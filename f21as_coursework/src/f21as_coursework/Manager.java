@@ -18,12 +18,12 @@ public class Manager {
 	 * passed in as a parameter and constructs a Customer and Order object for each line
 	 * in the file.
 	 */
-	public static void populateOrderList(/*placeholder for orderList*/ String fileName) {
+	public static void populateOrderList(OrderList orderList, String fileName) {
 		
 		try {
-			File orders 		= new File(fileName);									
+			File 	orders 		= new File(fileName);									
 			Scanner fileInput 	= new Scanner(orders);								
-			int count 			= 0;
+			int 	count 		= 0;
 			
 			if(fileInput.hasNextLine()==false) {
 				System.out.println("Input file is empty. Stopping execution.");
@@ -36,9 +36,9 @@ public class Manager {
 				String newOrderInfo [] 	= line.split(",");
 				
 				switch(newOrderInfo.length) {
-				case 5:
+				case 6:																// Change case depending on number of inputs
 					try {
-						/*orderList placeholder*/.addOrder(orderConstructor(newOrderInfo));
+						orderList.addDetails(orderConstructor(newOrderInfo));
 						customerConstructor(newOrderInfo);
 					}
 					catch(NumberFormatException nf) {
@@ -50,7 +50,52 @@ public class Manager {
 			}
 		}
 		catch (FileNotFoundException fnf) {
+			System.out.println("File not found, check file name");		
+		}		
+	}
+	
+	/*
+	 * The populateItemList method reads data from an external file specified by a String
+	 * passed in as a parameter and constructs a Customer and Order object for each line
+	 * in the file.
+	 * 
+	 * TODO: Create constructors for each subclass category.
+	 * TODO: Determine where the HashMap will be and how to populate it.
+	 */
+	public static void populateItemList(ItemList itemList, String fileName) {
 		
+		try {
+			File 	items 		= new File(fileName);									
+			Scanner fileInput 	= new Scanner(items);								
+			int 	count 		= 0;
+
+			if(fileInput.hasNextLine()==false) {
+				System.out.println("Input file is empty. Stopping execution.");
+				System.exit(0);
+			}
+			
+			while(fileInput.hasNextLine()) {
+				count 					+= 1;
+				String line 			= fileInput.nextLine();
+				String newOrderInfo [] 	= line.split(",");
+				
+				if(newOrderInfo[0].equalsIgnoreCase("food")) {
+					switch(newOrderInfo.length) {
+					case 6:																// Change case depending on number of inputs
+						try {
+							foodConstructor(newOrderInfo);
+						}
+						catch(NumberFormatException nf) {
+							System.out.println("Invalid data in row " + count
+												+ ". Exiting program run.");
+							System.exit(0);
+						}
+					}
+				}				
+			}
+		}
+		catch (FileNotFoundException fnf) {
+			System.out.println("File not found, check file name");		
 		}		
 	}
 	
