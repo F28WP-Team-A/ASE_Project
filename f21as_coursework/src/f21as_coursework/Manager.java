@@ -70,6 +70,7 @@ public class Manager {
 		
 		String 	orderID 		= newOrderInfo[2];
 		String  item			= newOrderInfo[4];
+		double  price 			= Double.parseDouble(newOrderInfo[5]);				// final structure of file TBD
 		String 	dateTime [] 	= newOrderInfo[3].split(".");
 		int 	dTime 	 [];
 		for(int i; i<dateTime.length; i++) {
@@ -78,21 +79,14 @@ public class Manager {
 		LocalDateTime timeStamp = LocalDateTime.of(dTime[0], dTime[1], dTime[2],
 													dTime[3], dTime[4], dTime[5]);
 		
-		return Order(orderID, item, timeStamp);
+		return Order(orderID, timeStamp, item, price);
 		
 	}
 	
 	
 	/*
-	 * Returns a newly instantiated Order object, created with
+	 * Returns a newly instantiated Customer object, created with
 	 * information from the String Array passed in as a parameter.
-	 * 
-	 * orderID remains a String but the order timestamp is first
-	 * split into another array, parsed into an array on type int
-	 * which is then used to construct a LocalDateTime object.
-	 * 
-	 * These variables are then passed into the Order constructor
-	 * as the return value.
 	 */
 	private static Customer customerConstructor(String [] newOrderInfo) {
 		
