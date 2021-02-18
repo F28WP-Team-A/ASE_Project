@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 public class Order {
     
     // instance variables
-    public String id;       // customer ID
-    public LocalDateTime timeStamp; // order time stamp
-    public String itemDetails;      // details of items
-    public double price;            // price of items
+    public String        id;            // order ID
+    public LocalDateTime timeStamp;     // order time stamp
+    public String        itemDetails;   // details of items
+    public double        price;         // price of items
 
 // constructor
 public Order (String id, LocalDateTime timeStamp, String itemDetails, double price) {
@@ -22,14 +22,14 @@ public Order (String id, LocalDateTime timeStamp, String itemDetails, double pri
     this.price = price;
 }
 
-// return customer id
+// return order id
 public String getId() {
-    return id;
+    return "Order ID: " + id;
 }
 
 // return order time stamp
 public LocalDateTime getTimeStamp() {
-    return timeStamp;
+    return "Order time stamp: " + timeStamp;
 }
 
 // return item details
