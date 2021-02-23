@@ -3,11 +3,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Order {
-	// instance variables
-    public String id;       		// customer ID
+    // instance variables
+    public String id;       	    // customer ID
     public LocalDateTime timeStamp; // order time stamp
     public String itemDetails;      // details of items
-    public BigDecimal price;            // price of items
+    public BigDecimal price;        // price of items
 
 // constructor
 public Order (String id, LocalDateTime timeStamp, String itemDetails, BigDecimal price) {
