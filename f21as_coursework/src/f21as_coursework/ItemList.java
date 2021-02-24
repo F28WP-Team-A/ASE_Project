@@ -40,6 +40,4 @@ public class ItemList {
 		public Items remove(Object key) {
 			return items.remove(key);
 		}
-		
-		
 	}
