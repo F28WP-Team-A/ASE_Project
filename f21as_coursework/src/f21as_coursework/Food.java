@@ -1,5 +1,5 @@
 package f21as_coursework;
-
+import java.math.BigDecimal;
 
 public class Food extends Items{
 
@@ -8,7 +8,7 @@ public class Food extends Items{
 	private String side;	//side that comes with item
 	
 	//constructor
-	public Food(String cat, String id, String des, double cost, String type, String side) {
+	public Food(String cat, String id, String des, BigDecimal cost, String type, String side) {
 		super (id, des, cat, cost);
 		this.type = type;
 		this.side = side;

@@ -1,5 +1,6 @@
 package f21as_coursework;
 
+import java.math.BigDecimal;
 
 public class Merchandise extends Items {
 
@@ -7,7 +8,7 @@ public class Merchandise extends Items {
 	private String size; //size of merch
 	
 	//constructor
-	public Merchandise (String cat,String id, String des, double cost, String size) {
+	public Merchandise (String cat,String id, String des, BigDecimal cost, String size) {
 		super (id, des, cat, cost);
 		this.size = size;
 	}

@@ -1,4 +1,5 @@
 package f21as_coursework;
+import java.math.BigDecimal;
 
 
 public class Drink extends Items {
@@ -9,7 +10,7 @@ public class Drink extends Items {
 	private String flavour;		//flavour of drink - vanilla, caramel
 	
 	//constructor
-	public Drink (String cat,String id, String des, double cost, String size, String type, String flav) {
+	public Drink (String cat,String id, String des, BigDecimal cost, String size, String type, String flav) {
 		super (id, des, cat, cost);
 		this.size = size;
 		this.type = type;
@@ -31,5 +32,4 @@ public class Drink extends Items {
 		return flavour;
 	}
 	
-
 }

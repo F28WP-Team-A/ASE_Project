@@ -1,4 +1,5 @@
 package f21as_coursework;
+import java.math.BigDecimal;
 
 
 public class Items {
@@ -7,10 +8,10 @@ public class Items {
 	private String identifier;		//unique ID for item
 	private String description;		//description of item
 	private String category;		//category of item
-	private double cost;			//cost of item
+	private BigDecimal cost;		//cost of item
 	
 	//constructor
-	public Items (String cat, String id, String des, double cost) {
+	public Items (String cat, String id, String des, BigDecimal cost) {
 		identifier = id;
 		description = des;
 		category = cat;
@@ -55,7 +56,7 @@ public class Items {
 	}
 	
 	//return cost of item
-	public double getCost() {
+	public BigDecimal getCost() {
 		return cost;
 	}
 	

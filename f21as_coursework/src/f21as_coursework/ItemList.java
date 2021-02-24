@@ -1,36 +1,45 @@
 package f21as_coursework;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import f21as_coursework.Items;
 
 public class ItemList {
 
-	public static void main(String[] args) {
 		//create HashMap object called items 
 		//where key = identifier (String) and value = menu item (String)
 		HashMap<String, Items> items = new HashMap<String, Items>();
 		
-		//print items in map
-		System.out.println(items);
-		System.out.println();
-		
-		//print size of map
-		System.out.println("Size of map is " + items.size());
-		
-		//loop through HashMap to print keys (identifiers)
-		for (String iden : items.keySet()) {
-			System.out.println(iden);
-		}
-		
-		///print keys and  values
-		for (String h : items.keySet()) {
-			System.out.println("key: " + h + items.get(h));
-		}
-
-
+		//return Set view of mappings contained in map
 		/*
-		 * finishing off HashMap 
+		 * need to check
 		 */
+		public Set<Map.Entry<String, Items>> entrySet(){
+			return items.entrySet();
+		}
+		
+		
+		//returns size of map - number of items in the map
+		public int getMapSize() {
+			return items.size();
+		}
+		
+		//returns true if map contains no key/value mappings
+		public boolean getEmpty() {
+			return items.isEmpty();
+		}
+				
+		//returns value for specified key
+		public Items get(Object key) {
+			return items.get(key);
+		}
+				
+		//remove mapping for specified key
+		public Items remove(Object key) {
+			return items.remove(key);
+		}
+		
 		
 	}
-}
