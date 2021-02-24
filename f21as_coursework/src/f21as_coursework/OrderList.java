@@ -1,19 +1,20 @@
 package f21as_coursework;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.util.Set;
+import java.util.TreeSet;
 
-//Order objects stored as an ArrayList
+//Order objects stored as a TreeSet
 public class OrderList {
 	// storage for details
-    private ArrayList <Order> orderList;
+	Set<Order> orders = new TreeSet<Order>();
 
-    // initialise order list
-    public OrderList() {
-        orderList = new ArrayList<Order>();
+    public OrderList(String filename) throws FileNotFoundException {
     }
 
     // look up order id and return order details
     public Order findById(String id) {
-        for (Order o : orderList) {
+        for (Order o : orders) {
             if (o.getId().equals(id)) {
                 return o;
             }
@@ -21,43 +22,38 @@ public class OrderList {
         return null;
     }
     
-    // add new details to list
-    public void addDetails(Order details) {
-    	orderList.add(details);
-    }
-
-    // remove order object by ID
-    public void removeDetails(String id) {
-        int index = findIndex(id);
-        if (index != -1) {
-            orderList.remove(index);
-        }
-    }
-
-    // look up order ID and return index
-    private int findIndex(String id) {
-        int size = orderList.size();
-        for (int i = 0; i < size; i++) {
-            Order o = orderList.get(i);
-            if (o.getId().equals(id)) {
-                return i;
-            }
-        }
-        return -1;
+    // add new details to TreeSet
+    public boolean addDetails(Order details) {
+    	return orders.add(details);
     }
     
     // return number of orders
     public int getNumberOfOrders() {
-        return orderList.size();
+        return orders.size();
     }
 
     // return all order details
     public String listDetails() {
         StringBuffer allOrders = new StringBuffer();
-        for (Order details : orderList) {
+        for (Order details : orders) {
             allOrders.append(details);
             allOrders.append('\n');
         }
         return allOrders.toString();
     }
+    
+    // return report
+    public String getReport() {
+    	return null;
+    }
+    
+    // return total order sales
+    public BigDecimal getTotalSales() {
+    	BigDecimal totalSales = new BigDecimal("0");
+    	for (Order o : orders) {
+    		totalSales = totalSales.add(o.getPrice());
+    	}
+    	return totalSales;
+    }
+    
 }

@@ -77,13 +77,13 @@ public class Manager {
 			while(fileInput.hasNextLine()) {
 				count 					+= 1;
 				String line 			= fileInput.nextLine();
-				String newOrderInfo [] 	= line.split(",");
+				String newItemInfo [] 	= line.split(",");
 				
-				if(newOrderInfo[0].equalsIgnoreCase("food")) {
-					switch(newOrderInfo.length) {
+				if(newItemInfo[0].equalsIgnoreCase("food")) {
+					switch(newItemInfo.length) {
 					case 6:																// Change case depending on number of inputs
 						try {
-							foodConstructor(newOrderInfo);
+							itemList.put(newItemInfo[1], foodConstructor(newItemInfo)); // TODO finish put method when Isla has finished ItemList class
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
@@ -91,7 +91,35 @@ public class Manager {
 							System.exit(0);
 						}
 					}
-				}				
+				}
+				
+				if(newItemInfo[0].equalsIgnoreCase("drink")) {
+					switch(newItemInfo.length) {
+					case 7:																// Change case depending on number of inputs
+						try {
+							drinkConstructor(newItemInfo);								// TODO finish put method when Isla has finished ItemList class
+						}
+						catch(NumberFormatException nf) {
+							System.out.println("Invalid data in row " + count
+												+ ". Exiting program run.");
+							System.exit(0);
+						}
+					}
+				}
+				
+				if(newItemInfo[0].equalsIgnoreCase("merchandise")) {
+					switch(newItemInfo.length) {
+					case 5:																// Change case depending on number of inputs
+						try {
+							merchConstructor(newItemInfo);								// TODO finish put method when Isla has finished ItemList class
+						}
+						catch(NumberFormatException nf) {
+							System.out.println("Invalid data in row " + count
+												+ ". Exiting program run.");
+							System.exit(0);
+						}
+					}
+				}
 			}
 		}
 		catch (FileNotFoundException fnf) {
@@ -113,18 +141,19 @@ public class Manager {
 	 */
 	private static Order orderConstructor(String [] newOrderInfo) {
 		
-		String 	orderID 		= newOrderInfo[2];
-		String  item			= newOrderInfo[4];
-		double  price 			= Double.parseDouble(newOrderInfo[5]);				// final structure of file TBD
-		String 	dateTime [] 	= newOrderInfo[3].split(".");
-		int 	dTime 	 [];
-		for(int i; i<dateTime.length; i++) {
+		String 	orderID 		= newOrderInfo[3];
+		String  item			= newOrderInfo[10];
+		double  price 			= Double.parseDouble(newOrderInfo[11]);
+		String 	dateTime [] 	= {newOrderInfo[4], newOrderInfo[5], newOrderInfo[6], 
+								   newOrderInfo[7], newOrderInfo[8], newOrderInfo[9]};
+		int 	dTime 	 []		= new int [6];
+		for(int i = 0 ; i<dateTime.length; i++) {
 			dTime[i] = Integer.parseInt(dateTime[i]);
 		}
 		LocalDateTime timeStamp = LocalDateTime.of(dTime[0], dTime[1], dTime[2],
 													dTime[3], dTime[4], dTime[5]);
 		
-		return Order(orderID, timeStamp, item, price);
+		return new Order(orderID, timeStamp, item, price);
 		
 	}
 	
@@ -142,6 +171,59 @@ public class Manager {
 		
 	}
 	
+	/*
+	 * Food constructor
+	 * 
+	 * Food(String cat, String id, String des, double cost, String type, String side)
+	 * 
+	 */
+	private static Food foodConstructor(String [] newItemInfo) {
+		
+		String cat  = newItemInfo[0];
+		String id 	= newItemInfo[1];
+		String des	= newItemInfo[2];
+		double cost	= Double.parseDouble(newItemInfo[3]);
+		String type = newItemInfo[4];
+		String side = newItemInfo[5];
+		
+		return new Food(cat, id, des, cost, type, side);
+	}
+	
+	/*
+	 * Drink constructor
+	 * 
+	 * (String cat,String id, String des, double cost, String size, String type, String flav)
+	 * 
+	 */
+	private static Drink drinkConstructor(String [] newItemInfo) {
+		
+		String cat  = newItemInfo[0];
+		String id 	= newItemInfo[1];
+		String des	= newItemInfo[2];
+		double cost	= Double.parseDouble(newItemInfo[3]);
+		String size = newItemInfo[4];
+		String type = newItemInfo[5];
+		String flav = newItemInfo[6];
+				
+		return new Drink(cat, id, des, cost, size, type, flav);
+	}
+	
+	/*
+	 * Merchandise constructor
+	 * 
+	 * Merchandise (String cat,String id, String des, double cost, String size)
+	 * 
+	 */
+	private static Merchandise merchConstructor(String [] newItemInfo) {
+		
+		String cat  = newItemInfo[0];
+		String id 	= newItemInfo[1];
+		String des	= newItemInfo[2];
+		double cost	= Double.parseDouble(newItemInfo[3]);
+		String size = newItemInfo[4];
+				
+		return new Merchandise(cat, id, des, cost, size);
+	}
 		
 		
 		
