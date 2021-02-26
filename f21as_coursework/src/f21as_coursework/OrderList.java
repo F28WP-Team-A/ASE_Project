@@ -1,6 +1,7 @@
 package f21as_coursework;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -9,7 +10,7 @@ public class OrderList {
 	// storage for details
 	Set<Order> orders = new TreeSet<Order>();
 
-    public OrderList(String filename) throws FileNotFoundException {
+    public OrderList() {
     }
 
     // look up order id and return order details

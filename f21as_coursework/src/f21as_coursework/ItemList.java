@@ -40,4 +40,13 @@ public class ItemList {
 		public Items remove(Object key) {
 			return items.remove(key);
 		}
+		
+		/*
+		 * ADDING FOR TEST
+		 * 
+		 */
+		public void addItem(String key, Items value) {
+			items.put(key, value);
+		}
+		
 	}

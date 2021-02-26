@@ -3,6 +3,8 @@ package f21as_coursework;
 import java.io.*;
 import java.util.Scanner;
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
+
 
 public class Manager {
 	
@@ -34,10 +36,11 @@ public class Manager {
 				count 					+= 1;
 				String line 			= fileInput.nextLine();
 				String newOrderInfo [] 	= line.split(",");
-				
+
 				switch(newOrderInfo.length) {
-				case 6:																// Change case depending on number of inputs
+				case 12:																// Change case depending on number of inputs
 					try {
+						
 						orderList.addDetails(orderConstructor(newOrderInfo));
 						customerConstructor(newOrderInfo);
 					}
@@ -48,10 +51,11 @@ public class Manager {
 					}
 				}
 			}
+			fileInput.close();
 		}
 		catch (FileNotFoundException fnf) {
 			System.out.println("File not found, check file name");		
-		}		
+		}
 	}
 	
 	/*
@@ -83,7 +87,7 @@ public class Manager {
 					switch(newItemInfo.length) {
 					case 6:																// Change case depending on number of inputs
 						try {
-							itemList.put(newItemInfo[1], foodConstructor(newItemInfo)); // TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], foodConstructor(newItemInfo)); // TODO finish put method when Isla has finished ItemList class
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
@@ -97,7 +101,7 @@ public class Manager {
 					switch(newItemInfo.length) {
 					case 7:																// Change case depending on number of inputs
 						try {
-							drinkConstructor(newItemInfo);								// TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], drinkConstructor(newItemInfo));								// TODO finish put method when Isla has finished ItemList class
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
@@ -111,7 +115,7 @@ public class Manager {
 					switch(newItemInfo.length) {
 					case 5:																// Change case depending on number of inputs
 						try {
-							merchConstructor(newItemInfo);								// TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], merchConstructor(newItemInfo));								// TODO finish put method when Isla has finished ItemList class
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
@@ -121,6 +125,7 @@ public class Manager {
 					}
 				}
 			}
+			fileInput.close();
 		}
 		catch (FileNotFoundException fnf) {
 			System.out.println("File not found, check file name");		
@@ -143,7 +148,7 @@ public class Manager {
 		
 		String 	orderID 		= newOrderInfo[3];
 		String  item			= newOrderInfo[10];
-		double  price 			= Double.parseDouble(newOrderInfo[11]);
+		BigDecimal  price 		= new BigDecimal(newOrderInfo[11]);
 		String 	dateTime [] 	= {newOrderInfo[4], newOrderInfo[5], newOrderInfo[6], 
 								   newOrderInfo[7], newOrderInfo[8], newOrderInfo[9]};
 		int 	dTime 	 []		= new int [6];
@@ -164,10 +169,12 @@ public class Manager {
 	 */
 	private static Customer customerConstructor(String [] newOrderInfo) {
 		
-		String 	custID 		= newOrderInfo[0];
-		String  name 		= newOrderInfo[1];
+		String 	custID 			= newOrderInfo[0];
+		String  firstName 		= newOrderInfo[1];
+		String  secondName 		= newOrderInfo[2];
+		Name	customerName 	= new Name(firstName, secondName);
 		
-		return Customer(name, custID);
+		return new Customer(customerName, custID);
 		
 	}
 	
@@ -179,14 +186,14 @@ public class Manager {
 	 */
 	private static Food foodConstructor(String [] newItemInfo) {
 		
-		String cat  = newItemInfo[0];
-		String id 	= newItemInfo[1];
-		String des	= newItemInfo[2];
-		double cost	= Double.parseDouble(newItemInfo[3]);
-		String type = newItemInfo[4];
-		String side = newItemInfo[5];
+		String cat  		= newItemInfo[0];
+		String id 			= newItemInfo[1];
+		String des			= newItemInfo[2];
+		BigDecimal price	= new BigDecimal(newItemInfo[3]);
+		String type 		= newItemInfo[4];
+		String side 		= newItemInfo[5];
 		
-		return new Food(cat, id, des, cost, type, side);
+		return new Food(cat, id, des, price, type, side);
 	}
 	
 	/*
@@ -197,15 +204,15 @@ public class Manager {
 	 */
 	private static Drink drinkConstructor(String [] newItemInfo) {
 		
-		String cat  = newItemInfo[0];
-		String id 	= newItemInfo[1];
-		String des	= newItemInfo[2];
-		double cost	= Double.parseDouble(newItemInfo[3]);
-		String size = newItemInfo[4];
-		String type = newItemInfo[5];
-		String flav = newItemInfo[6];
+		String cat  		= newItemInfo[0];
+		String id 			= newItemInfo[1];
+		String des			= newItemInfo[2];
+		BigDecimal price	= new BigDecimal(newItemInfo[3]);
+		String size 		= newItemInfo[4];
+		String type 		= newItemInfo[5];
+		String flav 		= newItemInfo[6];
 				
-		return new Drink(cat, id, des, cost, size, type, flav);
+		return new Drink(cat, id, des, price, size, type, flav);
 	}
 	
 	/*
@@ -216,13 +223,13 @@ public class Manager {
 	 */
 	private static Merchandise merchConstructor(String [] newItemInfo) {
 		
-		String cat  = newItemInfo[0];
-		String id 	= newItemInfo[1];
-		String des	= newItemInfo[2];
-		double cost	= Double.parseDouble(newItemInfo[3]);
-		String size = newItemInfo[4];
+		String cat  		= newItemInfo[0];
+		String id 			= newItemInfo[1];
+		String des			= newItemInfo[2];
+		BigDecimal price	= new BigDecimal(newItemInfo[3]);
+		String size 		= newItemInfo[4];
 				
-		return new Merchandise(cat, id, des, cost, size);
+		return new Merchandise(cat, id, des, price, size);
 	}
 		
 		
