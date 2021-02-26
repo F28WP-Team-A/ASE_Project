@@ -38,11 +38,18 @@ public class Manager {
 				String newOrderInfo [] 	= line.split(",");
 
 				switch(newOrderInfo.length) {
-				case 12:																// Change case depending on number of inputs
+				case 12:
 					try {
+						if(orderList.getNumberOfOrders() > 0 && orderList.existingID(newOrderInfo[0].trim())) {		// If order exists, item is added to order
+							orderList.findById(newOrderInfo[0]).addItem(newOrderInfo[10]);
+							orderList.findById(newOrderInfo[0]).addPrice(new BigDecimal(newOrderInfo[11]));
+							continue;
+						}
+						else {
+							orderList.addDetails(orderConstructor(newOrderInfo));
+						}
 						
-						orderList.addDetails(orderConstructor(newOrderInfo));
-						customerConstructor(newOrderInfo);
+						customerConstructor(newOrderInfo);															// TODO Add customer list class
 					}
 					catch(NumberFormatException nf) {
 						System.out.println("Invalid data in row " + count
@@ -63,8 +70,6 @@ public class Manager {
 	 * passed in as a parameter and constructs a Customer and Order object for each line
 	 * in the file.
 	 * 
-	 * TODO: Create constructors for each subclass category.
-	 * TODO: Determine where the HashMap will be and how to populate it.
 	 */
 	public static void populateItemList(ItemList itemList, String fileName) {
 		
@@ -87,7 +92,7 @@ public class Manager {
 					switch(newItemInfo.length) {
 					case 6:																// Change case depending on number of inputs
 						try {
-							itemList.addItem(newItemInfo[1], foodConstructor(newItemInfo)); // TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], foodConstructor(newItemInfo));
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
@@ -101,7 +106,7 @@ public class Manager {
 					switch(newItemInfo.length) {
 					case 7:																// Change case depending on number of inputs
 						try {
-							itemList.addItem(newItemInfo[1], drinkConstructor(newItemInfo));								// TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], drinkConstructor(newItemInfo));
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
@@ -113,9 +118,9 @@ public class Manager {
 				
 				if(newItemInfo[0].equalsIgnoreCase("merchandise")) {
 					switch(newItemInfo.length) {
-					case 5:																// Change case depending on number of inputs
+					case 5:	
 						try {
-							itemList.addItem(newItemInfo[1], merchConstructor(newItemInfo));								// TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], merchConstructor(newItemInfo));								
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
@@ -146,7 +151,7 @@ public class Manager {
 	 */
 	private static Order orderConstructor(String [] newOrderInfo) {
 		
-		String 	orderID 		= newOrderInfo[3];
+		String 	orderID 		= newOrderInfo[0];
 		String  item			= newOrderInfo[10];
 		BigDecimal  price 		= new BigDecimal(newOrderInfo[11]);
 		String 	dateTime [] 	= {newOrderInfo[4], newOrderInfo[5], newOrderInfo[6], 

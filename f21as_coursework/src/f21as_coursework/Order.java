@@ -1,13 +1,16 @@
 package f21as_coursework;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Order implements Comparable<Order> {
     // instance variables
-    public String id;       	    // customer ID
-    public LocalDateTime timeStamp; // order time stamp
-    public String itemDetails;      // details of items
-    public BigDecimal price;        // price of items
+    public String id;       	    			// customer ID
+    public LocalDateTime timeStamp; 			// order time stamp
+    public ArrayList<String> itemDetails;      	// details of items
+    public BigDecimal price;        			// price of items
 
 	// constructor
 	public Order (String id, LocalDateTime timeStamp, String itemDetails, BigDecimal price) {
@@ -18,7 +21,8 @@ public class Order implements Comparable<Order> {
 	    }
 	    this.id = id.trim();
 	    this.timeStamp = timeStamp;
-	    this.itemDetails = itemDetails;
+	    this.itemDetails = new ArrayList<String> ();
+	    this.itemDetails.add(itemDetails);
 	    this.price = price;
 	}
 	
@@ -32,9 +36,19 @@ public class Order implements Comparable<Order> {
 	    return timeStamp;
 	}
 	
+	// add item to item details
+	public void addItem(String item) {
+		itemDetails.add(item);
+	}
+	
 	// return item details
 	public String getItemDetails() {
-	    return itemDetails;
+	    return itemDetails.toString();
+	}
+	
+	// increment price of items
+	public void addPrice(BigDecimal itemPrice) {
+		price = price.add(itemPrice);
 	}
 	
 	// return price of items
@@ -67,11 +81,6 @@ public class Order implements Comparable<Order> {
 			return -1;
 		}
 	}
-	
-//	// compare order object by id to another for sorting
-//	public int compareTo(Order otherDetails) {
-//	    return id.compareTo(otherDetails.getId());
-//	}
 	
 	// return string with all details
 	public String toString() {

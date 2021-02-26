@@ -1,7 +1,6 @@
 package f21as_coursework;
-import java.io.FileNotFoundException;
+
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -55,6 +54,17 @@ public class OrderList {
     		totalSales = totalSales.add(o.getPrice());
     	}
     	return totalSales;
+    }
+    
+    // boolen match for id
+    public boolean existingID(String inputId) {
+    	for(Order o: orders) {
+    		if(o.id.equals(inputId)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
     
 }
