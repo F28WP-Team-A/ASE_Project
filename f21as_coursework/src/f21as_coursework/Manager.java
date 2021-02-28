@@ -4,6 +4,10 @@ import java.io.*;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 
 public class Manager {
@@ -257,8 +261,95 @@ public class Manager {
 				
 		return new Merchandise(cat, id, des, price, size);
 	}
+	
+//	/* METHOD 1
+//	 * Method that checks if the order is eligible for a discount. Returns
+//	 * new price of order after discount if applicable.
+//	 */
+//	public static BigDecimal applyDiscount(OrderList orders, String customerID) {
+//			
+//		ArrayList<String> orderItems = new ArrayList<String>();
+//		
+//		BigDecimal price = new BigDecimal(0);
+//		BigDecimal discount = new BigDecimal(0);
+//			
+//		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
+//			if(orders.getOrderItem(i).getId().equals(customerID) && orders.getOrderItem(i).getItemDetails().substring(1,2).equals("F")) {
+//				orderItems.add("FOOD");
+//				price = price.add(orders.getOrderItem(i).getPrice());
+//			}
+//			else if(orders.getOrderItem(i).getId().equals(customerID)) {
+//				orderItems.add(orders.getOrderItem(i).getItemDetails().substring(1, 6));
+//				price = price.add(orders.getOrderItem(i).getPrice());
+//				
+//			}
+//		}
+//		
+//		Collections.sort(orderItems, String.CASE_INSENSITIVE_ORDER);
+//		System.out.println("orderItems: " + orderItems);
+//		
+//		if(orderItems.get(0).equalsIgnoreCase("drink") && orderItems.get(0).equalsIgnoreCase("drink")) {
+//			discount = price.multiply(new BigDecimal(0.20));
+//			System.out.println(discount);
+//			price = price.subtract(discount);
+//			System.out.println(price);
+//		}
+//		
+//		return price.round(new MathContext(3));
+//				
+//	}
+	
+	/* METHOD 2
+	 * Method that checks if the order is eligible for a discount. Returns
+	 * new price of order after discount if applicable.
+	 */
+	public static BigDecimal applyDiscount(OrderList orders, String customerID) {
+			
+		int food = 0;
+		int drink = 0;
+		int merch = 0;
+		
+		BigDecimal price = new BigDecimal(0);
+		BigDecimal discount = new BigDecimal(0);
+			
+		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
+			if(orders.getOrderItem(i).getId().equals(customerID) 
+				&& orders.getOrderItem(i).getItemDetails().substring(1,5).equalsIgnoreCase("food")) {
+				food += 1;
+				price = price.add(orders.getOrderItem(i).getPrice());
+			}
+			else if(orders.getOrderItem(i).getId().equals(customerID)
+				&& orders.getOrderItem(i).getItemDetails().substring(1,6).equalsIgnoreCase("drink")) {
+				drink += 1;
+				price = price.add(orders.getOrderItem(i).getPrice());
+			}
+			else if(orders.getOrderItem(i).getId().equals(customerID)
+				&& orders.getOrderItem(i).getItemDetails().substring(1,6).equalsIgnoreCase("merch")) {
+				merch += 1;
+				price = price.add(orders.getOrderItem(i).getPrice());
+			}
+		}
 		
 		
+		if(food >= 2 && drink >= 2) {
+			discount = price.multiply(new BigDecimal(0.20));
+			System.out.println(discount);
+			price = price.subtract(discount);
+			System.out.println(price);
+			return price.round(new MathContext(4));
+			
+			
+		}
 		
+		if(merch >= 1) {
+			discount = price.multiply(new BigDecimal(0.10));
+			System.out.println(discount);
+			price = price.subtract(discount);
+			System.out.println(price);
+			return price.round(new MathContext(4));
+		}
+		
+		return discount;
+	}
 
 }
