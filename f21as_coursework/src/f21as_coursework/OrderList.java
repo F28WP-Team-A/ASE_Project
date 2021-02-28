@@ -12,6 +12,17 @@ public class OrderList {
     public OrderList() {
     }
 
+    // look up orderItemNum and return order details
+    public Order getOrderItem(int orderItemNum) {
+    	for(Order o : orders) {
+    		if(o.getOrderItemNum() == orderItemNum) {
+    			return o;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     // look up order id and return order details
     public Order findById(String id) {
         for (Order o : orders) {

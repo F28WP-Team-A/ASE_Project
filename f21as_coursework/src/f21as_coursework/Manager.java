@@ -37,18 +37,17 @@ public class Manager {
 				String line 			= fileInput.nextLine();
 				String newOrderInfo [] 	= line.split(",");
 
-				switch(newOrderInfo.length) {
-				case 12:
+				if(newOrderInfo.length == 13) {
 					try {
-						if(orderList.getNumberOfOrders() > 0 && orderList.existingID(newOrderInfo[0].trim())) {		// If order exists, item is added to order
-							orderList.findById(newOrderInfo[0]).addItem(newOrderInfo[10]);
-							orderList.findById(newOrderInfo[0]).addPrice(new BigDecimal(newOrderInfo[11]));
-							continue;
-						}
-						else {
-							orderList.addDetails(orderConstructor(newOrderInfo));
-						}
-						
+//						if(orderList.getNumberOfOrders() > 0 && orderList.existingID(newOrderInfo[0].trim())) {		// If order exists, item is added to order
+//							orderList.findById(newOrderInfo[0]).addItem(newOrderInfo[10]);
+//							orderList.findById(newOrderInfo[0]).addPrice(new BigDecimal(newOrderInfo[11]));
+//							continue;
+//						}
+//						else {
+//							orderList.addDetails(orderConstructor(newOrderInfo));
+//						}
+						orderList.addDetails(orderConstructor(newOrderInfo));
 						customerConstructor(newOrderInfo);															// TODO Add customer list class
 					}
 					catch(NumberFormatException nf) {
@@ -56,6 +55,12 @@ public class Manager {
 											+ ". Exiting program run.");
 						System.exit(0);
 					}
+				}
+				else {
+					System.out.println("Incorrect number of data points at line "
+										+ count 
+										+ " of input file lenght is: " + newOrderInfo.length);
+					break;
 				}
 			}
 			fileInput.close();
@@ -88,9 +93,8 @@ public class Manager {
 				String line 			= fileInput.nextLine();
 				String newItemInfo [] 	= line.split(",");
 				
-				if(newItemInfo[0].equalsIgnoreCase("food")) {
-					switch(newItemInfo.length) {
-					case 6:																// Change case depending on number of inputs
+				if(newItemInfo[0].equalsIgnoreCase("food") ) {
+					if(newItemInfo.length == 6) {
 						try {
 							itemList.addItem(newItemInfo[1], foodConstructor(newItemInfo));
 						}
@@ -98,13 +102,18 @@ public class Manager {
 							System.out.println("Invalid data in row " + count
 												+ ". Exiting program run.");
 							System.exit(0);
-						}
+						}						
+					}
+					else {
+						System.out.println("Incorrect number of data points at line "
+								+ count 
+								+ " of input file");
+						break;
 					}
 				}
 				
 				if(newItemInfo[0].equalsIgnoreCase("drink")) {
-					switch(newItemInfo.length) {
-					case 7:																// Change case depending on number of inputs
+					if(newItemInfo.length == 7) {
 						try {
 							itemList.addItem(newItemInfo[1], drinkConstructor(newItemInfo));
 						}
@@ -112,13 +121,18 @@ public class Manager {
 							System.out.println("Invalid data in row " + count
 												+ ". Exiting program run.");
 							System.exit(0);
-						}
+						}						
+					}
+					else {
+						System.out.println("Incorrect number of data points at line "
+								+ count 
+								+ " of input file");
+						break;
 					}
 				}
 				
 				if(newItemInfo[0].equalsIgnoreCase("merchandise")) {
-					switch(newItemInfo.length) {
-					case 5:	
+					if(newItemInfo.length == 5) {
 						try {
 							itemList.addItem(newItemInfo[1], merchConstructor(newItemInfo));								
 						}
@@ -126,8 +140,14 @@ public class Manager {
 							System.out.println("Invalid data in row " + count
 												+ ". Exiting program run.");
 							System.exit(0);
-						}
+						}						
 					}
+					else {
+						System.out.println("Incorrect number of data points at line "
+								+ count 
+								+ " of input file");
+						break;
+					}					
 				}
 			}
 			fileInput.close();
@@ -151,11 +171,12 @@ public class Manager {
 	 */
 	private static Order orderConstructor(String [] newOrderInfo) {
 		
-		String 	orderID 		= newOrderInfo[0];
-		String  item			= newOrderInfo[10];
-		BigDecimal  price 		= new BigDecimal(newOrderInfo[11]);
-		String 	dateTime [] 	= {newOrderInfo[4], newOrderInfo[5], newOrderInfo[6], 
-								   newOrderInfo[7], newOrderInfo[8], newOrderInfo[9]};
+		int		orderItemNum    = Integer.parseInt(newOrderInfo[0]);
+		String 	orderID 		= newOrderInfo[1];
+		String  item			= newOrderInfo[11];
+		BigDecimal  price 		= new BigDecimal(newOrderInfo[12]);
+		String 	dateTime [] 	= {newOrderInfo[5], newOrderInfo[6], newOrderInfo[7], 
+								   newOrderInfo[8], newOrderInfo[9], newOrderInfo[10]};
 		int 	dTime 	 []		= new int [6];
 		for(int i = 0 ; i<dateTime.length; i++) {
 			dTime[i] = Integer.parseInt(dateTime[i]);
@@ -163,7 +184,7 @@ public class Manager {
 		LocalDateTime timeStamp = LocalDateTime.of(dTime[0], dTime[1], dTime[2],
 													dTime[3], dTime[4], dTime[5]);
 		
-		return new Order(orderID, timeStamp, item, price);
+		return new Order(orderItemNum, orderID, timeStamp, item, price);
 		
 	}
 	

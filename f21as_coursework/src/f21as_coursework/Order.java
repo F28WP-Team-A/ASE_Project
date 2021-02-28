@@ -7,16 +7,18 @@ import java.util.Arrays;
 
 public class Order implements Comparable<Order> {
     // instance variables
-    public String id;       	    			// customer ID
+    public int orderItemNum;
+	public String id;       	    			// customer ID
     public LocalDateTime timeStamp; 			// order time stamp
     public ArrayList<String> itemDetails;      	// details of items
     public BigDecimal price;        			// price of items
 
 	// constructor
-	public Order (String id, LocalDateTime timeStamp, String itemDetails, BigDecimal price) {
+	public Order (int orderItemNum, String id, LocalDateTime timeStamp, String itemDetails, BigDecimal price) {
 	        
 	    // id must be provided
-	    if(id.trim().length() ==0) {
+	    this.orderItemNum = orderItemNum;
+		if(id.trim().length() ==0) {
 	        throw new IllegalStateException("Must provide id");
 	    }
 	    this.id = id.trim();
@@ -24,6 +26,11 @@ public class Order implements Comparable<Order> {
 	    this.itemDetails = new ArrayList<String> ();
 	    this.itemDetails.add(itemDetails);
 	    this.price = price;
+	}	
+	
+	// return orderItemNum
+	public int getOrderItemNum() {
+		return orderItemNum;
 	}
 	
 	// return customer id
@@ -44,11 +51,6 @@ public class Order implements Comparable<Order> {
 	// return item details
 	public String getItemDetails() {
 	    return itemDetails.toString();
-	}
-	
-	// increment price of items
-	public void addPrice(BigDecimal itemPrice) {
-		price = price.add(itemPrice);
 	}
 	
 	// return price of items
@@ -74,7 +76,7 @@ public class Order implements Comparable<Order> {
 		if(this.timeStamp.isEqual( otherOrder.timeStamp)) {
 			return 0;
 		}
-		else if(this.timeStamp.isAfter(otherOrder.timeStamp)) {
+		if(this.timeStamp.isAfter(otherOrder.timeStamp)) {
 			return 1;
 		}
 		else {
