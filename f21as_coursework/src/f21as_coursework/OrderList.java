@@ -33,10 +33,14 @@ public class OrderList {
         return null;
     }
     
-    // add new details to TreeSet
-    public boolean addDetails(Order details) {
-    	return orders.add(details);
-    }
+ // add new details to TreeSet
+    public void addDetails(Order details) throws IncorrectOrderException {
+    	if (details.getId() == null) {
+    		throw new IncorrectOrderException("Order ID is NULL");
+    	}
+    	orders.add(details);
+    	}
+	
     
     // return number of orders
     public int getNumberOfOrders() {
@@ -67,7 +71,7 @@ public class OrderList {
     	return totalSales;
     }
     
-    // boolen match for id
+    // Boolean match for id
     public boolean existingID(String inputId) {
     	for(Order o: orders) {
     		if(o.id.equals(inputId)) {
