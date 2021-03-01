@@ -40,4 +40,20 @@ public class ItemList {
 		public Items remove(Object key) {
 			return items.remove(key);
 		}
+		
+		/*
+		 * ADDING FOR TEST
+		 * 
+		 */
+		public void addItem(String key, Items value) throws IncorrectItemException {
+			if (value.getCost() == null) {
+				throw new IncorrectItemException("Item price is NULL");
+			}
+			
+			if (value.getID().trim().length() == 0) {
+				throw new IncorrectItemException ("Item ID is NULL");
+			}
+			items.put(key, value);
+		}
+		
 	}

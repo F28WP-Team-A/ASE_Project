@@ -11,7 +11,7 @@ public class Drink extends Items {
 	
 	//constructor
 	public Drink (String cat,String id, String des, BigDecimal cost, String size, String type, String flav) {
-		super (id, des, cat, cost);
+		super (cat, id, des, cost);		// Moved cat to front of constructor to get correct variable order
 		this.size = size;
 		this.type = type;
 		flavour = flav;

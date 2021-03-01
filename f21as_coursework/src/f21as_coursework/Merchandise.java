@@ -9,7 +9,7 @@ public class Merchandise extends Items {
 	
 	//constructor
 	public Merchandise (String cat,String id, String des, BigDecimal cost, String size) {
-		super (id, des, cat, cost);
+		super (cat, id, des, cost);							// Moved cat to front of constructor to get correct variable order
 		this.size = size;
 	}
 	

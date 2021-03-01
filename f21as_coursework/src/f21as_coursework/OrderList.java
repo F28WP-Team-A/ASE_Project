@@ -1,5 +1,5 @@
 package f21as_coursework;
-import java.io.FileNotFoundException;
+
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,9 +9,20 @@ public class OrderList {
 	// storage for details
 	Set<Order> orders = new TreeSet<Order>();
 
-    public OrderList(String filename) throws FileNotFoundException {
+    public OrderList() {
     }
 
+    // look up orderItemNum and return order details
+    public Order getOrderItem(int orderItemNum) {
+    	for(Order o : orders) {
+    		if(o.getOrderItemNum() == orderItemNum) {
+    			return o;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     // look up order id and return order details
     public Order findById(String id) {
         for (Order o : orders) {
@@ -22,10 +33,14 @@ public class OrderList {
         return null;
     }
     
-    // add new details to TreeSet
-    public boolean addDetails(Order details) {
-    	return orders.add(details);
-    }
+ // add new details to TreeSet
+    public void addDetails(Order details) throws IncorrectOrderException {
+    	if (details.getId() == null) {
+    		throw new IncorrectOrderException("Order ID is NULL");
+    	}
+    	orders.add(details);
+    	}
+	
     
     // return number of orders
     public int getNumberOfOrders() {
@@ -54,6 +69,17 @@ public class OrderList {
     		totalSales = totalSales.add(o.getPrice());
     	}
     	return totalSales;
+    }
+    
+    // Boolean match for id
+    public boolean existingID(String inputId) {
+    	for(Order o: orders) {
+    		if(o.id.equals(inputId)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
     
 }

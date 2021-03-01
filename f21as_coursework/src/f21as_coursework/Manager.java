@@ -3,6 +3,28 @@ package f21as_coursework;
 import java.io.*;
 import java.util.Scanner;
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.math.MathContext;
+
+/*
+ * The Manager class is designed to manage the workflow of
+ * the application.
+ * 
+ * The Manager class is used to read in data from a text
+ * file and populate an OrderList with existing Orders, as
+ * well as populate an ItemList with the Items offered by
+ * the cafe, also from a text file.
+ * 
+ * In addition to handling the file input and output of the
+ * application, the Manager class contains the applyDiscount
+ * method, which checks whether a customer's order is eligible
+ * for a discount and if so, returns the discounted price.
+ *
+ * Created as part of F21AS Advanced Software Engineering.
+ * 
+ * Author: Elliot Whitehouse (ew2000)
+ */
+
 
 public class Manager {
 	
@@ -18,7 +40,7 @@ public class Manager {
 	 * passed in as a parameter and constructs a Customer and Order object for each line
 	 * in the file.
 	 */
-	public static void populateOrderList(OrderList orderList, String fileName) {
+	public static void populateOrderList(OrderList orderList, String fileName) throws IncorrectOrderException {
 		
 		try {
 			File 	orders 		= new File(fileName);									
@@ -34,9 +56,8 @@ public class Manager {
 				count 					+= 1;
 				String line 			= fileInput.nextLine();
 				String newOrderInfo [] 	= line.split(",");
-				
-				switch(newOrderInfo.length) {
-				case 6:																// Change case depending on number of inputs
+
+				if(newOrderInfo.length == 13) {
 					try {
 						orderList.addDetails(orderConstructor(newOrderInfo));
 						customerConstructor(newOrderInfo);
@@ -47,11 +68,18 @@ public class Manager {
 						System.exit(0);
 					}
 				}
+				else {
+					System.out.println("Incorrect number of data points at line "
+										+ count 
+										+ " of input file.");
+					break;
+				}
 			}
+			fileInput.close();
 		}
 		catch (FileNotFoundException fnf) {
 			System.out.println("File not found, check file name");		
-		}		
+		}
 	}
 	
 	/*
@@ -59,10 +87,8 @@ public class Manager {
 	 * passed in as a parameter and constructs a Customer and Order object for each line
 	 * in the file.
 	 * 
-	 * TODO: Create constructors for each subclass category.
-	 * TODO: Determine where the HashMap will be and how to populate it.
 	 */
-	public static void populateItemList(ItemList itemList, String fileName) {
+	public static void populateItemList(ItemList itemList, String fileName) throws IncorrectItemException {
 		
 		try {
 			File 	items 		= new File(fileName);									
@@ -79,48 +105,64 @@ public class Manager {
 				String line 			= fileInput.nextLine();
 				String newItemInfo [] 	= line.split(",");
 				
-				if(newItemInfo[0].equalsIgnoreCase("food")) {
-					switch(newItemInfo.length) {
-					case 6:																// Change case depending on number of inputs
+				if(newItemInfo[0].equalsIgnoreCase("food") ) {
+					if(newItemInfo.length == 6) {
 						try {
-							itemList.put(newItemInfo[1], foodConstructor(newItemInfo)); // TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], foodConstructor(newItemInfo));
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
 												+ ". Exiting program run.");
 							System.exit(0);
-						}
+						}						
+					}
+					else {
+						System.out.println("Incorrect number of data points at line "
+								+ count 
+								+ " of input file");
+						break;
 					}
 				}
 				
 				if(newItemInfo[0].equalsIgnoreCase("drink")) {
-					switch(newItemInfo.length) {
-					case 7:																// Change case depending on number of inputs
+					if(newItemInfo.length == 7) {
 						try {
-							drinkConstructor(newItemInfo);								// TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], drinkConstructor(newItemInfo));
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
 												+ ". Exiting program run.");
 							System.exit(0);
-						}
+						}						
+					}
+					else {
+						System.out.println("Incorrect number of data points at line "
+								+ count 
+								+ " of input file");
+						break;
 					}
 				}
 				
 				if(newItemInfo[0].equalsIgnoreCase("merchandise")) {
-					switch(newItemInfo.length) {
-					case 5:																// Change case depending on number of inputs
+					if(newItemInfo.length == 5) {
 						try {
-							merchConstructor(newItemInfo);								// TODO finish put method when Isla has finished ItemList class
+							itemList.addItem(newItemInfo[1], merchConstructor(newItemInfo));								
 						}
 						catch(NumberFormatException nf) {
 							System.out.println("Invalid data in row " + count
 												+ ". Exiting program run.");
 							System.exit(0);
-						}
+						}						
 					}
+					else {
+						System.out.println("Incorrect number of data points at line "
+								+ count 
+								+ " of input file");
+						break;
+					}					
 				}
 			}
+			fileInput.close();
 		}
 		catch (FileNotFoundException fnf) {
 			System.out.println("File not found, check file name");		
@@ -141,91 +183,142 @@ public class Manager {
 	 */
 	private static Order orderConstructor(String [] newOrderInfo) {
 		
-		String 	orderID 		= newOrderInfo[3];
-		String  item			= newOrderInfo[10];
-		double  price 			= Double.parseDouble(newOrderInfo[11]);
-		String 	dateTime [] 	= {newOrderInfo[4], newOrderInfo[5], newOrderInfo[6], 
-								   newOrderInfo[7], newOrderInfo[8], newOrderInfo[9]};
-		int 	dTime 	 []		= new int [6];
+		int			orderItemNum    = Integer.parseInt(newOrderInfo[0]);
+		String 		orderID 		= newOrderInfo[1];
+		String  	item			= newOrderInfo[11];
+		BigDecimal  price 			= new BigDecimal(newOrderInfo[12]);
+		String 		dateTime [] 	= {newOrderInfo[5], newOrderInfo[6], newOrderInfo[7], 
+								   		newOrderInfo[8], newOrderInfo[9], newOrderInfo[10]};
+		int 		dTime 	 []		= new int [6];
 		for(int i = 0 ; i<dateTime.length; i++) {
 			dTime[i] = Integer.parseInt(dateTime[i]);
 		}
 		LocalDateTime timeStamp = LocalDateTime.of(dTime[0], dTime[1], dTime[2],
 													dTime[3], dTime[4], dTime[5]);
 		
-		return new Order(orderID, timeStamp, item, price);
+		return new Order(orderItemNum, orderID, timeStamp, item, price);
 		
 	}
 	
 	
 	/*
-	 * Returns a newly instantiated Customer object, created with
-	 * information from the String Array passed in as a parameter.
+	 * The Customer constructor method returns a Customer
+	 * object constructed using the data provided in the String 
+	 * Array parameter. 
 	 */
 	private static Customer customerConstructor(String [] newOrderInfo) {
 		
-		String 	custID 		= newOrderInfo[0];
-		String  name 		= newOrderInfo[1];
+		String 	custID 			= newOrderInfo[0];
+		String  firstName 		= newOrderInfo[1];
+		String  secondName 		= newOrderInfo[2];
+		Name	customerName 	= new Name(firstName, secondName);
 		
-		return Customer(name, custID);
+		return new Customer(customerName, custID);
 		
 	}
 	
 	/*
-	 * Food constructor
-	 * 
-	 * Food(String cat, String id, String des, double cost, String type, String side)
-	 * 
+	 * The Food constructor method returns a Food
+	 * object constructed using the data provided in the String 
+	 * Array parameter. 
 	 */
 	private static Food foodConstructor(String [] newItemInfo) {
 		
-		String cat  = newItemInfo[0];
-		String id 	= newItemInfo[1];
-		String des	= newItemInfo[2];
-		double cost	= Double.parseDouble(newItemInfo[3]);
-		String type = newItemInfo[4];
-		String side = newItemInfo[5];
+		String 		cat  	= newItemInfo[0];
+		String 		id 		= newItemInfo[1];
+		String 		des		= newItemInfo[2];
+		BigDecimal 	price	= new BigDecimal(newItemInfo[3]);
+		String 		type 	= newItemInfo[4];
+		String 		side 	= newItemInfo[5];
 		
-		return new Food(cat, id, des, cost, type, side);
+		return new Food(cat, id, des, price, type, side);
 	}
 	
 	/*
-	 * Drink constructor
-	 * 
-	 * (String cat,String id, String des, double cost, String size, String type, String flav)
-	 * 
+	 * The Drink constructor method returns a Drink
+	 * object constructed using the data provided in the String 
+	 * Array parameter. 
 	 */
 	private static Drink drinkConstructor(String [] newItemInfo) {
 		
-		String cat  = newItemInfo[0];
-		String id 	= newItemInfo[1];
-		String des	= newItemInfo[2];
-		double cost	= Double.parseDouble(newItemInfo[3]);
-		String size = newItemInfo[4];
-		String type = newItemInfo[5];
-		String flav = newItemInfo[6];
+		String 		cat  	= newItemInfo[0];
+		String 		id 		= newItemInfo[1];
+		String 		des		= newItemInfo[2];
+		BigDecimal 	price	= new BigDecimal(newItemInfo[3]);
+		String 		size 	= newItemInfo[4];
+		String 		type 	= newItemInfo[5];
+		String 		flav 	= newItemInfo[6];
 				
-		return new Drink(cat, id, des, cost, size, type, flav);
+		return new Drink(cat, id, des, price, size, type, flav);
 	}
 	
 	/*
-	 * Merchandise constructor
-	 * 
-	 * Merchandise (String cat,String id, String des, double cost, String size)
-	 * 
+	 * The Merchandise constructor method returns a Merchandise
+	 * object constructed using the data provided in the String 
+	 * Array parameter. 
 	 */
 	private static Merchandise merchConstructor(String [] newItemInfo) {
 		
-		String cat  = newItemInfo[0];
-		String id 	= newItemInfo[1];
-		String des	= newItemInfo[2];
-		double cost	= Double.parseDouble(newItemInfo[3]);
-		String size = newItemInfo[4];
+		String 		cat  	= newItemInfo[0];
+		String 		id 		= newItemInfo[1];
+		String 		des		= newItemInfo[2];
+		BigDecimal 	price	= new BigDecimal(newItemInfo[3]);
+		String 		size 	= newItemInfo[4];
 				
-		return new Merchandise(cat, id, des, cost, size);
+		return new Merchandise(cat, id, des, price, size);
 	}
+	
+	
+	/* 
+	 * applyDiscount checks if the order is eligible for a discount. Returns
+	 * new price of order after discount if applicable.
+	 * 
+	 * Takes in as parameters the OrderList containing the Orders and the
+	 * customerId of the customer who's order is being processed.
+	 * 
+	 * Returns the discounted price of the customers order as a BigDecimal.
+	 */
+	public static BigDecimal applyDiscount(OrderList orders, String customerID) {
+			
+		int food 	= 0;
+		int drink 	= 0;
+		int merch 	= 0;
 		
+		BigDecimal price = new BigDecimal(0);
+		BigDecimal discount = new BigDecimal(0);
+			
+		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
+			
+			if(orders.getOrderItem(i).getId().equals(customerID) 
+				&& orders.getOrderItem(i).getItemDetails().substring(1,5).equalsIgnoreCase("food")) {
+				food += 1;
+				price = price.add(orders.getOrderItem(i).getPrice());
+			}
+			
+			else if(orders.getOrderItem(i).getId().equals(customerID)
+				&& orders.getOrderItem(i).getItemDetails().substring(1,6).equalsIgnoreCase("drink")) {
+				drink += 1;
+				price = price.add(orders.getOrderItem(i).getPrice());
+			}
+			
+			else if(orders.getOrderItem(i).getId().equals(customerID)
+				&& orders.getOrderItem(i).getItemDetails().substring(1,6).equalsIgnoreCase("merch")) {
+				merch += 1;
+				price = price.add(orders.getOrderItem(i).getPrice());
+			}
+		}
 		
+		// Check for discounts
+		if(food >= 2 && drink >= 2) {
+			price = price.multiply(new BigDecimal(0.80));
+			return price.round(new MathContext(4));
+		}
 		
-
+		if(merch >= 1) {
+			price = price.multiply(new BigDecimal(0.90));
+			return price.round(new MathContext(4));
+		}
+		
+		return discount;
+	}
 }
