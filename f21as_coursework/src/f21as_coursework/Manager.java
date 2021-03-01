@@ -5,9 +5,25 @@ import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+
+/*
+ * The Manager class is designed to manage the workflow of
+ * the application.
+ * 
+ * The Manager class is used to read in data from a text
+ * file and populate an OrderList with existing Orders, as
+ * well as populate an ItemList with the Items offered by
+ * the cafe, also from a text file.
+ * 
+ * In addition to handling the file input and output of the
+ * application, the Manager class contains the applyDiscount
+ * method, which checks whether a customer's order is eligible
+ * for a discount and if so, returns the discounted price.
+ *
+ * Created as part of F21AS Advanced Software Engineering.
+ * 
+ * Author: Elliot Whitehouse (ew2000)
+ */
 
 
 public class Manager {
@@ -43,16 +59,8 @@ public class Manager {
 
 				if(newOrderInfo.length == 13) {
 					try {
-//						if(orderList.getNumberOfOrders() > 0 && orderList.existingID(newOrderInfo[0].trim())) {		// If order exists, item is added to order
-//							orderList.findById(newOrderInfo[0]).addItem(newOrderInfo[10]);
-//							orderList.findById(newOrderInfo[0]).addPrice(new BigDecimal(newOrderInfo[11]));
-//							continue;
-//						}
-//						else {
-//							orderList.addDetails(orderConstructor(newOrderInfo));
-//						}
 						orderList.addDetails(orderConstructor(newOrderInfo));
-						customerConstructor(newOrderInfo);															// TODO Add customer list class
+						customerConstructor(newOrderInfo);
 					}
 					catch(NumberFormatException nf) {
 						System.out.println("Invalid data in row " + count
@@ -63,7 +71,7 @@ public class Manager {
 				else {
 					System.out.println("Incorrect number of data points at line "
 										+ count 
-										+ " of input file lenght is: " + newOrderInfo.length);
+										+ " of input file.");
 					break;
 				}
 			}
@@ -175,13 +183,13 @@ public class Manager {
 	 */
 	private static Order orderConstructor(String [] newOrderInfo) {
 		
-		int		orderItemNum    = Integer.parseInt(newOrderInfo[0]);
-		String 	orderID 		= newOrderInfo[1];
-		String  item			= newOrderInfo[11];
-		BigDecimal  price 		= new BigDecimal(newOrderInfo[12]);
-		String 	dateTime [] 	= {newOrderInfo[5], newOrderInfo[6], newOrderInfo[7], 
-								   newOrderInfo[8], newOrderInfo[9], newOrderInfo[10]};
-		int 	dTime 	 []		= new int [6];
+		int			orderItemNum    = Integer.parseInt(newOrderInfo[0]);
+		String 		orderID 		= newOrderInfo[1];
+		String  	item			= newOrderInfo[11];
+		BigDecimal  price 			= new BigDecimal(newOrderInfo[12]);
+		String 		dateTime [] 	= {newOrderInfo[5], newOrderInfo[6], newOrderInfo[7], 
+								   		newOrderInfo[8], newOrderInfo[9], newOrderInfo[10]};
+		int 		dTime 	 []		= new int [6];
 		for(int i = 0 ; i<dateTime.length; i++) {
 			dTime[i] = Integer.parseInt(dateTime[i]);
 		}
@@ -194,8 +202,9 @@ public class Manager {
 	
 	
 	/*
-	 * Returns a newly instantiated Customer object, created with
-	 * information from the String Array passed in as a parameter.
+	 * The Customer constructor method returns a Customer
+	 * object constructed using the data provided in the String 
+	 * Array parameter. 
 	 */
 	private static Customer customerConstructor(String [] newOrderInfo) {
 		
@@ -209,84 +218,89 @@ public class Manager {
 	}
 	
 	/*
-	 * Food constructor
-	 * 
-	 * Food(String cat, String id, String des, double cost, String type, String side)
-	 * 
+	 * The Food constructor method returns a Food
+	 * object constructed using the data provided in the String 
+	 * Array parameter. 
 	 */
 	private static Food foodConstructor(String [] newItemInfo) {
 		
-		String cat  		= newItemInfo[0];
-		String id 			= newItemInfo[1];
-		String des			= newItemInfo[2];
-		BigDecimal price	= new BigDecimal(newItemInfo[3]);
-		String type 		= newItemInfo[4];
-		String side 		= newItemInfo[5];
+		String 		cat  	= newItemInfo[0];
+		String 		id 		= newItemInfo[1];
+		String 		des		= newItemInfo[2];
+		BigDecimal 	price	= new BigDecimal(newItemInfo[3]);
+		String 		type 	= newItemInfo[4];
+		String 		side 	= newItemInfo[5];
 		
 		return new Food(cat, id, des, price, type, side);
 	}
 	
 	/*
-	 * Drink constructor
-	 * 
-	 * (String cat,String id, String des, double cost, String size, String type, String flav)
-	 * 
+	 * The Drink constructor method returns a Drink
+	 * object constructed using the data provided in the String 
+	 * Array parameter. 
 	 */
 	private static Drink drinkConstructor(String [] newItemInfo) {
 		
-		String cat  		= newItemInfo[0];
-		String id 			= newItemInfo[1];
-		String des			= newItemInfo[2];
-		BigDecimal price	= new BigDecimal(newItemInfo[3]);
-		String size 		= newItemInfo[4];
-		String type 		= newItemInfo[5];
-		String flav 		= newItemInfo[6];
+		String 		cat  	= newItemInfo[0];
+		String 		id 		= newItemInfo[1];
+		String 		des		= newItemInfo[2];
+		BigDecimal 	price	= new BigDecimal(newItemInfo[3]);
+		String 		size 	= newItemInfo[4];
+		String 		type 	= newItemInfo[5];
+		String 		flav 	= newItemInfo[6];
 				
 		return new Drink(cat, id, des, price, size, type, flav);
 	}
 	
 	/*
-	 * Merchandise constructor
-	 * 
-	 * Merchandise (String cat,String id, String des, double cost, String size)
-	 * 
+	 * The Merchandise constructor method returns a Merchandise
+	 * object constructed using the data provided in the String 
+	 * Array parameter. 
 	 */
 	private static Merchandise merchConstructor(String [] newItemInfo) {
 		
-		String cat  		= newItemInfo[0];
-		String id 			= newItemInfo[1];
-		String des			= newItemInfo[2];
-		BigDecimal price	= new BigDecimal(newItemInfo[3]);
-		String size 		= newItemInfo[4];
+		String 		cat  	= newItemInfo[0];
+		String 		id 		= newItemInfo[1];
+		String 		des		= newItemInfo[2];
+		BigDecimal 	price	= new BigDecimal(newItemInfo[3]);
+		String 		size 	= newItemInfo[4];
 				
 		return new Merchandise(cat, id, des, price, size);
 	}
 	
 	
 	/* 
-	 * Method that checks if the order is eligible for a discount. Returns
+	 * applyDiscount checks if the order is eligible for a discount. Returns
 	 * new price of order after discount if applicable.
+	 * 
+	 * Takes in as parameters the OrderList containing the Orders and the
+	 * customerId of the customer who's order is being processed.
+	 * 
+	 * Returns the discounted price of the customers order as a BigDecimal.
 	 */
 	public static BigDecimal applyDiscount(OrderList orders, String customerID) {
 			
-		int food = 0;
-		int drink = 0;
-		int merch = 0;
+		int food 	= 0;
+		int drink 	= 0;
+		int merch 	= 0;
 		
 		BigDecimal price = new BigDecimal(0);
 		BigDecimal discount = new BigDecimal(0);
 			
 		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
+			
 			if(orders.getOrderItem(i).getId().equals(customerID) 
 				&& orders.getOrderItem(i).getItemDetails().substring(1,5).equalsIgnoreCase("food")) {
 				food += 1;
 				price = price.add(orders.getOrderItem(i).getPrice());
 			}
+			
 			else if(orders.getOrderItem(i).getId().equals(customerID)
 				&& orders.getOrderItem(i).getItemDetails().substring(1,6).equalsIgnoreCase("drink")) {
 				drink += 1;
 				price = price.add(orders.getOrderItem(i).getPrice());
 			}
+			
 			else if(orders.getOrderItem(i).getId().equals(customerID)
 				&& orders.getOrderItem(i).getItemDetails().substring(1,6).equalsIgnoreCase("merch")) {
 				merch += 1;
@@ -294,28 +308,17 @@ public class Manager {
 			}
 		}
 		
-		
+		// Check for discounts
 		if(food >= 2 && drink >= 2) {
-			discount = price.multiply(new BigDecimal(0.20));
-			System.out.println(discount);
-			price = price.subtract(discount);
-			System.out.println(price);
+			price = price.multiply(new BigDecimal(0.80));
 			return price.round(new MathContext(4));
-			
-			
 		}
 		
 		if(merch >= 1) {
-			discount = price.multiply(new BigDecimal(0.10));
-			System.out.println(discount);
-			price = price.subtract(discount);
-			System.out.println(price);
+			price = price.multiply(new BigDecimal(0.90));
 			return price.round(new MathContext(4));
 		}
 		
 		return discount;
 	}
-	
-	
-
 }
