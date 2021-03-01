@@ -45,7 +45,14 @@ public class ItemList {
 		 * ADDING FOR TEST
 		 * 
 		 */
-		public void addItem(String key, Items value) {
+		public void addItem(String key, Items value) throws IncorrectItemException {
+			if (value.getCost() == null) {
+				throw new IncorrectItemException("Item price is NULL");
+			}
+			
+			if (value.getID().trim().length() == 0) {
+				throw new IncorrectItemException ("Item ID is NULL");
+			}
 			items.put(key, value);
 		}
 		
