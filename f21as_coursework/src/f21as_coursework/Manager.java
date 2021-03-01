@@ -262,44 +262,8 @@ public class Manager {
 		return new Merchandise(cat, id, des, price, size);
 	}
 	
-//	/* METHOD 1
-//	 * Method that checks if the order is eligible for a discount. Returns
-//	 * new price of order after discount if applicable.
-//	 */
-//	public static BigDecimal applyDiscount(OrderList orders, String customerID) {
-//			
-//		ArrayList<String> orderItems = new ArrayList<String>();
-//		
-//		BigDecimal price = new BigDecimal(0);
-//		BigDecimal discount = new BigDecimal(0);
-//			
-//		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
-//			if(orders.getOrderItem(i).getId().equals(customerID) && orders.getOrderItem(i).getItemDetails().substring(1,2).equals("F")) {
-//				orderItems.add("FOOD");
-//				price = price.add(orders.getOrderItem(i).getPrice());
-//			}
-//			else if(orders.getOrderItem(i).getId().equals(customerID)) {
-//				orderItems.add(orders.getOrderItem(i).getItemDetails().substring(1, 6));
-//				price = price.add(orders.getOrderItem(i).getPrice());
-//				
-//			}
-//		}
-//		
-//		Collections.sort(orderItems, String.CASE_INSENSITIVE_ORDER);
-//		System.out.println("orderItems: " + orderItems);
-//		
-//		if(orderItems.get(0).equalsIgnoreCase("drink") && orderItems.get(0).equalsIgnoreCase("drink")) {
-//			discount = price.multiply(new BigDecimal(0.20));
-//			System.out.println(discount);
-//			price = price.subtract(discount);
-//			System.out.println(price);
-//		}
-//		
-//		return price.round(new MathContext(3));
-//				
-//	}
 	
-	/* METHOD 2
+	/* 
 	 * Method that checks if the order is eligible for a discount. Returns
 	 * new price of order after discount if applicable.
 	 */
@@ -351,5 +315,7 @@ public class Manager {
 		
 		return discount;
 	}
+	
+	
 
 }
