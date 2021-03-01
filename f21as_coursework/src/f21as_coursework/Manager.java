@@ -40,7 +40,7 @@ public class Manager {
 	 * passed in as a parameter and constructs a Customer and Order object for each line
 	 * in the file.
 	 */
-	public static void populateOrderList(OrderList orderList, String fileName) {
+	public static void populateOrderList(OrderList orderList, String fileName) throws IncorrectOrderException {
 		
 		try {
 			File 	orders 		= new File(fileName);									
@@ -88,7 +88,7 @@ public class Manager {
 	 * in the file.
 	 * 
 	 */
-	public static void populateItemList(ItemList itemList, String fileName) {
+	public static void populateItemList(ItemList itemList, String fileName) throws IncorrectItemException {
 		
 		try {
 			File 	items 		= new File(fileName);									
