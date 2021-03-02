@@ -15,6 +15,10 @@ public class Customer {
         this.custName=custName;
         this.custID=custID;
     }
+    
+    public String getCustID() {
+    	return this.custID;
+    }
 
     public String getDetails(){
         return "Customer Name: " + custName.getFullName() + "\tCustomer ID: " + custID;

@@ -12,27 +12,29 @@ public class Main {
 		ItemList items = new ItemList();
 
 		OrderList orders = new OrderList();
+		
+		CustomerList customers = new CustomerList();
 
-		GuiCreate.GuiCreator();
+//		GuiCreate gui = new GuiCreate();
+		
+//		gui.GuiCreator();
 		
 		Manager.populateItemList(items, "items.csv");
 
-		Manager.populateOrderList(orders, "existingCustomerOrders.csv");
+		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
 
 		BigDecimal price = new BigDecimal(0);
 
-		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
-			if(orders.getOrderItem(i).getId().equals(String.valueOf(1))) {
-				price = price.add(orders.getOrderItem(i).getPrice());
-			}
-		}
+		price = Manager.getTotalPrice(orders, String.valueOf(5));
 
 		System.out.println("Price: " + price);
-
-		price = Manager.applyDiscount(orders, String.valueOf(1));
-
-		System.out.println("New Price: " + price);
-
-	}
+		
+		System.out.println(customers.getCustListSize());
+		
+		
+		for(int i = 1; i <= customers.getCustListSize(); i++) {
+			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
+		}
+	}		
 
 }
