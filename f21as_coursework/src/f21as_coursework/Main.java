@@ -8,15 +8,17 @@ public class Main {
 
 	public static void main(String[] args) throws IncorrectItemException, IncorrectOrderException {
 		// TODO Auto-generated method stub
-		
+
 		ItemList items = new ItemList();
-		
+
 		OrderList orders = new OrderList();
+
+		GuiCreate.GuiCreator();
 		
 		Manager.populateItemList(items, "items.csv");
-		
+
 		Manager.populateOrderList(orders, "existingCustomerOrders.csv");
-		
+
 		BigDecimal price = new BigDecimal(0);
 
 		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
@@ -24,13 +26,13 @@ public class Main {
 				price = price.add(orders.getOrderItem(i).getPrice());
 			}
 		}
-		
+
 		System.out.println("Price: " + price);
-		
+
 		price = Manager.applyDiscount(orders, String.valueOf(1));
-		
+
 		System.out.println("New Price: " + price);
-		
+
 	}
-	
+
 }
