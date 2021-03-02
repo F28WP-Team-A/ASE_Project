@@ -45,14 +45,30 @@ public class ItemList {
 		 * ADDING FOR TEST
 		 * 
 		 */
+		
 		public void addItem(String key, Items value) throws IncorrectItemException {
+			// check if item cost is null
 			if (value.getCost() == null) {
 				throw new IncorrectItemException("Item price is NULL");
 			}
-			
+			// check if ID is null
 			if (value.getID().trim().length() == 0) {
 				throw new IncorrectItemException ("Item ID is NULL");
 			}
+			// check if item identifier is correct 
+			if (!value.getID().substring(0,4).equals("FOOD") &&
+				!value.getID().substring(0,5).equals("DRINK") &&
+				!value.getID().substring(0,5).equals("MERCH")) {
+				throw new IncorrectItemException("Item ID identifier is incorrect" + value.getID());
+			}
+			// check item has ID number and not just identifier
+			try {
+				int i = Integer.parseInt(value.getID().substring(5,6));
+			}
+			catch (NumberFormatException e) {
+				throw new IncorrectItemException("Incorrect item number identifier");
+			}
+			
 			items.put(key, value);
 		}
 		
