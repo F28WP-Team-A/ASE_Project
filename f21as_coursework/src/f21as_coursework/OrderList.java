@@ -35,8 +35,13 @@ public class OrderList {
     
  // add new details to TreeSet
     public void addDetails(Order details) throws IncorrectOrderException {
+    	// check order ID is not null
     	if (details.getId() == null) {
     		throw new IncorrectOrderException("Order ID is NULL");
+    	}
+    	// check order time stamp is not null
+    	if (details.getTimeStamp() == null) {
+    		throw new IncorrectOrderException("Order timestamp is NULL");
     	}
     	orders.add(details);
     	}
