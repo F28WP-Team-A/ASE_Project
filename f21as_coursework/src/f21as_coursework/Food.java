@@ -9,7 +9,7 @@ public class Food extends Items{
 	
 	//constructor
 	public Food(String cat, String id, String des, BigDecimal cost, String type, String side) {
-		super (id, des, cat, cost);
+		super (cat, id, des, cost);
 		this.type = type;
 		this.side = side;
 	}
