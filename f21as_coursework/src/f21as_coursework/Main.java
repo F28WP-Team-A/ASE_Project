@@ -52,6 +52,9 @@ public class Main {
 		}
 		
 		
+		System.out.println(items.getMenu());
+		
+		
 //		for(Entry<String, Items> i : items.entrySet()) {
 //			System.out.println(i.getKey() + " " + i.getValue().getDescription()); 
 		}
