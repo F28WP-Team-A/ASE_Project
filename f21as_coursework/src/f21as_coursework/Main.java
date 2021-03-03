@@ -15,9 +15,9 @@ public class Main {
 		
 		CustomerList customers = new CustomerList();
 
-		GuiCreate gui = new GuiCreate();
-		
-		gui.GuiCreator();
+//		GuiCreate gui = new GuiCreate();
+//		
+//		gui.GuiCreator();
 		
 		Manager.populateItemList(items, "items.csv");
 
@@ -34,8 +34,12 @@ public class Main {
 		System.out.println(customers.getCustListSize());
 		
 		
-		for(int i = 1; i <= customers.getCustListSize(); i++) {
-			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
+//		for(int i = 1; i <= customers.getCustListSize(); i++) {
+//			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
+//		}
+		
+		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
+			System.out.println(s.toString());
 		}
 	}		
 
