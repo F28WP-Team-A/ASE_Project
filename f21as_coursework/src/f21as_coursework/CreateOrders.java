@@ -1,8 +1,10 @@
 package f21as_coursework;
 
 import java.awt.BorderLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,9 +17,27 @@ public class CreateOrders {
 	public static void CreateOrders(){
 		JButton but1 = new JButton("cake £7.60");
 		but1.addActionListener(new ActionListener() {
-
+			
+			CustomerList customer = new CustomerList();
+			
 			@Override
 			public void actionPerformed(ActionEvent a) {
+				String m = JOptionPane.showInputDialog("Please enter a existing customer id or click new customer");
+						if (OrderList.existingID(m));
+						else{JOptionPane.showMessageDialog(null,"That Customer does not exist please re-enter or create a new customer");;
+						}
+							try {
+								System.out.println(OrderList.getNumberOfOrders()+1 +"," + OrderList.findById(m)+","+
+										CurrentTime.getCurrentTime()+","+"[FOOD101]");
+								
+								
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							};							
+									//customer.getCustomer(String.valueOf(m)).getDetails());
+									
+				//OrderList.addDetails(OrderList.getNumberOfOrders(), 7, ,);
 				JOptionPane.showMessageDialog(null, "Added Cake to the order");
 			}
 		});

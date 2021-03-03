@@ -8,9 +8,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.swing.JTable;
+
 public class Main {
 
-	public static void main(String[] args) throws IncorrectItemException, IncorrectOrderException {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
 		ItemList items = new ItemList();
@@ -19,9 +21,9 @@ public class Main {
 		
 		CustomerList customers = new CustomerList();
 
-//		GuiCreate gui = new GuiCreate();
-//		
-//		gui.GuiCreator();
+		GuiCreate gui = new GuiCreate();
+		
+		gui.GuiCreator();
 		
 		Manager.populateItemList(items, "items.csv");
 
@@ -29,7 +31,7 @@ public class Main {
 
 		BigDecimal price = new BigDecimal(0);
 	
-		Manager.indexOrders(orders, customers,items);
+		Manager.indexOrders(orders, customers, items);
 		
 		price = Manager.getTotalPrice(orders, String.valueOf(5));
 
@@ -37,20 +39,22 @@ public class Main {
 		
 		System.out.println(customers.getCustListSize());
 		
+		JTable placehold = new JTable();
 		
-//		for(int i = 1; i <= customers.getCustListSize(); i++) {
-//			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
-//		}
+		System.out.println(CurrentTime.getCurrentTime());
 		
-//		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
-//			System.out.println(s.toString());
-//		}
+		for(int i = 1; i <= customers.getCustListSize(); i++) {
+			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
+		}
+		
+		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
+			System.out.println(s.toString());
+		}
 		
 		
-		for(Entry<String, Items> i : items.entrySet()) {
-			System.out.println(i.getKey() + " " + i.getValue().getDescription()); 
+//		for(Entry<String, Items> i : items.entrySet()) {
+//			System.out.println(i.getKey() + " " + i.getValue().getDescription()); 
 		}
 		
 	}		
 
-}

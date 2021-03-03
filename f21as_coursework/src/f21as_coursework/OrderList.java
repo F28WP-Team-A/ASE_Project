@@ -7,7 +7,7 @@ import java.util.TreeSet;
 //Order objects stored as a TreeSet
 public class OrderList {
 	// storage for details
-	Set<Order> orders = new TreeSet<Order>();
+	static Set<Order> orders = new TreeSet<Order>();
 
     public OrderList() {
     }
@@ -24,7 +24,7 @@ public class OrderList {
     }
     
     // look up order id and return order details
-    public Order findById(String id) {
+    public static Order findById(String id) {
         for (Order o : orders) {
             if (o.getId().equals(id)) {
                 return o;
@@ -48,7 +48,7 @@ public class OrderList {
 	
     
     // return number of orders
-    public int getNumberOfOrders() {
+    public static int getNumberOfOrders() {
         return orders.size();
     }
 
@@ -77,7 +77,7 @@ public class OrderList {
     }
     
     // Boolean match for id
-    public boolean existingID(String inputId) {
+    public static boolean existingID(String inputId) {
     	for(Order o: orders) {
     		if(o.id.equals(inputId)) {
     			return true;

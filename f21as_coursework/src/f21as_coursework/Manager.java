@@ -279,6 +279,7 @@ public class Manager {
 	// this maybe should also be in a different form / place
 	// also this cannot be called in its current format within the GuiCreate 
 	// need to work out some form of getter. 
+	
 	public static ArrayList<ArrayList<String>> indexOrders(OrderList orders, 
 												  CustomerList customers,
 												  ItemList items)	{

@@ -64,19 +64,19 @@ public class GuiCreate{
 
 
 public class CustomerDataTable extends JPanel {
+				
 		String[] columns = new String [] {
 				"Order" , "Order Number", "Name" ,"Price £","Item"
 		};
-		//ArrayList<String[]> data = Manager.indexOrders(orders, customers, items);
+		
+		
+	//	ArrayList<ArrayList<String>> data = Manager.indexOrder();
+		
+		
 		
 		DefaultTableModel model = new DefaultTableModel(columns,25);
-		/*
-		public void loadAll() {
-			for (String[] s : data) {
-				model.addRow((String[]) s);
-			}
-		}
-		*/
+		
+		
 		public CustomerDataTable() {
 
 		JTable table = new JTable(model);
