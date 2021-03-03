@@ -3,6 +3,7 @@ package f21as_coursework;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 //import f21as_coursework.Items;
 
@@ -74,6 +75,55 @@ public class ItemList {
 			}
 			
 			items.put(key, value);
+		}
+		
+		/*
+		 * getMenu method returns a String formatted as a table,
+		 * containing all of the items in the HashMap ItemList that
+		 * are on the menu.
+		 * 
+		 * This is used in generating the report when a user closes
+		 * the application.
+		 */
+		public String getMenu() {
+
+			String menu = String.format("%-20s", "Item Number")
+							+ String.format("%-30s", "Description") 
+							+ String.format("%-15s", "Type/Size")
+							+ String.format("%-15s", "Drink Type")
+							+ String.format("%-15s", "Flavour")
+							+ String.format("%-19s", "Price") 
+							+ "\n";
+
+			for(Entry<String, Items> i : items.entrySet()) {
+				menu 	+= String.format("%-20s", i.getKey()); 
+
+
+				if(i.getValue() instanceof Drink) {
+					Drink drink = (Drink) i.getValue();
+					menu 	+= String.format("%-30s", drink.getDescription())
+							+ String.format("%-15s", drink.getSize())
+							+ String.format("%-15s", drink.getType())
+							+ String.format("%-15s", drink.getFlavour())
+							+ String.format("%-19s", drink.getCost());  
+				}
+				if(i.getValue() instanceof Merchandise) {
+					Merchandise merch = (Merchandise) i.getValue();
+					menu 	+= String.format("%-30s", merch.getDescription()) 
+							+ String.format("%-45s", merch.getSize())
+							+ String.format("%-19s", merch.getCost());
+				}
+				if(i.getValue() instanceof Food) {
+					Food food = (Food) i.getValue();
+					menu 	+= String.format("%-30s", food.getDescription())
+							+ String.format("%-45s", food.getType())
+							+ String.format("%-19s", food.getCost());
+				}
+
+				menu += "\n";
+			}
+
+			return menu;
 		}
 		
 	}
