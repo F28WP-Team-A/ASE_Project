@@ -3,6 +3,10 @@ package f21as_coursework;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Main {
 
@@ -38,9 +42,15 @@ public class Main {
 //			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
 //		}
 		
-		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
-			System.out.println(s.toString());
+//		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
+//			System.out.println(s.toString());
+//		}
+		
+		
+		for(Entry<String, Items> i : items.entrySet()) {
+			System.out.println(i.getKey() + " " + i.getValue().getDescription()); 
 		}
+		
 	}		
 
 }
