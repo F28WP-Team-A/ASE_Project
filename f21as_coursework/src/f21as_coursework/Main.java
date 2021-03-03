@@ -3,6 +3,10 @@ package f21as_coursework;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Main {
 
@@ -12,27 +16,41 @@ public class Main {
 		ItemList items = new ItemList();
 
 		OrderList orders = new OrderList();
+		
+		CustomerList customers = new CustomerList();
 
-		GuiCreate.GuiCreator();
+//		GuiCreate gui = new GuiCreate();
+//		
+//		gui.GuiCreator();
 		
 		Manager.populateItemList(items, "items.csv");
 
-		Manager.populateOrderList(orders, "existingCustomerOrders.csv");
+		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
 
 		BigDecimal price = new BigDecimal(0);
-
-		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
-			if(orders.getOrderItem(i).getId().equals(String.valueOf(1))) {
-				price = price.add(orders.getOrderItem(i).getPrice());
-			}
-		}
+	
+		Manager.indexOrders(orders, customers,items);
+		
+		price = Manager.getTotalPrice(orders, String.valueOf(5));
 
 		System.out.println("Price: " + price);
-
-		price = Manager.applyDiscount(orders, String.valueOf(1));
-
-		System.out.println("New Price: " + price);
-
-	}
+		
+		System.out.println(customers.getCustListSize());
+		
+		
+//		for(int i = 1; i <= customers.getCustListSize(); i++) {
+//			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
+//		}
+		
+//		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
+//			System.out.println(s.toString());
+//		}
+		
+		
+		for(Entry<String, Items> i : items.entrySet()) {
+			System.out.println(i.getKey() + " " + i.getValue().getDescription()); 
+		}
+		
+	}		
 
 }

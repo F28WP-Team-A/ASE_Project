@@ -1,6 +1,10 @@
 package f21as_coursework;
 
+import java.util.HashMap;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
@@ -40,7 +44,8 @@ public class Manager {
 	 * passed in as a parameter and constructs a Customer and Order object for each line
 	 * in the file.
 	 */
-	public static void populateOrderList(OrderList orderList, String fileName) throws IncorrectOrderException {
+	public static void populateOrderList(OrderList orderList, CustomerList customers,
+										String fileName) throws IncorrectOrderException {
 		
 		try {
 			File 	orders 		= new File(fileName);									
@@ -60,7 +65,7 @@ public class Manager {
 				if(newOrderInfo.length == 13) {
 					try {
 						orderList.addDetails(orderConstructor(newOrderInfo));
-						customerConstructor(newOrderInfo);
+						customers.addCustomer(customerConstructor(newOrderInfo));
 					}
 					catch(NumberFormatException nf) {
 						System.out.println("Invalid data in row " + count
@@ -208,9 +213,9 @@ public class Manager {
 	 */
 	private static Customer customerConstructor(String [] newOrderInfo) {
 		
-		String 	custID 			= newOrderInfo[0];
-		String  firstName 		= newOrderInfo[1];
-		String  secondName 		= newOrderInfo[2];
+		String 	custID 			= newOrderInfo[1];
+		String  firstName 		= newOrderInfo[2];
+		String  secondName 		= newOrderInfo[3];
 		Name	customerName 	= new Name(firstName, secondName);
 		
 		return new Customer(customerName, custID);
@@ -266,26 +271,59 @@ public class Manager {
 		String 		size 	= newItemInfo[4];
 				
 		return new Merchandise(cat, id, des, price, size);
+	};
+	
+	
+	// creates an ArrayList of orders with customer names customer id and price 
+	// need to work out some way of merging price orders id and name together. 
+	// this maybe should also be in a different form / place
+	// also this cannot be called in its current format within the GuiCreate 
+	// need to work out some form of getter. 
+	public static ArrayList<ArrayList<String>> indexOrders(OrderList orders, 
+												  CustomerList customers,
+												  ItemList items)	{
+		
+		ArrayList<ArrayList<String>> allOrders = new ArrayList<ArrayList<String>>();
+		
+		for(String s : customers.getCustomerIDs()) {
+			ArrayList<String> orderDetails = new ArrayList<String>();
+			String id = s;
+			String name = customers.getCustomer(s).getCustName();
+			String price = String.valueOf(getTotalPrice(orders, s));
+			orderDetails.add(id);
+			orderDetails.add(name);
+			orderDetails.add(price);
+			for(int i =1; i< orders.getNumberOfOrders(); i++) {
+				if(orders.getOrderItem(i).getId().equals(s)) {
+					orderDetails.add(orders.getOrderItem(i).getItemDetails().replaceAll("\\[", "").replaceAll("\\]",""));
+					
+				}
+			}
+			
+			allOrders.add(orderDetails);
+		}
+		
+		return allOrders;
 	}
 	
 	
 	/* 
-	 * applyDiscount checks if the order is eligible for a discount. Returns
-	 * new price of order after discount if applicable.
+	 * getTotalPrice sums the total price of an order and checks if the
+	 * order is eligible for a discount. If the order is eligible, the
+	 * discount is applied. Returns price of order as a BigDecimal.
 	 * 
 	 * Takes in as parameters the OrderList containing the Orders and the
 	 * customerId of the customer who's order is being processed.
 	 * 
-	 * Returns the discounted price of the customers order as a BigDecimal.
+	 * Returns the price of the customers order as a BigDecimal.
 	 */
-	public static BigDecimal applyDiscount(OrderList orders, String customerID) {
+	public static BigDecimal getTotalPrice(OrderList orders, String customerID) {
 			
 		int food 	= 0;
 		int drink 	= 0;
 		int merch 	= 0;
 		
 		BigDecimal price = new BigDecimal(0);
-		BigDecimal discount = new BigDecimal(0);
 			
 		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
 			
@@ -309,6 +347,11 @@ public class Manager {
 		}
 		
 		// Check for discounts
+		if(food >= 3)  {
+			price = price.multiply(new BigDecimal(0.70));
+			return price.round(new MathContext(4));
+		}
+		
 		if(food >= 2 && drink >= 2) {
 			price = price.multiply(new BigDecimal(0.80));
 			return price.round(new MathContext(4));
@@ -319,6 +362,6 @@ public class Manager {
 			return price.round(new MathContext(4));
 		}
 		
-		return discount;
+		return price;
 	}
 }

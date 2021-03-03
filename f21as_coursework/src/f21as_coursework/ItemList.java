@@ -18,6 +18,7 @@ public class ItemList {
 		 */
 		public Set<Map.Entry<String, Items>> entrySet(){
 			return items.entrySet();
+			
 		}
 		
 		
@@ -35,7 +36,10 @@ public class ItemList {
 		public Items get(Object key) {
 			return items.get(key);
 		}
-				
+		
+		public boolean contains(Object key) {
+			return items.containsKey(key);
+		}
 		//remove mapping for specified key
 		public Items remove(Object key) {
 			return items.remove(key);
