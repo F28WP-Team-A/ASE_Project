@@ -52,7 +52,7 @@ public class Main {
 		}
 		
 		
-		System.out.println(items.getMenu());
+//		System.out.println(items.getMenu());
 		
 		
 //		for(Entry<String, Items> i : items.entrySet()) {
