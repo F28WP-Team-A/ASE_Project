@@ -29,6 +29,7 @@ public class Main {
 
 		BigDecimal price = new BigDecimal(0);
 	
+		Manager.indexOrders(orders, customers, items);
 
 		
 		price = Manager.getTotalPrice(orders, String.valueOf(5));
@@ -37,10 +38,10 @@ public class Main {
 		
 		System.out.println(customers.getCustListSize());
 		
-//		for (ArrayList<String> s : Manager.indexOrders(orders, customers,items)){
-//			System.out.println(s.toString());
-//		}
-//		
+		for (ArrayList<String> s : Manager.indexOrders(orders, customers,items)){
+			System.out.println(s.toString());
+		}
+		
 		
 //		for(int i = 1; i <= customers.getCustListSize(); i++) {
 //			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
@@ -50,7 +51,7 @@ public class Main {
 //			System.out.println(s.toString());
 //		}
 		
-		System.out.println(items.getMenu());
+//		System.out.println(items.getMenu());
 		
 		
 	}		
