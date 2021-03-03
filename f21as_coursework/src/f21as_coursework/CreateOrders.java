@@ -12,14 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class CreateOrders {
-	public static void main(String[] args){
+	public static void CreateOrders(){
 		JButton but1 = new JButton("cake £7.60");
 		but1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent a) {
 				JOptionPane.showMessageDialog(null, "Added Cake to the order");
-				
 			}
 		});
 		JButton but2 = new JButton("pasta £3.20");
@@ -98,7 +97,8 @@ public class CreateOrders {
 		east.add(but6);
 		
 		JFrame frame = new JFrame("New Order");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setSize(500,200);
 		frame.getContentPane().add(BorderLayout.NORTH,texinput);
 		frame.getContentPane().add(BorderLayout.WEST,west);
 		frame.getContentPane().add(BorderLayout.CENTER,center);

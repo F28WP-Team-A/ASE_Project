@@ -1,6 +1,10 @@
 package f21as_coursework;
 
+import java.util.HashMap;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
@@ -267,7 +271,47 @@ public class Manager {
 		String 		size 	= newItemInfo[4];
 				
 		return new Merchandise(cat, id, des, price, size);
-	}
+	};
+	
+	// creates an ArrayList of orders with customer names customer id and price 
+	// need to work out some way of merging price orders id and name together. 
+	// this maybe should also be in a different form / place
+	// also this cannot be called in its current format within the GuiCreate 
+	// need to work out some form of getter. 
+	
+	public static ArrayList<String[]> indexOrders(OrderList orders, 
+												  CustomerList customers,
+												  ItemList items){
+		ArrayList<String[]> indexorders = new ArrayList();
+		String fullOrder1 =null;
+		String fullOrder2 = "";
+		String fullOrder3 = "";
+		String cust ="";
+		for(int i =1; i< orders.getNumberOfOrders(); i++) {
+				for (int k = 1; k <customers.getCustListSize(); k++) {
+						if(orders.getOrderItem(i).getId() ==
+						customers.getCustomer(String.valueOf(k)).getCustID()) {
+							cust = customers.getCustomer(String.valueOf(k)).getCustName();
+						};
+				}
+				String itemholder = orders.getOrderItem(i).getItemDetails().replaceAll("\\[", "").replaceAll("\\]","");
+				
+				
+				
+				fullOrder1 = orders.getOrderItem(i).getId();
+				fullOrder2 = String.valueOf(orders.getOrderItem(i).getPrice());
+				fullOrder3 = items.get(itemholder).getDescription();
+				String[] abc = {fullOrder1, cust , fullOrder2, fullOrder3};
+				
+				indexorders.add(abc);
+
+			};
+			for (String[] strArr: indexorders) {
+			System.out.println(Arrays.toString(strArr));
+		}
+		
+		return indexorders;
+	};
 	
 	
 	/* 

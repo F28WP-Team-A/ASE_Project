@@ -15,16 +15,18 @@ public class Main {
 		
 		CustomerList customers = new CustomerList();
 
-//		GuiCreate gui = new GuiCreate();
+		GuiCreate gui = new GuiCreate();
 		
-//		gui.GuiCreator();
+		gui.GuiCreator();
 		
 		Manager.populateItemList(items, "items.csv");
 
 		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
 
 		BigDecimal price = new BigDecimal(0);
-
+	
+		Manager.indexOrders(orders, customers,items);
+		
 		price = Manager.getTotalPrice(orders, String.valueOf(5));
 
 		System.out.println("Price: " + price);

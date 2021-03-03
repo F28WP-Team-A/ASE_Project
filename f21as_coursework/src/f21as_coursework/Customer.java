@@ -19,7 +19,9 @@ public class Customer {
     public String getCustID() {
     	return this.custID;
     }
-
+    public String getCustName() {
+    	return custName.getFullName();
+    }
     public String getDetails(){
         return "Customer Name: " + custName.getFullName() + "\tCustomer ID: " + custID;
         
