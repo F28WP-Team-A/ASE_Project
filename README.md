@@ -5,6 +5,7 @@
   <li>Isla Gunn</li>
   <li>Liam Horrobin</li>
   <li>Melanie Lucas</li>
+  <li>Matthieu Pesci</li> 
   <li>Elliot Whitehouse</li>
 </ul>
 
