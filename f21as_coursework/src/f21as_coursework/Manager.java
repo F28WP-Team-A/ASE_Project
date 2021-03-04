@@ -365,4 +365,47 @@ public class Manager {
 		
 		return price;
 	}
+	
+	
+	/*
+	 * getReport method generates a report including the orders from the
+	 * cafe, the total sales from orders and the full menu as a String.
+	 * 
+	 * This is called by outputReport when exiting the GUI.
+	 */
+	public static String getReport(OrderList orders, CustomerList customers,ItemList items) {
+		
+		String report 	= "Orders: \n";
+		
+		for(ArrayList<String> s : indexOrders(orders, customers, items)) {
+			report 		+= s.toString() + "\n";
+		}
+		
+		report          += "Total Sales: £" + orders.getTotalSales();
+		
+		report 			+= "\n\nMenu: \n"
+						+  items.getMenu();
+		
+		return report;
+	}
+	
+	/*
+	 * Outputs a file containing a report including the orders from the
+	 * cafe, the total sales from orders and the full menu.
+	 * 
+	 * The method is enclosed in a try/catch block in order to catch any
+	 * IOExceptions that may arise when calling this method.
+	 */
+	public static void outputReport(OrderList orders, CustomerList customers,
+									ItemList items, String fileName) {
+		
+		try {
+			FileWriter reportOutput = new FileWriter(fileName);							
+			reportOutput.write(getReport(orders, customers, items));									
+			reportOutput.close();
+		}
+		catch (IOException e) {															
+			e.getStackTrace();
+		}
+	}
 }

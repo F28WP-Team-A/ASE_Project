@@ -28,6 +28,7 @@ public class Main {
 		Manager.populateItemList(items, "items.csv");
 
 		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
+
 //
 //		BigDecimal price = new BigDecimal(0);
 //	
@@ -59,6 +60,10 @@ public class Main {
 //			System.out.println(i.getKey() + " " + i.getValue().getDescription());
 		
 		CafeGUI gui = new CafeGUI(orders, customers, items);
+		
+		System.out.println(Manager.getReport(orders, customers, items));
+		
+//		Manager.outputReport(orders, customers, items, "ReportOuput.txt");
 		
 		}
 		

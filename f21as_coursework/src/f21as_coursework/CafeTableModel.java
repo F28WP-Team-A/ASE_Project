@@ -12,11 +12,11 @@ public class CafeTableModel extends AbstractTableModel {
 	
 	/*
 	 * Constructor creates an instance of the
-	 * CompTableModel using a CompetitorList
+	 * CafeTableModel using a OrderList
 	 * and String Array of column headers passed
 	 * in as parameters.
 	 * 
-	 * The relevant data from the CompetitorList
+	 * The relevant data from the OrderList
 	 * is then parsed into a 2 dimensional Object
 	 * Array which becomes the formatted data used
 	 * in the table.
@@ -36,12 +36,12 @@ public class CafeTableModel extends AbstractTableModel {
 	/*
 	 * Sets the value of the 2 dimensional Object
 	 * Array rowData to be the data from the 
-	 * CompetitorList to be used in the JTable.
+	 * OrderList to be used in the JTable.
 	 * 
-	 * Iterates through the CompetitorList and
+	 * Iterates through the OrderList and
 	 * populates each row of the 2D Object Array
-	 * with data from the COmpetitors in the
-	 * CompetitorList.
+	 * with data from the Orders in the
+	 * OrderList.
 	 */
 	private void getRowData() {
 		for(int i = 0; i< orders.getNumberOfOrders(); i++) {
@@ -50,8 +50,7 @@ public class CafeTableModel extends AbstractTableModel {
 			rowData[i][1]	= customers.getCustomer(orders.getOrderItem(i+1).getId()).getCustName();
 			rowData[i][2]	= items.get(placeholder).getDescription();
 			rowData[i][3]	= orders.getOrderItem(i+1).getPrice();
-//			rowData[i][4]	= compList.getCompetitor(i).getScoreArray();
-//			rowData[i][5]	= compList.getCompetitor(i).getOverallScore();
+
 		}
 		
 	}
@@ -70,37 +69,6 @@ public class CafeTableModel extends AbstractTableModel {
 	public String getColumnName(int col) {
 		return columnHeaders[col];
 	}
-	
-	
-//	@Override
-	/*
-	 * Returns the Class of the data in the
-	 * column at the index specified by the 
-	 * int passed in as a parameter.
-	 * 
-	 * Overrides the implementation of the
-	 * getColumnClass method in the
-	 * AbstractTableModel superclass which implements
-	 * the method from the TableModel interface.
-	 */
-//	public Class<?> getColumnClass(int col) {
-//		switch (col){
-//			case 0:
-//				return rowData[0][0].getClass();
-//			case 1:
-//				return rowData[0][1].getClass();
-//			case 2:
-//				return rowData[0][2].getClass();
-//			case 3:
-//				return rowData[0][3].getClass();
-//			case 4:
-//				return rowData[0][4].getClass();
-//			case 5:
-//				return rowData[0][5].getClass();
-//			default:
-//				return String.class;
-//		}
-//	}
 
 	@Override
 	/*
