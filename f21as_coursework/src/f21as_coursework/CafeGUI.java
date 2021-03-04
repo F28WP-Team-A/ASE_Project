@@ -23,15 +23,11 @@ public class CafeGUI extends JFrame implements ActionListener {
 	private CafeTableModel 			tableModel;
 	JTable							table;
 	JTextField 						customerID, eastNumInput, customerName;
-	JLabel 							compNumOutput, nameOuput, scoresOutput,
-									overallScoreOutput, newOverallScore, showNewScore;
 	JTextArea						menu;
-	JButton 						southNumSearch, eastNumSearch, submitItemSelection,
-									filterSubmit, close;
-	ArrayList<JCheckBox> 			sportBoxes, levelBoxes;
-	JCheckBox 						diving, surfing, beginner, intermediate, advanced;
+	JButton 						eastNumSearch, submitItemSelection,
+									close;
 	TableRowSorter<CafeTableModel> 	sorter;
-	JComboBox<String> 				sortSelection, itemsList, sizeSelection;
+	JComboBox<String> 				itemsList, sizeSelection;
 	
 	
 	/*
@@ -45,8 +41,6 @@ public class CafeGUI extends JFrame implements ActionListener {
 		this.customers = customers;
 		this.items = items;
 		this.currentCustomerNum = orders.getNumberOfOrders();
-		sportBoxes = new ArrayList<JCheckBox>();
-		levelBoxes = new ArrayList<JCheckBox>();
 		setDefaultCloseOperation(CafeGUI.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout(1,1));
 		createEastPanel();
@@ -82,7 +76,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 	private void createEastPanel() {
 		JPanel 			eastPanel 		= new JPanel();		
 		
-		TitledBorder 	border 			= new TitledBorder("Search for a competitor and alter their score");	// Creates a border with a title that informs the user of the functionality of the panel.
+		TitledBorder 	border 			= new TitledBorder("Add a new order");									// Creates a border with a title that informs the user of the functionality of the panel.
 		border.setTitleJustification(TitledBorder.CENTER);
 		eastPanel.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), border));	// Gives the JPanel a BevelBorder and puts the TitledBorder within the BevelBorder.
 		
@@ -97,23 +91,14 @@ public class CafeGUI extends JFrame implements ActionListener {
 		customerID 					= new JTextField(5); 
 		eastPanel.add(customerID);
 		
-		JLabel 			compName 		= new JLabel("Name:");
-		eastPanel.add(compName);
-		
-		nameOuput = new JLabel("");
-		eastPanel.add(nameOuput);
+		JLabel 			cName 		= new JLabel("Name:");
+		eastPanel.add(cName);
 		
 		customerName 		= new JTextField(5);
 		eastPanel.add(customerName);
 		
-		scoresOutput 					= new JLabel("");
-		eastPanel.add(scoresOutput);
-		
-		overallScoreOutput 				= new JLabel("");
-		eastPanel.add(overallScoreOutput);
-		
-		JLabel 			newScoresPrompt	= new JLabel("Choose item:");
-		eastPanel.add(newScoresPrompt);
+		JLabel 			chooseItem	= new JLabel("Choose item:");
+		eastPanel.add(chooseItem);
 		
 		itemsList 						= new JComboBox<String>(getItems(items));
 		eastPanel.add(itemsList);
@@ -126,16 +111,13 @@ public class CafeGUI extends JFrame implements ActionListener {
 				group.createSequentialGroup()
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)					// Padding added to create some space between each object.
 						.addComponent(eastNumPrompt)
-						.addComponent(compName)
-						.addComponent(nameOuput)
-						.addComponent(newScoresPrompt))
+						.addComponent(cName)
+						.addComponent(chooseItem))
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
 						.addComponent(customerID)
 						.addComponent(customerName)
-						.addComponent(scoresOutput)
 						.addComponent(itemsList))
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
-						.addComponent(overallScoreOutput)
 						.addComponent(submitItemSelection)
 						)
 					
@@ -146,14 +128,10 @@ public class CafeGUI extends JFrame implements ActionListener {
 							.addComponent(eastNumPrompt)
 							.addComponent(customerID))
 					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
-							.addComponent(compName)
+							.addComponent(cName)
 							.addComponent(customerName))
 					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
-							.addComponent(nameOuput)
-							.addComponent(scoresOutput)
-							.addComponent(overallScoreOutput))
-					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
-							.addComponent(newScoresPrompt)
+							.addComponent(chooseItem)
 							.addComponent(itemsList)
 							.addComponent(submitItemSelection))
 		);
@@ -302,14 +280,14 @@ public class CafeGUI extends JFrame implements ActionListener {
 				
 				}
 			catch(NullPointerException n) {
-				JOptionPane.showMessageDialog(null, "Invalid competitor number");								// Outputs a JOptionPane if the getCompetitoObj method returns null.
+				JOptionPane.showMessageDialog(null, "Invalid customer number");
 				n.printStackTrace();
 			}
 			catch(IndexOutOfBoundsException i) {
-				JOptionPane.showMessageDialog(null, "Invalid number of scores");								// Outputs a JOptionPane if the user enters an incorrect number of scores for that Competitor.
+				JOptionPane.showMessageDialog(null, "Invalid number of scores");
 			}
 			catch(NumberFormatException f) {
-				JOptionPane.showMessageDialog(null, "Score must be made up of numbers only");					// Outputs a JOptionPane if the user enters 5 values that are not numbers.
+				JOptionPane.showMessageDialog(null, "Score must be made up of numbers only");
 			}
 			catch(IncorrectOrderException ioe) {
 				ioe.printStackTrace();
