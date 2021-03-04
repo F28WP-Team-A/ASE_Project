@@ -139,7 +139,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 		this.add(eastPanel, BorderLayout.EAST);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				System.out.println("test12");
+				Manager.outputReport(orders, customers, items, "Cafe_Report.txt");;
 			}
 		});
 		
@@ -171,13 +171,13 @@ public class CafeGUI extends JFrame implements ActionListener {
 		
 		
 		String [] 		columnHeaders 	= {"ID", "Name", "Item", "Price"};										// String Array containing the column headers for the JTable.
-<<<<<<< HEAD
+
 		tableModel 						= new CafeTableModel(orders, customers, items,columnHeaders);							// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
 		sorter 							= new TableRowSorter<CafeTableModel>(tableModel);						// Instantiates a new TableRowSorter for the custom CompTableModel.
-=======
-		tableModel 						= new CafeTableModel(orders, customers, columnHeaders);
+
+		tableModel 						= new CafeTableModel(orders, customers, items, columnHeaders);
 		sorter 							= new TableRowSorter<CafeTableModel>(tableModel);
->>>>>>> da9e5bb6bbb66560d900cd7bc60e0b26f80bd816
+
 		
 		table 			= new JTable(tableModel);
 		table.setRowSorter(sorter);
@@ -293,14 +293,15 @@ public class CafeGUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Invalid customer number");
 				n.printStackTrace();
 			}
-			catch(IndexOutOfBoundsException i) {
-				JOptionPane.showMessageDialog(null, "Invalid number of scores");
-			}
+//			catch(IndexOutOfBoundsException i) {
+//				JOptionPane.showMessageDialog(null, "Invalid number of scores");
+//			}
 			catch(NumberFormatException f) {
 				JOptionPane.showMessageDialog(null, "Score must be made up of numbers only");
 			}
 			catch(IncorrectOrderException ioe) {
 				ioe.printStackTrace();
+				System.out.println("ioe exception");
 			}
 
 		}
