@@ -193,11 +193,6 @@ public class CafeGUI extends JFrame implements ActionListener {
 		);
 				
 		this.add(eastPanel, BorderLayout.EAST);
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.out.println("test12");
-			}
-		});
 		
 	}
 	
@@ -246,7 +241,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 //		centrePanel.add(sortSelection);
 		
 		String [] 		columnHeaders 	= {"ID", "Name", "Item", "Price"};										// String Array containing the column headers for the JTable.
-		tableModel 						= new CafeTableModel(orders, customers, items,columnHeaders);							// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
+		tableModel 						= new CafeTableModel(orders, customers, columnHeaders);							// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
 		sorter 							= new TableRowSorter<CafeTableModel>(tableModel);						// Instantiates a new TableRowSorter for the custom CompTableModel.
 		
 		table 			= new JTable(tableModel);												// Creates a new JTable that uses the custom table model CompTableModel just created.
@@ -331,7 +326,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		westPanel.add(scroll);
 		menu.setSize(1,1);
-		menu.setEditable(false);
+		
 		scroll.setSize(1,1);
 		
 //		JLabel filterLabel 	= new JLabel("Filter by:");
