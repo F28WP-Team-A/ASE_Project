@@ -11,9 +11,17 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-public class GuiCreate{	
+public class GuiCreate{
 	
-	public GuiCreate() throws IncorrectOrderException {
+	private OrderList orders;
+	private ItemList items;
+	private CustomerList customers;
+	
+	public GuiCreate(OrderList orders, ItemList items, CustomerList customers) throws IncorrectOrderException {
+		
+		this.orders = orders;
+		this.customers = customers;
+		this.items = items;
 
 	}
 	public void GuiCreator(){
@@ -35,7 +43,7 @@ public class GuiCreate{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new CreateOrders().CreateOrders();
+					new CreateOrders(orders, items, customers);
 
 				}
 			});

@@ -294,7 +294,7 @@ public class Manager {
 			orderDetails.add(id);
 			orderDetails.add(name);
 			orderDetails.add(price);
-			for(int i =1; i< orders.getNumberOfOrders(); i++) {
+			for(int i =1; i< orders.getNumberOfOrders()+1; i++) {
 				if(orders.getOrderItem(i).getId().equals(s)) {
 					orderDetails.add(orders.getOrderItem(i).getItemDetails().replaceAll("\\[", "").replaceAll("\\]",""));
 					
@@ -326,7 +326,7 @@ public class Manager {
 		
 		BigDecimal price = new BigDecimal(0);
 			
-		for(int i = 1; i < orders.getNumberOfOrders(); i++) {
+		for(int i = 1; i < orders.getNumberOfOrders()+1; i++) {
 			
 			if(orders.getOrderItem(i).getId().equals(customerID) 
 				&& orders.getOrderItem(i).getItemDetails().substring(1,5).equalsIgnoreCase("food")) {
