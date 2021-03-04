@@ -12,9 +12,23 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CreateOrders {
-	public static void CreateOrders(){
+	
+	private OrderList orders;
+	private ItemList items;
+	private CustomerList customers;
+	
+	public CreateOrders(OrderList orders, ItemList items, CustomerList customers){
+		
+		this.orders = orders;
+		this.customers = customers;
+		this.items = items;
+		
 		JButton but1 = new JButton("cake £7.60");
 		but1.addActionListener(new ActionListener() {
 			
@@ -24,11 +38,13 @@ public class CreateOrders {
 			public void actionPerformed(ActionEvent a) {
 				String m = JOptionPane.showInputDialog("Please enter a existing customer id or click new customer");
 						if (OrderList.existingID(m));
+						
 						else{JOptionPane.showMessageDialog(null,"That Customer does not exist please re-enter or create a new customer");;
 						}
 							try {
 								System.out.println(OrderList.getNumberOfOrders()+1 +"," + OrderList.findById(m)+","+
 										CurrentTime.getCurrentTime()+","+"[FOOD101]");
+								
 								
 								
 							} catch (Exception e) {
