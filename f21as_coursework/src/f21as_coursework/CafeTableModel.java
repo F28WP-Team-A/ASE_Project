@@ -8,6 +8,7 @@ public class CafeTableModel extends AbstractTableModel {
 	private CustomerList customers;
 	private String [] columnHeaders;
 	private Object [] [] rowData;
+	private ItemList items;
 	
 	/*
 	 * Constructor creates an instance of the
@@ -20,9 +21,10 @@ public class CafeTableModel extends AbstractTableModel {
 	 * Array which becomes the formatted data used
 	 * in the table.
 	 */
-	public CafeTableModel(OrderList orders , CustomerList customers, String [] headers) {
+	public CafeTableModel(OrderList orders , CustomerList customers,ItemList items, String [] headers) {
 		this.orders = orders;
 		this.customers = customers;
+		this.items = items;
 		rowData = new Object[orders.getNumberOfOrders()+25][4];
 		System.out.println(orders.getNumberOfOrders());
 		System.out.println(rowData.length);
@@ -43,9 +45,10 @@ public class CafeTableModel extends AbstractTableModel {
 	 */
 	private void getRowData() {
 		for(int i = 0; i< orders.getNumberOfOrders(); i++) {
+			String placeholder = orders.getOrderItem(i+1).getItemDetails().replaceAll("\\[", "").replaceAll("\\]",""); 
 			rowData[i][0]	= orders.getOrderItem(i+1).getId();
 			rowData[i][1]	= customers.getCustomer(orders.getOrderItem(i+1).getId()).getCustName();
-			rowData[i][2]	= orders.getOrderItem(i+1).getItemDetails();
+			rowData[i][2]	= items.get(placeholder).getDescription();
 			rowData[i][3]	= orders.getOrderItem(i+1).getPrice();
 //			rowData[i][4]	= compList.getCompetitor(i).getScoreArray();
 //			rowData[i][5]	= compList.getCompetitor(i).getOverallScore();
@@ -141,7 +144,6 @@ public class CafeTableModel extends AbstractTableModel {
 	}
 	
 	public void addRow(OrderList orders) {
-		
 		rowData[orders.getNumberOfOrders()-1][0]	= orders.getOrderItem(orders.getNumberOfOrders()).getId();
 		System.out.println("No. of orders: " + orders.getOrderItem(orders.getNumberOfOrders()).getId());
 		System.out.println("Stack trace: " + customers.getCustomer(orders.getOrderItem(orders.getNumberOfOrders()).getId()));
