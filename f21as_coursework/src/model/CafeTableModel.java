@@ -1,6 +1,10 @@
-package f21as_coursework;
+package model;
 
 import javax.swing.table.AbstractTableModel;
+
+import f21as_coursework.CustomerList;
+import f21as_coursework.ItemList;
+import f21as_coursework.OrderList;
 
 public class CafeTableModel extends AbstractTableModel {
 	

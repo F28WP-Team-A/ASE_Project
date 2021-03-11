@@ -12,6 +12,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import model.CafeTableModel;
+
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Map.Entry;

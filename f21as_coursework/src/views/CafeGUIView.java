@@ -1,6 +1,7 @@
 package views;
 
 import f21as_coursework.*;
+import model.CafeTableModel;
 import controllers.*;
 
 import java.awt.*;
