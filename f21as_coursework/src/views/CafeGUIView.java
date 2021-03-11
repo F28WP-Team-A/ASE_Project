@@ -249,6 +249,10 @@ public class CafeGUIView extends JFrame {
 		
 	}
 	
+	public void updateSeverOne(String order) {
+		serverOne.setText(order);
+	}
+	
 	/*
 	 * Add ActionListeners
 	 */
