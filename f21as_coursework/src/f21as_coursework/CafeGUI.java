@@ -4,9 +4,13 @@ import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableRowSorter;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 	JTable							table;
 	JTextField 						customerID, eastNumInput, customerName;
 	JTextArea						menu;
+	JTextPane						serverOne, serverTwo;
 	JButton 						eastNumSearch, submitItemSelection,
 									close;
 	TableRowSorter<CafeTableModel> 	sorter;
@@ -45,7 +50,7 @@ public class CafeGUI extends JFrame implements ActionListener {
 		this.setLayout(new BorderLayout(1,1));
 		createEastPanel();
 		createCentrePanel();
-		createWestPanel();
+		createSouthPanel();
 		pack();
 		setLocation(450,150);
 		setTitle("Cafe GUI");
@@ -137,11 +142,11 @@ public class CafeGUI extends JFrame implements ActionListener {
 		);
 				
 		this.add(eastPanel, BorderLayout.EAST);
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				Manager.outputReport(orders, customers, items, "Cafe_Report.txt");;
-			}
-		});
+//		this.addWindowListener(new WindowAdapter() {
+//			public void windowClosing(WindowEvent e) {
+//				Manager.outputReport(orders, customers, items, "Cafe_Report.txt");
+//			}
+//		});
 		
 	}
 	
@@ -201,37 +206,46 @@ public class CafeGUI extends JFrame implements ActionListener {
 		
 		return itemList;
 	}
-		
 	
 	/*
-	 * Creates a JPanel and adds it to the west section
-	 * of the GUI instance.
-	 * 
-	 * The west JPanel is used to display the cafe's menu
-	 * to be used as a reference when submitting new orders.
-	 * 
-	 * Access modifier set to private so this method
-	 * can only be called from within the class.
+	 * Create South Panel for servers
 	 */
-	private void createWestPanel() {
-		JPanel westPanel 	= new JPanel();
+	private void createSouthPanel() {
+		JPanel 			southPanel 	= new JPanel();
+		southPanel.setLayout(new BoxLayout(southPanel,BoxLayout.LINE_AXIS));
+		southPanel.add(Box.createHorizontalGlue());
 		
-		westPanel.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED),				// Gives the JPanel a BevelBorder and an empty border to give the panel some padding
-															   new EmptyBorder(10,10,10,10)));
-		westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
+		TitledBorder 	border 			= new TitledBorder("Serving Counter"); 					// Creates a border with a title that informs the user of the functionality of the panel.
+															
 		
-		menu  = new JTextArea(items.getMenu());
-		westPanel.add(menu);
-		JScrollPane scroll = new JScrollPane (menu, 
-				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		westPanel.add(scroll);
-		menu.setSize(1,1);
-		menu.setEditable(false);
-		scroll.setSize(1,1);
-				
-		this.add(westPanel, BorderLayout.WEST);
+		border.setTitleJustification(TitledBorder.CENTER);
+		southPanel.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), border));
+		
+		TitledBorder 	sOneBorder 			= new TitledBorder("Server 1");
+		sOneBorder.setTitleJustification(TitledBorder.CENTER);
+		serverOne = new JTextPane();
+		serverOne.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		serverOne.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), sOneBorder));
+		StyledDocument sOneText = serverOne.getStyledDocument();
+		SimpleAttributeSet center = new SimpleAttributeSet();
+		StyleConstants.setAlignment(center,  StyleConstants.ALIGN_CENTER);
+		sOneText.setParagraphAttributes(0, sOneText.getLength(), center, false);
+		southPanel.add(serverOne);
+		
+		TitledBorder 	sTwoBorder 			= new TitledBorder("Server 2");
+		sTwoBorder.setTitleJustification(TitledBorder.CENTER);
+		serverTwo = new JTextPane();
+		serverTwo.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		serverTwo.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), sTwoBorder));
+		StyledDocument sTwoText = serverTwo.getStyledDocument();
+		StyleConstants.setAlignment(center,  StyleConstants.ALIGN_CENTER);
+		sTwoText.setParagraphAttributes(0, sTwoText.getLength(), center, false);
+		southPanel.add(serverTwo);
+		
+		this.add(southPanel, BorderLayout.SOUTH);	
+		
 	}
-
+		
 	/*
 	 * The actionPerformed method provides an implementation
 	 * of the actionPerformed class from the ActionListener

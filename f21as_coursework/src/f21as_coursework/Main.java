@@ -20,50 +20,12 @@ public class Main {
 		OrderList orders = new OrderList();
 		
 		CustomerList customers = new CustomerList();
-
-//		GuiCreate gui = new GuiCreate(orders, items, customers);
-//		
-//		gui.GuiCreator();
-//		
+	
 		Manager.populateItemList(items, "items.csv");
 
 		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
-
-//
-//		BigDecimal price = new BigDecimal(0);
-//	
-//		Manager.indexOrders(orders, customers, items);
-//		
-//		price = Manager.getTotalPrice(orders, String.valueOf(5));
-//
-//		System.out.println("Price: " + price);
-//		
-//		System.out.println(customers.getCustListSize());
-//		
-//		JTable placehold = new JTable();
-//		
-//		System.out.println(CurrentTime.getCurrentTime());
-//		
-//		for(int i = 1; i <= customers.getCustListSize(); i++) {
-//			System.out.println(customers.getCustomer(String.valueOf(i)).getDetails());
-//		}
-		
-//		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
-//			System.out.println(s.toString());
-//		}
-//		
-//		
-//		System.out.println(items.getMenu());
-		
-		
-//		for(Entry<String, Items> i : items.entrySet()) {
-//			System.out.println(i.getKey() + " " + i.getValue().getDescription());
 		
 		CafeGUI gui = new CafeGUI(orders, customers, items);
-		
-		System.out.println(Manager.getReport(orders, customers, items));
-		
-//		Manager.outputReport(orders, customers, items, "ReportOuput.txt");
 		
 		}
 		
