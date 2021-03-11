@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import javax.swing.JTable;
+
+import views.*;
+import controllers.*;
 
 public class Main {
 
@@ -25,7 +27,9 @@ public class Main {
 
 		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
 		
-		CafeGUI gui = new CafeGUI(orders, customers, items);
+		CafeGUIView gui = new CafeGUIView(orders, customers, items);
+		
+		CafeGUIController controller = new CafeGUIController(gui);
 		
 		}
 		
