@@ -1,4 +1,8 @@
-package f21as_coursework;
+package views;
+
+import f21as_coursework.*;
+import model.CafeTableModel;
+import controllers.*;
 
 import java.awt.*;
 
@@ -12,15 +16,13 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import model.CafeTableModel;
-
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class CafeGUI extends JFrame implements ActionListener {
+public class CafeGUIView extends JFrame {
 	
 	private OrderList 				orders;
 	private CustomerList			customers;
@@ -42,13 +44,13 @@ public class CafeGUI extends JFrame implements ActionListener {
 	 * an OrderList, CustomerList and ItemList that will provide
 	 * the data used by the GUI.
 	 */
-	public CafeGUI(OrderList orders, CustomerList customers, ItemList items) {
+	public CafeGUIView(OrderList orders, CustomerList customers, ItemList items) {
 		
 		this.orders = orders;
 		this.customers = customers;
 		this.items = items;
 		this.currentCustomerNum = orders.getNumberOfOrders();
-		setDefaultCloseOperation(CafeGUI.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(CafeGUIView.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout(1,1));
 		createEastPanel();
 		createCentrePanel();
@@ -112,7 +114,6 @@ public class CafeGUI extends JFrame implements ActionListener {
 		
 		submitItemSelection 				= new JButton("Submit");
 		eastPanel.add(submitItemSelection);
-		submitItemSelection.addActionListener(this);
 		
 		group.setHorizontalGroup(
 				group.createSequentialGroup()
@@ -247,80 +248,16 @@ public class CafeGUI extends JFrame implements ActionListener {
 		this.add(southPanel, BorderLayout.SOUTH);	
 		
 	}
-		
+	
+	public void updateSeverOne(String order) {
+		serverOne.setText(order);
+	}
+	
 	/*
-	 * The actionPerformed method provides an implementation
-	 * of the actionPerformed class from the ActionListener
-	 * interface and proved the event handling capability
-	 * of the CafeGUI class.
+	 * Add ActionListeners
 	 */
-	public void actionPerformed(ActionEvent e) {
-				
-		/*
-		 * If the "Submit" JButton is clicked in the 
-		 * east panel, this condition is triggered.
-		 * 
-		 * Submits the the id, customer name (if entered)
-		 * and item choice in order to create a new order.
-		 */
-		if(e.getSource() == submitItemSelection) {
-			try {
-				currentCustomerNum += 1;
-				String 		inputString 	= customerID.getText().trim();
-				String		custName    = "";
-				String 		itemChoice 	= itemsList.getSelectedItem().toString();
-				BigDecimal price = new BigDecimal(0);
-				
-				for(int i = 1; i< orders.getNumberOfOrders(); i++) {
-					if(orders.getOrderItem(i).getId().equals(inputString)) {
-						custName += customers.getCustomer(orders.getOrderItem(i).getId()).getCustName();
-						break;
-					}
-					else {
-						custName    = customerName.getText().trim();
-						String []  name = custName.split(" ");
-						
-						customers.addCustomer(new Customer( new Name(name[0], name[1]), String.valueOf(7)));
-					}	
-				}
-				
-				for(Entry<String, Items> i : items.entrySet()) {
-					if(i.getValue().getID().equals(itemChoice)) {
-						price =  price.add(i.getValue().getCost());
-					}
-				}
-				
-				System.out.println(currentCustomerNum + " "+ inputString + " "+ LocalDateTime.now() + " "+ itemChoice + " "+ price);
-				
-				orders.addDetails(new Order(currentCustomerNum, inputString, LocalDateTime.now(), itemChoice, price));
-				
-				
-				
-				for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
-					System.out.println(s.toString());
-				}
-				
-				tableModel.addRow(orders);
-				
-				
-				
-				}
-			catch(NullPointerException n) {
-				JOptionPane.showMessageDialog(null, "Invalid customer number");
-				n.printStackTrace();
-			}
-//			catch(IndexOutOfBoundsException i) {
-//				JOptionPane.showMessageDialog(null, "Invalid number of scores");
-//			}
-			catch(NumberFormatException f) {
-				JOptionPane.showMessageDialog(null, "Score must be made up of numbers only");
-			}
-			catch(IncorrectOrderException ioe) {
-				ioe.printStackTrace();
-				System.out.println("ioe exception");
-			}
-
-		}
+	public void addSetListener(ActionListener al) {
+		submitItemSelection.addActionListener(al);
+		System.out.println("Action Listener added");
 	}
 }
-
