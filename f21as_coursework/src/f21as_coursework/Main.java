@@ -11,6 +11,7 @@ import javax.swing.JTable;
 
 import views.*;
 import controllers.*;
+import model.CafeModel;
 
 public class Main {
 
@@ -27,9 +28,11 @@ public class Main {
 
 		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
 		
+		CafeModel cafe = new CafeModel(orders, items, customers);
+		
 		CafeGUIView gui = new CafeGUIView(orders, customers, items);
 		
-		CafeGUIController controller = new CafeGUIController(gui);
+		CafeGUIController controller = new CafeGUIController(gui, cafe);
 		
 		}
 		

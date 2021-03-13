@@ -180,11 +180,8 @@ public class CafeGUIView extends JFrame {
 		
 		String [] 		columnHeaders 	= {"ID", "Name", "Item", "Price"};										// String Array containing the column headers for the JTable.
 
-		tableModel 						= new CafeTableModel(orders, customers, items,columnHeaders);							// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
+		tableModel 						= new CafeTableModel(orders, customers, items,columnHeaders);			// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
 		sorter 							= new TableRowSorter<CafeTableModel>(tableModel);						// Instantiates a new TableRowSorter for the custom CompTableModel.
-
-		tableModel 						= new CafeTableModel(orders, customers, items, columnHeaders);
-		sorter 							= new TableRowSorter<CafeTableModel>(tableModel);
 
 		
 		table 			= new JTable(tableModel);
