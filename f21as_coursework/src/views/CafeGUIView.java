@@ -29,11 +29,12 @@ public class CafeGUIView extends JFrame {
 	private ItemList				items;
 	private int 					currentCustomerNum;
 	private CafeTableModel 			tableModel;
+	JLabel							countdown;
 	JTable							table;
-	JTextField 						customerID, eastNumInput, customerName;
+	JTextField 						customerID, eastNumInput, customerName, newSpeed;
 	JTextArea						menu;
 	JTextPane						serverOne, serverTwo;
-	JButton 						eastNumSearch, submitItemSelection,
+	JButton 						eastNumSearch, submitItemSelection, submitNewSpeed,
 									close;
 	TableRowSorter<CafeTableModel> 	sorter;
 	JComboBox<String> 				itemsList, sizeSelection;
@@ -100,7 +101,7 @@ public class CafeGUIView extends JFrame {
 		customerID 					= new JTextField(5); 
 		eastPanel.add(customerID);
 		
-		JLabel 			cName 		= new JLabel("Name:");
+		JLabel cName 						= new JLabel("Name:");
 		eastPanel.add(cName);
 		
 		customerName 		= new JTextField(5);
@@ -115,18 +116,38 @@ public class CafeGUIView extends JFrame {
 		submitItemSelection 				= new JButton("Submit");
 		eastPanel.add(submitItemSelection);
 		
+		JLabel timeRemaining				= new JLabel("Time Remaining:");
+		eastPanel.add(timeRemaining);
+		
+		countdown							= new JLabel("00:00");
+		eastPanel.add(countdown);
+		
+		JLabel enterNewSpeed				= new JLabel("Enter new processing speed (seconds):");
+		eastPanel.add(enterNewSpeed);
+		
+		newSpeed							= new JTextField(5);
+		eastPanel.add(newSpeed);
+		
+		submitNewSpeed						= new JButton("Submit");
+		eastPanel.add(submitNewSpeed);
+		
 		group.setHorizontalGroup(
 				group.createSequentialGroup()
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)					// Padding added to create some space between each object.
 						.addComponent(eastNumPrompt)
 						.addComponent(cName)
-						.addComponent(chooseItem))
+						.addComponent(chooseItem)
+						.addComponent(timeRemaining)
+						.addComponent(enterNewSpeed))
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
 						.addComponent(customerID)
 						.addComponent(customerName)
-						.addComponent(itemsList))
+						.addComponent(itemsList)
+						.addComponent(countdown)
+						.addComponent(newSpeed))
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
 						.addComponent(submitItemSelection)
+						.addComponent(submitNewSpeed)
 						)
 					
 		);
@@ -142,6 +163,13 @@ public class CafeGUIView extends JFrame {
 							.addComponent(chooseItem)
 							.addComponent(itemsList)
 							.addComponent(submitItemSelection))
+					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
+							.addComponent(timeRemaining)
+							.addComponent(countdown))
+					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
+							.addComponent(enterNewSpeed)
+							.addComponent(newSpeed)
+							.addComponent(submitNewSpeed))
 		);
 				
 		this.add(eastPanel, BorderLayout.EAST);
@@ -246,15 +274,44 @@ public class CafeGUIView extends JFrame {
 		
 	}
 	
+	/*
+	 * Updates the text in the JTextPane of server1
+	 * with the String input as a parameter.
+	 */
 	public void updateSeverOne(String order) {
 		serverOne.setText(order);
 	}
 	
 	/*
+	 * Updates the text of the JLabel showing the
+	 * time remaining.
+	 */
+	public void updateGUITimer(String time) {
+		countdown.setText("00:" + time);
+	}
+	
+	/*
+	 * Returns the String input by the user as the
+	 * new order processing speed as an int.
+	 */
+	public int getSpeedInput() {
+		return Integer.parseInt(newSpeed.getText());
+	}
+	
+	public void errorMessage(String message) {
+		JOptionPane.showMessageDialog(null, message);
+	}
+	
+	/*
 	 * Add ActionListeners
 	 */
-	public void addSetListener(ActionListener al) {
+	public void addNewCustListener(ActionListener al) {
 		submitItemSelection.addActionListener(al);
+		System.out.println("Action Listener added");
+	}
+	
+	public void addUpdateSpeedListener(ActionListener al) {
+		submitNewSpeed.addActionListener(al);
 		System.out.println("Action Listener added");
 	}
 }

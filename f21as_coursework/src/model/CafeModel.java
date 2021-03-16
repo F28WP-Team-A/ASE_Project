@@ -5,7 +5,10 @@ import views.*;
 
 import java.util.ArrayList;
 
+import javax.swing.Timer;
+
 import controllers.*;
+import controllers.CafeGUIController.OrderProcessor;
 
 /*
  * The CafeModel class is designed to be the model
@@ -28,6 +31,8 @@ public class CafeModel {
 	private ItemList 		items;
 	private CustomerList 	customers;
 	private int 			orderIndex;
+	private int				processingTime;
+	private int				processingSpeed;
 	
 	public CafeModel(OrderList orders, ItemList items, CustomerList customers) {
 		
@@ -35,7 +40,18 @@ public class CafeModel {
 		this.items 		= items;
 		this.customers 	= customers;
 		orderIndex 		= 0;
+		processingSpeed = 3;
+		queueTimerInit(Manager.indexOrders(orders, customers, items));
 		
+	}
+	
+	public int getProcessingSpeed() {
+		return processingSpeed;
+	}
+
+
+	public void setProcessingSpeed(int processingSpeed) {
+		this.processingSpeed = processingSpeed;
 	}
 	
 	
@@ -71,6 +87,35 @@ public class CafeModel {
 			return "No more orders";
 		}
 		
+	}
+	
+	/*
+	 * This method initialises the time remaining to process all
+	 * orders. Updates instance int variable processingTime.
+	 * 
+	 * Is updated if user alters number of orders or processing
+	 * speed.	
+	 */
+	public void queueTimerInit(ArrayList<ArrayList<String>> orders) {
+		
+		processingTime = orders.size() * processingSpeed + processingSpeed;		
+	}
+	
+	/*
+	 * Returns the time remaining to process the queue in seconds as a
+	 * String.
+	 * 
+	 * Is called by QueueTimer to display on the GUI instance every
+	 * second. 	
+	 */
+	public String queueTimer() {
+		
+		if(processingTime <= 10) {
+			return "0" + Integer.toString(processingTime-=1);
+		}
+		else {
+			return Integer.toString(processingTime-=1);
+		}
 	}
 
 }

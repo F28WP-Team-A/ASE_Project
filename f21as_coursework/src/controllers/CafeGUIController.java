@@ -24,13 +24,15 @@ public class CafeGUIController {
 	
 	private CafeGUIView gui;
 	private CafeModel 	cafe;
+	private Timer		timer;
 	
 	
 	public CafeGUIController(CafeGUIView gui, CafeModel cafe) {
 		this.gui 	= gui;
 		this.cafe 	= cafe;
 		updateServer();
-		gui.addSetListener(new OrderProcessor());
+		queueCountdown();
+		gui.addUpdateSpeedListener(new UpdateSpeed());
 		
 	}
 	
@@ -42,8 +44,27 @@ public class CafeGUIController {
 	private void updateServer() {
 		int counter = 6;
 		
-		Timer timer = new Timer(3000, new OrderProcessor());
+		timer = new Timer(cafe.getProcessingSpeed()*1000, new OrderProcessor());
 		timer.start();
+	}
+	
+	/*
+	 * Stops the timer instance currently controlling
+	 * the processing of orders.
+	 */
+	private void resetProcessingSpeed() {
+		timer.stop();
+	}
+	
+	/*
+	 * Creates a new timer to control the updating of
+	 * the JLabel that displays the time remaining to
+	 * process the orders.
+	 */
+	private void queueCountdown() {
+
+		Timer countdown = new Timer(1000, new QueueTimer());
+		countdown.start();
 	}
 	
 	
@@ -59,6 +80,44 @@ public class CafeGUIController {
 		
 		public void actionPerformed(ActionEvent e) {
 			gui.updateSeverOne(cafe.getNextOrder());
+		}
+	}
+	
+	/*
+	 * The QueueTimer class crates an action listener
+	 * that when triggered updates the time remaining
+	 * JLabel on the GUI instance.
+	 * 
+	 * Is called based on a swing timer and is called
+	 * once every second.
+	 */
+	public class QueueTimer implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			gui.updateGUITimer(cafe.queueTimer());
+		}
+	}
+	
+	/*
+	 * UpdateSpeed class creates an action listener
+	 * that when triggered stops the current timer
+	 * that is controlling the processing of orders,
+	 * updates the processing speed of the cafe model
+	 * and initiates a new order processing timer with
+	 * the speed submitted by the user on the GUI.
+	 */
+	public class UpdateSpeed implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			try {
+				resetProcessingSpeed();
+				cafe.setProcessingSpeed(gui.getSpeedInput());
+				updateServer();
+				System.out.println("Updated speed to: " + cafe.getProcessingSpeed());
+			}
+			catch(NumberFormatException n) {
+				gui.errorMessage("Invalid number of seconds");
+			}
 		}
 	}
 	
