@@ -1,13 +1,16 @@
 package f21as_coursework;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 //Order objects stored as a TreeSet
 public class OrderList {
 	// storage for details
-	static Set<Order> orders = new TreeSet<Order>();
+	// synchronizedSortedSet() returns a synchronized thread-safe sorted set backed by the sorted TreeSet
+	static SortedSet<Order> orders = Collections.synchronizedSortedSet(new TreeSet<Order>());
 
     public OrderList() {
     }
