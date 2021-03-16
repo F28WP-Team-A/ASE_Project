@@ -11,7 +11,8 @@ public class ItemList {
 
 		//create HashMap object called items 
 		//where key = identifier (String) and value = menu item (String)
-		HashMap<String, Items> items = new HashMap<String, Items>();
+		//synchronizedMap() returns a synchronized Map that is backed by the Map that provide in the parameter
+		Map<String, Items> items = Collections.synchronizedMap(new HashMap<String, Items>());
 		
 		//return Set view of mappings contained in map
 		/*
