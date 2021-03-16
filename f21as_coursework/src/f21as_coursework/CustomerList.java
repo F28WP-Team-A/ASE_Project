@@ -1,6 +1,8 @@
 package f21as_coursework;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /*
  * The CustomerList class is store a list of all Customer
