@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class CustomerList {
 	
-	private ArrayList<Customer> customers;
+	private List<Customer> customers;
 	
 	
 	/*
@@ -23,7 +23,8 @@ public class CustomerList {
 	 */
 	public CustomerList() {
 		
-		this.customers = new ArrayList<Customer>();
+		// synchronizedList() returns a synchronized thread-safe list backed by the ArrayList
+		this.customers = Collections.synchronizedList(new ArrayList<Customer>());
 	}
 	
 	
