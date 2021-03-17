@@ -296,7 +296,9 @@ public class Manager {
 			orderDetails.add(price);
 			for(int i =1; i< orders.getNumberOfOrders()+1; i++) {
 				if(orders.getOrderItem(i).getId().equals(s)) {
-					orderDetails.add(orders.getOrderItem(i).getItemDetails().replaceAll("\\[", "").replaceAll("\\]",""));
+					String itemID = orders.getOrderItem(i).getItemDetails().replaceAll("\\[", "").replaceAll("\\]","");
+					String menuItem = items.get(itemID).getDescription();
+					orderDetails.add(menuItem);
 					
 				}
 			}
