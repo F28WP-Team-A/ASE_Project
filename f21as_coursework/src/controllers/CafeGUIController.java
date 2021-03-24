@@ -33,6 +33,7 @@ public class CafeGUIController {
 		updateServer();
 		queueCountdown();
 		gui.addUpdateSpeedListener(new UpdateSpeed());
+		gui.addNewServerListener(new AddServer());
 		
 	}
 	
@@ -118,6 +119,16 @@ public class CafeGUIController {
 			catch(NumberFormatException n) {
 				gui.errorMessage("Invalid number of seconds");
 			}
+		}
+	}
+	
+	public class AddServer implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			// TODO Make add server number dynamic
+			// Create new Server object
+			gui.addServer(3);
+			// Start new server object thread
 		}
 	}
 	

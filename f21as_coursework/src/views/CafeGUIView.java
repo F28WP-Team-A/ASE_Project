@@ -29,13 +29,14 @@ public class CafeGUIView extends JFrame {
 	private ItemList				items;
 	private int 					currentCustomerNum;
 	private CafeTableModel 			tableModel;
+	JPanel							eastPanel, centrePanel, southPanel;
 	JLabel							countdown;
 	JTable							table;
 	JTextField 						customerID, eastNumInput, customerName, newSpeed;
 	JTextArea						menu;
 	JTextPane						serverOne, serverTwo;
 	JButton 						eastNumSearch, submitItemSelection, submitNewSpeed,
-									close;
+									addServer;
 	TableRowSorter<CafeTableModel> 	sorter;
 	JComboBox<String> 				itemsList, sizeSelection;
 	
@@ -84,7 +85,7 @@ public class CafeGUIView extends JFrame {
 	 * can only be called from within the class.
 	 */
 	private void createEastPanel() {
-		JPanel 			eastPanel 		= new JPanel();		
+		eastPanel 		= new JPanel();		
 		
 		TitledBorder 	border 			= new TitledBorder("PLACEHOLDER FOR USER CONTROLS");					// Creates a border with a title that informs the user of the functionality of the panel.
 		border.setTitleJustification(TitledBorder.CENTER);
@@ -131,6 +132,12 @@ public class CafeGUIView extends JFrame {
 		submitNewSpeed						= new JButton("Submit");
 		eastPanel.add(submitNewSpeed);
 		
+		JLabel addServerLabel				= new JLabel("Click button to add a server:");
+		eastPanel.add(addServerLabel);
+		
+		addServer							= new JButton("Add Server");
+		eastPanel.add(addServer);
+		
 		group.setHorizontalGroup(
 				group.createSequentialGroup()
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)					// Padding added to create some space between each object.
@@ -138,7 +145,8 @@ public class CafeGUIView extends JFrame {
 						.addComponent(cName)
 						.addComponent(chooseItem)
 						.addComponent(timeRemaining)
-						.addComponent(enterNewSpeed))
+						.addComponent(enterNewSpeed)
+						.addComponent(addServerLabel))
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
 						.addComponent(customerID)
 						.addComponent(customerName)
@@ -148,6 +156,7 @@ public class CafeGUIView extends JFrame {
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
 						.addComponent(submitItemSelection)
 						.addComponent(submitNewSpeed)
+						.addComponent(addServer)
 						)
 					
 		);
@@ -170,6 +179,9 @@ public class CafeGUIView extends JFrame {
 							.addComponent(enterNewSpeed)
 							.addComponent(newSpeed)
 							.addComponent(submitNewSpeed))
+					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
+							.addComponent(addServerLabel)
+							.addComponent(addServer))
 		);
 				
 		this.add(eastPanel, BorderLayout.EAST);
@@ -196,7 +208,7 @@ public class CafeGUIView extends JFrame {
 	 * 
 	 */
 	private void createCentrePanel() {
-		JPanel 			centrePanel 	= new JPanel();
+		centrePanel 	= new JPanel();
 		centrePanel.setLayout(new BoxLayout(centrePanel,BoxLayout.Y_AXIS));
 		
 		TitledBorder 	border 			= new TitledBorder("Table of orders"); 					// Creates a border with a title that informs the user of the functionality of the panel.
@@ -239,7 +251,7 @@ public class CafeGUIView extends JFrame {
 	 * Create South Panel for servers
 	 */
 	private void createSouthPanel() {
-		JPanel 			southPanel 	= new JPanel();
+		southPanel 	= new JPanel();
 		southPanel.setLayout(new BoxLayout(southPanel,BoxLayout.LINE_AXIS));
 		southPanel.add(Box.createHorizontalGlue());
 		
@@ -302,12 +314,30 @@ public class CafeGUIView extends JFrame {
 		JOptionPane.showMessageDialog(null, message);
 	}
 	
+	public void addServer(int num) {
+		TitledBorder 	newServerBorder 			= new TitledBorder("Server " + num);
+		newServerBorder.setTitleJustification(TitledBorder.CENTER);
+		JTextPane newServer = new JTextPane();
+		newServer.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		newServer.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), newServerBorder));
+		StyledDocument sOneText = newServer.getStyledDocument();
+		SimpleAttributeSet center = new SimpleAttributeSet();
+		StyleConstants.setAlignment(center,  StyleConstants.ALIGN_CENTER);
+		sOneText.setParagraphAttributes(0, sOneText.getLength(), center, false);
+		southPanel.add(newServer);
+	}
+	
 	/*
 	 * Add ActionListeners
 	 */
 	public void addNewCustListener(ActionListener al) {
 		submitItemSelection.addActionListener(al);
 		System.out.println("Action Listener added");
+	}
+	
+	public void addNewServerListener(ActionListener al) {
+		addServer.addActionListener(al);
+		System.out.println("Add server action Listener added");
 	}
 	
 	public void addUpdateSpeedListener(ActionListener al) {
