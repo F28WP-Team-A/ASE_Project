@@ -52,7 +52,7 @@ public class CafeGUIView extends JFrame {
 		this.customers = customers;
 		this.items = items;
 		this.currentCustomerNum = orders.getNumberOfOrders();
-		setDefaultCloseOperation(CafeGUIView.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(CafeGUIView.DO_NOTHING_ON_CLOSE);
 		this.setLayout(new BorderLayout(1,1));
 		createEastPanel();
 		createCentrePanel();
@@ -217,10 +217,10 @@ public class CafeGUIView extends JFrame {
 		border.setTitleJustification(TitledBorder.CENTER);
 		centrePanel.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), border));	// Gives the JPanel a BevelBorder and puts the TitledBorder within the BevelBorder.
 		
-		
-		String [] 		columnHeaders 	= {"ID", "Name", "Item", "Price"};										// String Array containing the column headers for the JTable.
+		ArrayList<ArrayList<String>> allOrders = Manager.indexOrders(orders, customers, items);
+		String [] 		columnHeaders 	= {"ID", "Name", "No. of Items", "Price"};										// String Array containing the column headers for the JTable.
 
-		tableModel 						= new CafeTableModel(orders, customers, items,columnHeaders);			// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
+		tableModel 						= new CafeTableModel(orders, customers, items, allOrders, columnHeaders);			// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
 		sorter 							= new TableRowSorter<CafeTableModel>(tableModel);						// Instantiates a new TableRowSorter for the custom CompTableModel.
 
 		

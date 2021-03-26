@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import javax.swing.table.AbstractTableModel;
 
 import f21as_coursework.CustomerList;
@@ -13,6 +15,7 @@ public class CafeTableModel extends AbstractTableModel {
 	private String [] columnHeaders;
 	private Object [] [] rowData;
 	private ItemList items;
+	private ArrayList<ArrayList<String>> allOrders;
 	
 	/*
 	 * Constructor creates an instance of the
@@ -25,11 +28,14 @@ public class CafeTableModel extends AbstractTableModel {
 	 * Array which becomes the formatted data used
 	 * in the table.
 	 */
-	public CafeTableModel(OrderList orders , CustomerList customers,ItemList items, String [] headers) {
+	public CafeTableModel(OrderList orders , CustomerList customers,ItemList items, 
+							ArrayList<ArrayList<String>> allOrders, 
+							String [] headers) {
 		this.orders = orders;
 		this.customers = customers;
 		this.items = items;
-		rowData = new Object[orders.getNumberOfOrders()+25][4];
+		this.allOrders = allOrders;
+		rowData = new Object[allOrders.size()][4];
 		System.out.println(orders.getNumberOfOrders());
 		System.out.println(rowData.length);
 		getRowData();
@@ -48,15 +54,23 @@ public class CafeTableModel extends AbstractTableModel {
 	 * OrderList.
 	 */
 	private void getRowData() {
-		for(int i = 0; i< orders.getNumberOfOrders(); i++) {
-			String placeholder = orders.getOrderItem(i+1).getItemDetails().replaceAll("\\[", "").replaceAll("\\]",""); 
-			rowData[i][0]	= orders.getOrderItem(i+1).getId();
-			rowData[i][1]	= customers.getCustomer(orders.getOrderItem(i+1).getId()).getCustName();
-			rowData[i][2]	= items.get(placeholder).getDescription();
-			rowData[i][3]	= orders.getOrderItem(i+1).getPrice();
-
+		int i = 0;
+		for(ArrayList<String> order : allOrders) {
+			rowData[i][0]	= order.get(0);
+			rowData[i][1]	= order.get(1);
+			rowData[i][2]	= getNumItems(order);
+			rowData[i][3]	= order.get(2);
+			i++;
 		}
 		
+	}
+	
+	private int getNumItems(ArrayList<String> order) {
+		int count = 0;
+		for(int i = 3; i < order.size(); i++) {
+			count += 1;
+		}
+		return count;
 	}
 	
 	@Override
