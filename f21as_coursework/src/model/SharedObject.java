@@ -13,11 +13,11 @@ public class SharedObject {
 		done = false;
 	}
 	
-	public synchronized String get() {
-		System.out.println("Consumer getting...");
+	public synchronized String get(int i) {
+		System.out.println("Consumer "+i+" getting...");
 		while(empty) {
 			try {
-				System.out.println("Consumer waiting...");
+				System.out.println("Consumer "+i+" waiting...");
 				wait();
 			}
 			catch (InterruptedException e) {
@@ -25,7 +25,7 @@ public class SharedObject {
 			}
 		}
 		
-		System.out.println("Got order ");
+		System.out.println("Consumer "+i+ "Got order " + order);
 		empty = true;
 		notifyAll();
 		return order;
@@ -43,7 +43,7 @@ public class SharedObject {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Put order: ");
+		System.out.println("Put order: " + o);
 		empty = false;
 		notifyAll();
 		this.order = o;

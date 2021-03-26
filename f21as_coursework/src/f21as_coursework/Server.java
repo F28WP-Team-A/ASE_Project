@@ -44,7 +44,7 @@ public class Server extends Thread{
 
 				@Override
 				protected String doInBackground() throws Exception {
-					String order = so.get();
+					String order = so.get(threadNum);
 					return order;
 				}
 				
@@ -65,8 +65,6 @@ public class Server extends Thread{
 			};
 			
 			worker.execute();
-			
-			System.out.println("Thred 1 sees done as: " + done);
 		}
 		
 	}
