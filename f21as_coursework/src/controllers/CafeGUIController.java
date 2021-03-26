@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import f21as_coursework.*;
 import model.CafeModel;
+import model.CafeTableModel;
 import views.*;
 
 import javax.swing.JOptionPane;
@@ -31,16 +32,19 @@ public class CafeGUIController {
 	
 	private CafeGUIView gui;
 	private CafeModel 	cafe;
+	private CafeTableModel cafeTable;
 	private Timer		timer;
 	
 	
 	public CafeGUIController(CafeGUIView gui, CafeModel cafe) {
 		this.gui 	= gui;
 		this.cafe 	= cafe;
+		this.cafeTable = gui.getTableModel();
 //		updateServer();
 		queueCountdown();
 //		gui.addUpdateSpeedListener(new UpdateSpeed());
 //		gui.addNewServerListener(new AddServer());
+		gui.addNewCustListener(new AddCustomer());
 		
 	}
 	
@@ -137,6 +141,7 @@ public class CafeGUIController {
 			BigDecimal price = new BigDecimal(0);
 			
 			cafe.addOrder(inputString, custName, itemChoice, price);
+			cafeTable.addRow();
 		}
 	}
 	

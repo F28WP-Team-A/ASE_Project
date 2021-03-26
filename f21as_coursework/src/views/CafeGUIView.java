@@ -246,6 +246,10 @@ public class CafeGUIView extends JFrame {
 		return itemList;
 	}
 	
+	public CafeTableModel getTableModel() {
+		return tableModel;
+	}
+	
 	/*
 	 * Create South Panel for servers
 	 */

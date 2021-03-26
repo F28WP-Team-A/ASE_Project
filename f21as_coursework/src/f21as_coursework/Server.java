@@ -28,7 +28,7 @@ public class Server extends Thread{
 		while(!done) {
 			try {
 				System.out.println("Consumer "+ threadNum +" sleeping");
-				Thread.sleep(2000);
+				Thread.sleep(10000);
 			}
 			catch (InterruptedException e) {
 				e.printStackTrace();

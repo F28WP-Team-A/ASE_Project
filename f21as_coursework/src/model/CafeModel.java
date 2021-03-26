@@ -121,42 +121,42 @@ public class CafeModel {
 		}
 	}
 	
-	public void addOrder(String id, String name, String item, BigDecimal price) {
-		String custName = "";
-		for(int i = 1; i< orders.getNumberOfOrders(); i++) {
-			if(orders.getOrderItem(i).getId().equals(id)) {
-				custName += customers.getCustomer(orders.getOrderItem(i).getId()).getCustName();
-				break;
+	public void addOrder(String id, String nameInput, String item, BigDecimal price) {
+		try {
+			String custName = "";
+			System.out.println("Adding id:" + id);
+			for(int i = 1; i< orders.getNumberOfOrders(); i++) {
+				if(orders.getOrderItem(i).getId().equals(id)) {
+					custName += customers.getCustomer(orders.getOrderItem(i).getId()).getCustName();
+					break;
+				}
+				else {
+					custName    = nameInput;
+					String []  name = custName.split(" ");
+					
+					customers.addCustomer(new Customer( new Name(name[0], name[1]), String.valueOf(7)));
+				}	
 			}
-			else {
-				custName    = name;
-				String []  name = custName.split(" ");
-				
-				customers.addCustomer(new Customer( new Name(name[0], name[1]), String.valueOf(7)));
-			}	
-		}
-		
-		for(Entry<String, Items> i : items.entrySet()) {
-			if(i.getValue().getID().equals(itemChoice)) {
-				price =  price.add(i.getValue().getCost());
+			
+			for(Entry<String, Items> i : items.entrySet()) {
+				if(i.getValue().getID().equals(item)) {
+					price =  price.add(i.getValue().getCost());
+				}
+			}
+			
+			int itemNum = items.getMapSize() + 1;
+			
+			System.out.println(itemNum + " "+ id + " "+ LocalDateTime.now() + " "+ item + " "+ price);
+			
+			orders.addDetails(new Order(itemNum, id, LocalDateTime.now(), item, price));
+			
+			
+			
+			for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
+				System.out.println(s.toString());
 			}
 		}
 		
-		System.out.println(currentCustomerNum + " "+ inputString + " "+ LocalDateTime.now() + " "+ itemChoice + " "+ price);
-		
-		orders.addDetails(new Order(currentCustomerNum, inputString, LocalDateTime.now(), itemChoice, price));
-		
-		
-		
-		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
-			System.out.println(s.toString());
-		}
-		
-		tableModel.addRow(orders);
-		
-		
-		
-		}
 		catch(NullPointerException n) {
 			JOptionPane.showMessageDialog(null, "Invalid customer number");
 			n.printStackTrace();
@@ -171,6 +171,6 @@ public class CafeModel {
 			ioe.printStackTrace();
 			System.out.println("ioe exception");
 		}
-			
+	}	
 
 }
