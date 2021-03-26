@@ -3,8 +3,12 @@ package model;
 import f21as_coursework.*;
 import views.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import controllers.*;
@@ -116,5 +120,57 @@ public class CafeModel {
 			return Integer.toString(processingTime-=1);
 		}
 	}
+	
+	public void addOrder(String id, String name, String item, BigDecimal price) {
+		String custName = "";
+		for(int i = 1; i< orders.getNumberOfOrders(); i++) {
+			if(orders.getOrderItem(i).getId().equals(id)) {
+				custName += customers.getCustomer(orders.getOrderItem(i).getId()).getCustName();
+				break;
+			}
+			else {
+				custName    = name;
+				String []  name = custName.split(" ");
+				
+				customers.addCustomer(new Customer( new Name(name[0], name[1]), String.valueOf(7)));
+			}	
+		}
+		
+		for(Entry<String, Items> i : items.entrySet()) {
+			if(i.getValue().getID().equals(itemChoice)) {
+				price =  price.add(i.getValue().getCost());
+			}
+		}
+		
+		System.out.println(currentCustomerNum + " "+ inputString + " "+ LocalDateTime.now() + " "+ itemChoice + " "+ price);
+		
+		orders.addDetails(new Order(currentCustomerNum, inputString, LocalDateTime.now(), itemChoice, price));
+		
+		
+		
+		for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
+			System.out.println(s.toString());
+		}
+		
+		tableModel.addRow(orders);
+		
+		
+		
+		}
+		catch(NullPointerException n) {
+			JOptionPane.showMessageDialog(null, "Invalid customer number");
+			n.printStackTrace();
+		}
+	//	catch(IndexOutOfBoundsException i) {
+	//		JOptionPane.showMessageDialog(null, "Invalid number of scores");
+	//	}
+		catch(NumberFormatException f) {
+			JOptionPane.showMessageDialog(null, "Score must be made up of numbers only");
+		}
+		catch(IncorrectOrderException ioe) {
+			ioe.printStackTrace();
+			System.out.println("ioe exception");
+		}
+			
 
 }

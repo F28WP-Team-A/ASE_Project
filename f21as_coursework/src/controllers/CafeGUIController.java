@@ -2,9 +2,16 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
 import f21as_coursework.*;
 import model.CafeModel;
 import views.*;
+
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /*
@@ -122,7 +129,18 @@ public class CafeGUIController {
 		}
 	}
 	
-	public class AddServer implements ActionListener{
+	public class AddCustomer implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			String 		inputString 	= gui.getCustIDInput();
+			String		custName    = gui.getCustName();
+			String 		itemChoice 	= gui.getItemChoice();
+			BigDecimal price = new BigDecimal(0);
+			
+			cafe.addOrder(inputString, custName, itemChoice, price);
+		}
+	}
+	
+	public class AddServer implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			// TODO Make add server number dynamic

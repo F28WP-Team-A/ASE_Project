@@ -217,10 +217,9 @@ public class CafeGUIView extends JFrame {
 		border.setTitleJustification(TitledBorder.CENTER);
 		centrePanel.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), border));	// Gives the JPanel a BevelBorder and puts the TitledBorder within the BevelBorder.
 		
-		ArrayList<ArrayList<String>> allOrders = Manager.indexOrders(orders, customers, items);
 		String [] 		columnHeaders 	= {"ID", "Name", "No. of Items", "Price"};										// String Array containing the column headers for the JTable.
 
-		tableModel 						= new CafeTableModel(orders, customers, items, allOrders, columnHeaders);			// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
+		tableModel 						= new CafeTableModel(orders, customers, items, columnHeaders);			// Instantiates a new CompTableModel instance with a CompetitorList and column headers.
 		sorter 							= new TableRowSorter<CafeTableModel>(tableModel);						// Instantiates a new TableRowSorter for the custom CompTableModel.
 
 		
@@ -285,6 +284,19 @@ public class CafeGUIView extends JFrame {
 		this.add(southPanel, BorderLayout.SOUTH);	
 		
 	}
+	
+	public String getCustIDInput() {
+		return customerID.getText().trim();
+	}
+	
+	public String getItemChoice() {
+		return itemsList.getSelectedItem().toString();
+	}
+	
+	public String getCustName() {
+		return customerName.getText().trim();
+	}
+	
 	
 	/*
 	 * Updates the text in the JTextPane of server1
@@ -356,4 +368,5 @@ public class CafeGUIView extends JFrame {
 		submitNewSpeed.addActionListener(al);
 		System.out.println("Action Listener added");
 	}
+	
 }

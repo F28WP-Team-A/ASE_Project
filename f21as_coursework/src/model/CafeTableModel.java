@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import f21as_coursework.CustomerList;
 import f21as_coursework.ItemList;
+import f21as_coursework.Manager;
 import f21as_coursework.OrderList;
 
 public class CafeTableModel extends AbstractTableModel {
@@ -28,13 +29,12 @@ public class CafeTableModel extends AbstractTableModel {
 	 * Array which becomes the formatted data used
 	 * in the table.
 	 */
-	public CafeTableModel(OrderList orders , CustomerList customers,ItemList items, 
-							ArrayList<ArrayList<String>> allOrders, 
+	public CafeTableModel(OrderList orders , CustomerList customers,ItemList items,
 							String [] headers) {
 		this.orders = orders;
 		this.customers = customers;
 		this.items = items;
-		this.allOrders = allOrders;
+		allOrders = Manager.indexOrders(orders, customers, items);
 		rowData = new Object[allOrders.size()][4];
 		System.out.println(orders.getNumberOfOrders());
 		System.out.println(rowData.length);
@@ -129,15 +129,17 @@ public class CafeTableModel extends AbstractTableModel {
 		return rowData[rowIndex][columnIndex];
 	}
 	
-	public void addRow(OrderList orders) {
-		rowData[orders.getNumberOfOrders()-1][0]	= orders.getOrderItem(orders.getNumberOfOrders()).getId();
+	public void addRow() {
+		allOrders = Manager.indexOrders(orders, customers, items);
+		ArrayList<String> newOrder = allOrders.get(allOrders.size()-1);
+		rowData[allOrders.size()-1][0]	= newOrder.get(0);;
 		System.out.println("No. of orders: " + orders.getOrderItem(orders.getNumberOfOrders()).getId());
 		System.out.println("Stack trace: " + customers.getCustomer(orders.getOrderItem(orders.getNumberOfOrders()).getId()));
-		rowData[orders.getNumberOfOrders()-1][1]	= customers.getCustomer(orders.getOrderItem(orders.getNumberOfOrders()).getId()).getCustName();
-		rowData[orders.getNumberOfOrders()-1][2]	= orders.getOrderItem(orders.getNumberOfOrders()).getItemDetails();
-		rowData[orders.getNumberOfOrders()-1][3]	= orders.getOrderItem(orders.getNumberOfOrders()).getPrice();
+		rowData[allOrders.size()-1][1]	= newOrder.get(1);
+		rowData[allOrders.size()-1][2]	= getNumItems(newOrder);
+		rowData[allOrders.size()-1][3]	= newOrder.get(2);
 		
-	    this.fireTableRowsInserted(orders.getNumberOfOrders() - 1, orders.getNumberOfOrders() - 1);
+	    this.fireTableRowsInserted(allOrders.size()-1, allOrders.size()-1);
 	}
 
 
