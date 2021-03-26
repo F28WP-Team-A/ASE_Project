@@ -41,11 +41,11 @@ public class Main {
 		Thread producerThread = new Thread(q);
 		producerThread.start();
 		
-		ThreadTestOne serverOne = new ThreadTestOne(so);
+		Server serverOne = new Server(so, 1);
 		Thread consumerThreadOne = new Thread(serverOne);
 		consumerThreadOne.start();
 		
-		ThreadTestTwo serverTwo = new ThreadTestTwo(so);
+		Server serverTwo = new Server(so, 2);
 		Thread consumerThreadTwo = new Thread(serverTwo);
 		consumerThreadTwo.start();
 		

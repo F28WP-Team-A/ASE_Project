@@ -1,35 +1,40 @@
 package f21as_coursework;
 
+import model.*;
+
 public class Server extends Thread{
 	
-	private Order order;
-	private boolean available = true;
-	private boolean emptyQueue = false;
+	private SharedObject so;
+	private int threadNum;
 	
+	public Server(SharedObject so, int i) {
+		this.so = so;
+		threadNum =i;
+	}
 	
-	public Server() {}
-	
-	public void run () {
-		while(emptyQueue == false) {
-			treatOrder();	
+	@Override
+	public void run() {
+		boolean done = false;
+		
+		while(!done) {
+			try {
+				System.out.println("Consumer "+ threadNum +" sleeping");
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			if(so.getDone()) {
+				System.out.println("Consumer "+ threadNum +" done");
+				done = true;
+				break;
+			}
+			
+			String order = so.get();
+			System.out.println("Thred 1 sees done as: " + done);
 		}
-	}
-	
-	public void treatOrder() {
-		available = false;
-		System.out.println(order.getPrice());
-		try {
-			wait(5000);
-		}catch (InterruptedException e) {}	
-		available = true;
-	}
-	
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-	
-	public void setEmptyQueue(boolean emptyQueue) {
-		this.emptyQueue = emptyQueue;
+		
 	}
 	
 
