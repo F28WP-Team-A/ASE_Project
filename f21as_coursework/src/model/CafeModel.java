@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 import controllers.*;
-import controllers.CafeGUIController.OrderProcessor;
 
 /*
  * The CafeModel class is designed to be the model

@@ -34,6 +34,10 @@ public class Main {
 		
 		ArrayList<ArrayList<String>> allOrders = Manager.indexOrders(orders, customers, items);
 		
+		CafeGUIView gui = new CafeGUIView(orders, customers, items);
+		
+		CafeGUIController controller = new CafeGUIController(gui, cafe);
+		
 		SharedObject so = new SharedObject();
 		
 		QueueManager q = new QueueManager(so, allOrders, cafe);
@@ -41,19 +45,17 @@ public class Main {
 		Thread producerThread = new Thread(q);
 		producerThread.start();
 		
-		Server serverOne = new Server(so, 1);
+		Server serverOne = new Server(so, gui, 1);
 		Thread consumerThreadOne = new Thread(serverOne);
 		consumerThreadOne.start();
 		
-		Server serverTwo = new Server(so, 2);
+		Server serverTwo = new Server(so, gui, 2);
 		Thread consumerThreadTwo = new Thread(serverTwo);
 		consumerThreadTwo.start();
 		
 
 		
-//		CafeGUIView gui = new CafeGUIView(orders, customers, items);
-//		
-//		CafeGUIController controller = new CafeGUIController(gui, cafe);
+
 	}	
 }		
 

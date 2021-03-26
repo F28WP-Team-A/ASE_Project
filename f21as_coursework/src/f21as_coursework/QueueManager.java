@@ -26,7 +26,7 @@ public class QueueManager implements Runnable {
 			System.out.println("Number of orders: " + orders.size());
 			try {
 				System.out.println("Producer sleeping");
-				Thread.sleep(50);
+				Thread.sleep(1000);
 			}
 			catch (InterruptedException e) {
 				

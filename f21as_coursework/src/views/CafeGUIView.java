@@ -290,8 +290,20 @@ public class CafeGUIView extends JFrame {
 	 * Updates the text in the JTextPane of server1
 	 * with the String input as a parameter.
 	 */
-	public void updateSeverOne(String order) {
-		serverOne.setText(order);
+	public void updateSever(int i, String order) {
+		
+		switch(i) {
+		
+		case 1:
+			serverOne.setText(order);
+			break;
+			
+		case 2:
+			serverTwo.setText(order);
+			break;
+		}
+		
+		
 	}
 	
 	/*

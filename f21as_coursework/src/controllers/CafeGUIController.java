@@ -30,10 +30,10 @@ public class CafeGUIController {
 	public CafeGUIController(CafeGUIView gui, CafeModel cafe) {
 		this.gui 	= gui;
 		this.cafe 	= cafe;
-		updateServer();
+//		updateServer();
 		queueCountdown();
-		gui.addUpdateSpeedListener(new UpdateSpeed());
-		gui.addNewServerListener(new AddServer());
+//		gui.addUpdateSpeedListener(new UpdateSpeed());
+//		gui.addNewServerListener(new AddServer());
 		
 	}
 	
@@ -45,7 +45,7 @@ public class CafeGUIController {
 	private void updateServer() {
 		int counter = 6;
 		
-		timer = new Timer(cafe.getProcessingSpeed()*1000, new OrderProcessor());
+//		timer = new Timer(cafe.getProcessingSpeed()*1000, new OrderProcessor());
 		timer.start();
 	}
 	
@@ -77,12 +77,12 @@ public class CafeGUIController {
 	 * It calls the CafeModel method getNextOrder to
 	 * provide the String for the updateServerOne method.
 	 */
-	public class OrderProcessor implements ActionListener{
-		
-		public void actionPerformed(ActionEvent e) {
-			gui.updateSeverOne(cafe.getNextOrder());
-		}
-	}
+//	public class OrderProcessor implements ActionListener{
+//		
+//		public void actionPerformed(ActionEvent e) {
+//			gui.updateSever(cafe.getNextOrder());
+//		}
+//	}
 	
 	/*
 	 * The QueueTimer class crates an action listener
