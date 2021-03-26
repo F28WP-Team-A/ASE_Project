@@ -1,5 +1,7 @@
 package f21as_coursework;
 
+import java.util.concurrent.ExecutionException;
+
 import javax.swing.SwingWorker;
 
 import model.*;
@@ -38,7 +40,7 @@ public class Server extends Thread{
 				break;
 			}
 			
-			class ServeOrders extends SwingWorker<String, String> {
+			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 				@Override
 				protected String doInBackground() throws Exception {
@@ -46,12 +48,13 @@ public class Server extends Thread{
 					return order;
 				}
 				
+				@Override
 				protected void done() {
 					try {
 						gui.updateSever(threadNum, get());
 					}
 					catch(ExecutionException x) {
-					
+						x.printStackTrace();
 					}
 					catch(InterruptedException e) {
 						e.printStackTrace();
@@ -59,9 +62,9 @@ public class Server extends Thread{
 					
 				}
 				
-			}
+			};
 			
-			
+			worker.execute();
 			
 			System.out.println("Thred 1 sees done as: " + done);
 		}
