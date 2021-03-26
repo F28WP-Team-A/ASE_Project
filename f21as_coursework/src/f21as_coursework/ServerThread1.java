@@ -9,7 +9,9 @@ public class ServerThread1 implements Runnable{
 	
 	SharedOrderObject SOO;
 	
-	
+	public ServerThread1(SharedOrderObject s) {
+		this.SOO = s;
+	}
 	
 	public void run() {
 		while(SOO.notEmpty()) {

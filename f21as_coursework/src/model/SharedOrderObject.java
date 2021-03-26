@@ -14,17 +14,21 @@ public class SharedOrderObject {
 	private static OrderList orders;
 	private static CustomerList customers;
 	private static ItemList items;
-	private static int Counter = 0;
-	private static boolean empty = false;
+	private static int counter;
+	private static boolean empty;
+	private static boolean done;
 	//this allows for calling the static wait and notifyAll methods in a static method
 	// if i change things away from static the entire thing breaks
-	private static Object obj = new Object();
-	private static String OrderItem = "";
+	private static Object obj;
+	private static String orderItem;
 	// constructor
 	public SharedOrderObject(OrderList orders, ItemList items, CustomerList customers){
 		this.orders = orders;
 		this.items = items;
 		this.customers = customers;
+		this.counter = 0;
+		this.empty = true;
+		this.done = false;
 	}
 	
 	private static ArrayList<ArrayList<String>> completeOrders(OrderList orders,
@@ -82,9 +86,9 @@ public class SharedOrderObject {
 	
 	public synchronized static String getCustomerOrder() {
 		
-		OrderItem =(completeOrders(orders, customers, items).get(Counter).toString());
-		Counter ++;
-		return OrderItem;
+		orderItem =(completeOrders(orders, customers, items).get(counter).toString());
+		counter ++;
+		return orderItem;
 	};
 	
 	
@@ -103,7 +107,7 @@ public class SharedOrderObject {
 	}
 	// is used for the while loop to loop through the threads
 	public static boolean notEmpty() {
-		if(Counter < completeOrders(orders, customers, items).size()) {
+		if(counter < completeOrders(orders, customers, items).size()) {
 		return true;
 		}
 		else 

@@ -2,7 +2,11 @@ package f21as_coursework;
 import model.SharedOrderObject;
 public class ServerThread2 implements Runnable {
 	
-		SharedOrderObject SOO; 
+		SharedOrderObject SOO;
+		
+		public ServerThread2(SharedOrderObject s) {
+			this.SOO = s;
+		}
 		
 		public void run() {
 			while(SOO.notEmpty()) {
