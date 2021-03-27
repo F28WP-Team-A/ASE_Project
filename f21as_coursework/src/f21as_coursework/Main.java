@@ -34,9 +34,13 @@ public class Main {
 		
 		ArrayList<ArrayList<String>> allOrders = Manager.indexOrders(orders, customers, items);
 		
+		System.out.println("Foo123 price: " + items.getPrice("DRINK206"));
+		
 		CafeGUIView gui = new CafeGUIView(orders, customers, items);
 		
-		CafeGUIController controller = new CafeGUIController(gui, cafe);
+		NewOrderSharedObj orderSO = new NewOrderSharedObj();
+		
+		CafeGUIController controller = new CafeGUIController(gui, cafe, orderSO);
 		
 		SharedObject so = new SharedObject();
 		
@@ -53,6 +57,11 @@ public class Main {
 		Thread consumerThreadTwo = new Thread(serverTwo);
 		consumerThreadTwo.start();
 		
+		NewOrderMgr newOrderManager = new NewOrderMgr(so, orders, customers, cafe,
+						gui, controller, items, orderSO);
+		
+		Thread newOrderThread = new Thread(newOrderManager);
+		newOrderThread.start();		
 
 		
 

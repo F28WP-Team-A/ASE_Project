@@ -1,5 +1,6 @@
 package f21as_coursework;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -124,6 +125,23 @@ public class ItemList {
 			}
 
 			return menu;
+		}
+		
+		
+		/*
+		 * Returns price of item entered in parameter
+		 */
+		public BigDecimal getPrice(String itemChoice) {
+			
+			BigDecimal price = new BigDecimal(0);
+			
+			for(Entry<String, Items> i : items.entrySet()) {
+				if(i.getValue().getID().equals(itemChoice)) {
+					price =  price.add(i.getValue().getCost());
+				}
+			}
+			
+			return price;
 		}
 		
 	}

@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import f21as_coursework.*;
 import model.CafeModel;
 import model.CafeTableModel;
+import model.NewOrderSharedObj;
 import views.*;
 
 import javax.swing.JOptionPane;
@@ -34,12 +35,16 @@ public class CafeGUIController {
 	private CafeModel 	cafe;
 	private CafeTableModel cafeTable;
 	private Timer		timer;
+	private boolean newOrder;
+	private NewOrderSharedObj so;
 	
 	
-	public CafeGUIController(CafeGUIView gui, CafeModel cafe) {
+	public CafeGUIController(CafeGUIView gui, CafeModel cafe, NewOrderSharedObj so) {
 		this.gui 	= gui;
 		this.cafe 	= cafe;
 		this.cafeTable = gui.getTableModel();
+		this.so = so;
+		newOrder = false;
 //		updateServer();
 		queueCountdown();
 //		gui.addUpdateSpeedListener(new UpdateSpeed());
@@ -79,6 +84,22 @@ public class CafeGUIController {
 		countdown.start();
 	}
 	
+	
+	public synchronized boolean newOrderCheck() {
+		
+		System.out.println("New Order Manager getting...");
+		while(!newOrder) {
+			try {
+				wait();
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		notifyAll();
+		return newOrder;
+	}
 	
 	/*
 	 * The OrderProcessor class crates an action listener
@@ -135,13 +156,7 @@ public class CafeGUIController {
 	
 	public class AddCustomer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			String 		inputString 	= gui.getCustIDInput();
-			String		custName    = gui.getCustName();
-			String 		itemChoice 	= gui.getItemChoice();
-			BigDecimal price = new BigDecimal(0);
-			
-			cafe.addOrder(inputString, custName, itemChoice, price);
-			cafeTable.addRow();
+			so.put(gui.getNewOrderInfo());
 		}
 	}
 	

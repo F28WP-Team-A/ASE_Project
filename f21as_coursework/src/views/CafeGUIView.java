@@ -301,6 +301,15 @@ public class CafeGUIView extends JFrame {
 		return customerName.getText().trim();
 	}
 	
+	public ArrayList<String> getNewOrderInfo(){
+		ArrayList<String> newOrder = new ArrayList<String>();
+		
+		newOrder.add(customerID.getText().trim());
+		newOrder.add(itemsList.getSelectedItem().toString());
+		newOrder.add(customerName.getText().trim());
+		
+		return newOrder;
+	}
 	
 	/*
 	 * Updates the text in the JTextPane of server1
@@ -372,5 +381,4 @@ public class CafeGUIView extends JFrame {
 		submitNewSpeed.addActionListener(al);
 		System.out.println("Action Listener added");
 	}
-	
 }
