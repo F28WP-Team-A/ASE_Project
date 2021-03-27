@@ -133,8 +133,6 @@ public class CafeTableModel extends AbstractTableModel {
 		allOrders = Manager.indexOrders(orders, customers, items);
 		ArrayList<String> newOrder = allOrders.get(allOrders.size()-1);
 		rowData[allOrders.size()-1][0]	= newOrder.get(0);
-		System.out.println("No. of orders: " + orders.getOrderItem(orders.getNumberOfOrders()).getId());
-		System.out.println("Stack trace: " + customers.getCustomer(orders.getOrderItem(orders.getNumberOfOrders()).getId()));
 		rowData[allOrders.size()-1][1]	= newOrder.get(1);
 		rowData[allOrders.size()-1][2]	= getNumItems(newOrder);
 		rowData[allOrders.size()-1][3]	= newOrder.get(2);

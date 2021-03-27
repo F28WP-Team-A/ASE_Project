@@ -35,7 +35,6 @@ public class CustomerList {
 	 * Takes in as a parameter a Customer object to be added.
 	 */
 	public void addCustomer(Customer customer) {
-		
 		if(this.customers.size() == 0) {
 			this.customers.add(customer);
 		}

@@ -27,7 +27,7 @@ public class Server extends Thread{
 		
 		while(!done) {
 			try {
-				System.out.println("Consumer "+ threadNum +" sleeping");
+//				System.out.println("Consumer "+ threadNum +" sleeping");
 				Thread.sleep(10000);
 			}
 			catch (InterruptedException e) {
@@ -35,7 +35,7 @@ public class Server extends Thread{
 			}
 			
 			if(so.getDone()) {
-				System.out.println("Consumer "+ threadNum +" done");
+//				System.out.println("Consumer "+ threadNum +" done");
 				done = true;
 				break;
 			}

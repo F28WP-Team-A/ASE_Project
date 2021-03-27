@@ -44,7 +44,7 @@ public class Main {
 		
 		SharedObject so = new SharedObject();
 		
-		QueueManager q = new QueueManager(so, allOrders, cafe);
+		QueueManager q = new QueueManager(so, orders, cafe, customers, items);
 		
 		Thread producerThread = new Thread(q);
 		producerThread.start();

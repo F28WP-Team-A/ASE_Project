@@ -65,7 +65,6 @@ public class NewOrderMgr implements Runnable {
 			System.out.println("New Order Manager Finished Waiting...");
 			
 			ArrayList<String> newOrder = orderSO.get();
-			System.out.println("New Order: " + newOrder);
 			
 			String inputString = newOrder.get(0);
 			String newName = newOrder.get(2);
@@ -74,7 +73,6 @@ public class NewOrderMgr implements Runnable {
 			
 			try {
 				String custName = "";
-				System.out.println("Adding id:" + inputString);
 				for(int i = 1; i< orders.getNumberOfOrders(); i++) {
 					if(orders.getOrderItem(i).getId().equals(inputString)) {
 						custName += customers.getCustomer(orders.getOrderItem(i).getId()).getCustName();
@@ -84,27 +82,17 @@ public class NewOrderMgr implements Runnable {
 						custName    = newName;
 						String []  name = custName.split(" ");
 						
-						customers.addCustomer(new Customer( new Name(name[0], name[1]), String.valueOf(7)));
+						customers.addCustomer(new Customer( new Name(name[0], name[1]), inputString));
 					}	
 				}
 				
 				int itemNum = orders.getNumberOfOrders()+1;
-				
-				System.out.println(itemNum + " "+ inputString + " "+ LocalDateTime.now() + " "+ itemChoice + " "+ price);
 				
 				Order order = new Order(itemNum, inputString, LocalDateTime.now(), itemChoice, price);
 				
 				orders.addDetails(order);
 				
 				gui.getTableModel().addRow();		
-				
-				System.out.println("Customer IDs: " + customers.getCustomerIDs());
-				
-				
-				
-				for(ArrayList<String> s : Manager.indexOrders(orders, customers, items)) {
-					System.out.println(s.toString());
-				}
 			}
 			
 			catch(NullPointerException n) {

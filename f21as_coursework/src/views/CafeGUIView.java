@@ -305,6 +305,7 @@ public class CafeGUIView extends JFrame {
 		ArrayList<String> newOrder = new ArrayList<String>();
 		
 		newOrder.add(customerID.getText().trim());
+		System.out.println("New ID: " + customerID.getText().trim());
 		newOrder.add(itemsList.getSelectedItem().toString());
 		newOrder.add(customerName.getText().trim());
 		
