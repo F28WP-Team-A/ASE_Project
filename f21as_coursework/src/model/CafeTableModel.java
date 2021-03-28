@@ -56,6 +56,7 @@ public class CafeTableModel extends AbstractTableModel {
 	private void getRowData() {
 		int i = 0;
 		for(ArrayList<String> order : allOrders) {
+			System.out.println("Adding order row: " + order);
 			rowData[i][0]	= order.get(0);
 			rowData[i][1]	= order.get(1);
 			rowData[i][2]	= getNumItems(order);
@@ -137,15 +138,21 @@ public class CafeTableModel extends AbstractTableModel {
 		rowData[allOrders.size()-1][2]	= getNumItems(newOrder);
 		rowData[allOrders.size()-1][3]	= newOrder.get(2);
 		
-	    this.fireTableRowsInserted(allOrders.size()-1, allOrders.size()-1);
+	    this.fireTableRowsInserted(getRowCount()-1, getRowCount()-1);
 	}
 	
 	public void updateOrder(int i) {
 		i--;
 		rowData[i][2] = getNumItems(Manager.indexOrders(orders, customers, items).get(i));
-		System.out.println("Rowdata: " + rowData[i][2]);
 		
 		this.fireTableRowsUpdated(i, i);
+	}
+	
+	public void removeRow() {
+		allOrders.remove(0);
+		rowData = new Object[allOrders.size()+25][4];
+		getRowData();
+		this.fireTableDataChanged();
 	}
 
 

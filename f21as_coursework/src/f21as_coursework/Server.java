@@ -51,7 +51,9 @@ public class Server extends Thread{
 				@Override
 				protected void done() {
 					try {
-						gui.updateSever(threadNum, get());
+						String nextOrder = get();
+						gui.updateSever(threadNum, nextOrder);
+						gui.removeOrder();
 					}
 					catch(ExecutionException x) {
 						x.printStackTrace();

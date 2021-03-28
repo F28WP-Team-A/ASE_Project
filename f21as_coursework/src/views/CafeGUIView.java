@@ -256,6 +256,10 @@ public class CafeGUIView extends JFrame {
 		tableModel.updateOrder(i);
 	}
 	
+	public void removeOrder() {
+		tableModel.removeRow();
+	}
+	
 	/*
 	 * Create South Panel for servers
 	 */
