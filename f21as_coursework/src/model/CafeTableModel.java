@@ -17,6 +17,7 @@ public class CafeTableModel extends AbstractTableModel {
 	private Object [] [] rowData;
 	private ItemList items;
 	private ArrayList<ArrayList<String>> allOrders;
+	private int count;
 	
 	/*
 	 * Constructor creates an instance of the
@@ -41,6 +42,7 @@ public class CafeTableModel extends AbstractTableModel {
 		getRowData();
 		System.out.println(rowData.length);
 		columnHeaders = headers;
+		count = allOrders.size();
 	}
 	
 	/*
@@ -130,17 +132,17 @@ public class CafeTableModel extends AbstractTableModel {
 		return rowData[rowIndex][columnIndex];
 	}
 	
-	public void addRow() {
-//		allOrders = Manager.indexOrders(orders, customers, items);
-		System.out.println("All orders size: " + allOrders.size());
-		System.out.println("All orders:  " + allOrders);
-		ArrayList<String> newOrder = allOrders.get(allOrders.size()-1);
-		rowData[allOrders.size()-1][0]	= newOrder.get(0);
-		rowData[allOrders.size()-1][1]	= newOrder.get(1);
-		rowData[allOrders.size()-1][2]	= getNumItems(newOrder);
-		rowData[allOrders.size()-1][3]	= newOrder.get(2);
+	public void addRow() { 
+		ArrayList<ArrayList<String>> allOrdersUpdate = Manager.indexOrders(orders, customers, items);
+		ArrayList<String> newOrder = allOrdersUpdate.get(allOrdersUpdate.size()-1);
+		allOrders.add(newOrder);
+		count = allOrders.size()-1;
+		rowData[count][0]	= newOrder.get(0);
+		rowData[count][1]	= newOrder.get(1);
+		rowData[count][2]	= getNumItems(newOrder);
+		rowData[count][3]	= newOrder.get(2);
 		
-	    this.fireTableRowsInserted(allOrders.size()-1, allOrders.size()-1);
+	    this.fireTableRowsInserted(count, count);
 	}
 	
 	public void updateOrder(int i) {
