@@ -329,7 +329,7 @@ public class Manager {
 		BigDecimal price = new BigDecimal(0);
 			
 		for(int i = 1; i < orders.getNumberOfOrders()+1; i++) {
-			
+//			System.out.println("Manager 333 i: " + i);
 			if(orders.getOrderItem(i).getId().equals(customerID) 
 				&& orders.getOrderItem(i).getItemDetails().substring(1,5).equalsIgnoreCase("food")) {
 				food += 1;

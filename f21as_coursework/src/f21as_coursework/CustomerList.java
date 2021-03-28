@@ -35,7 +35,6 @@ public class CustomerList {
 	 * Takes in as a parameter a Customer object to be added.
 	 */
 	public void addCustomer(Customer customer) {
-		
 		if(this.customers.size() == 0) {
 			this.customers.add(customer);
 		}
@@ -104,6 +103,16 @@ public class CustomerList {
 	 */
 	public int getCustListSize() {
 		return this.customers.size();
+	}
+	
+	public boolean existingCustomer(String id) {
+		for(Customer c : this.customers) {
+			if(c.getCustID().equals(id)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 }

@@ -1,9 +1,12 @@
 package model;
 
+import java.util.ArrayList;
+
 import javax.swing.table.AbstractTableModel;
 
 import f21as_coursework.CustomerList;
 import f21as_coursework.ItemList;
+import f21as_coursework.Manager;
 import f21as_coursework.OrderList;
 
 public class CafeTableModel extends AbstractTableModel {
@@ -13,6 +16,8 @@ public class CafeTableModel extends AbstractTableModel {
 	private String [] columnHeaders;
 	private Object [] [] rowData;
 	private ItemList items;
+	private ArrayList<ArrayList<String>> allOrders;
+	private int count;
 	
 	/*
 	 * Constructor creates an instance of the
@@ -25,16 +30,16 @@ public class CafeTableModel extends AbstractTableModel {
 	 * Array which becomes the formatted data used
 	 * in the table.
 	 */
-	public CafeTableModel(OrderList orders , CustomerList customers,ItemList items, String [] headers) {
+	public CafeTableModel(OrderList orders , CustomerList customers,ItemList items,
+							String [] headers) {
 		this.orders = orders;
 		this.customers = customers;
 		this.items = items;
-		rowData = new Object[orders.getNumberOfOrders()+25][4];
-		System.out.println(orders.getNumberOfOrders());
-		System.out.println(rowData.length);
+		allOrders = Manager.indexOrders(orders, customers, items);
+		rowData = new Object[allOrders.size()+25][4];
 		getRowData();
-		System.out.println(rowData.length);
 		columnHeaders = headers;
+		count = allOrders.size();
 	}
 	
 	/*
@@ -48,15 +53,27 @@ public class CafeTableModel extends AbstractTableModel {
 	 * OrderList.
 	 */
 	private void getRowData() {
-		for(int i = 0; i< orders.getNumberOfOrders(); i++) {
-			String placeholder = orders.getOrderItem(i+1).getItemDetails().replaceAll("\\[", "").replaceAll("\\]",""); 
-			rowData[i][0]	= orders.getOrderItem(i+1).getId();
-			rowData[i][1]	= customers.getCustomer(orders.getOrderItem(i+1).getId()).getCustName();
-			rowData[i][2]	= items.get(placeholder).getDescription();
-			rowData[i][3]	= orders.getOrderItem(i+1).getPrice();
-
+		int i = 0;
+		for(ArrayList<String> order : allOrders) {
+			rowData[i][0]	= order.get(0);
+			rowData[i][1]	= order.get(1);
+			rowData[i][2]	= getNumItems(order);
+			rowData[i][3]	= order.get(2);
+			i++;
 		}
 		
+	}
+	
+	/*
+	 * Returns the number of items in the order passed
+	 * in as a parameter as an int.
+	 */
+	private int getNumItems(ArrayList<String> order) {
+		int count = 0;
+		for(int i = 3; i < order.size(); i++) {
+			count += 1;
+		}
+		return count;
 	}
 	
 	@Override
@@ -115,15 +132,70 @@ public class CafeTableModel extends AbstractTableModel {
 		return rowData[rowIndex][columnIndex];
 	}
 	
-	public void addRow(OrderList orders) {
-		rowData[orders.getNumberOfOrders()-1][0]	= orders.getOrderItem(orders.getNumberOfOrders()).getId();
-		System.out.println("No. of orders: " + orders.getOrderItem(orders.getNumberOfOrders()).getId());
-		System.out.println("Stack trace: " + customers.getCustomer(orders.getOrderItem(orders.getNumberOfOrders()).getId()));
-		rowData[orders.getNumberOfOrders()-1][1]	= customers.getCustomer(orders.getOrderItem(orders.getNumberOfOrders()).getId()).getCustName();
-		rowData[orders.getNumberOfOrders()-1][2]	= orders.getOrderItem(orders.getNumberOfOrders()).getItemDetails();
-		rowData[orders.getNumberOfOrders()-1][3]	= orders.getOrderItem(orders.getNumberOfOrders()).getPrice();
+	/*
+	 * Adds a new row to the tables containing data of the
+	 * new order entered by the user.
+	 */
+	public void addRow() { 
+		ArrayList<ArrayList<String>> allOrdersUpdate = Manager.indexOrders(orders, customers, items);
+		ArrayList<String> newOrder = allOrdersUpdate.get(allOrdersUpdate.size()-1);
+		allOrders.add(newOrder);
+		count = allOrders.size()-1;
+		rowData[count][0]	= newOrder.get(0);
+		rowData[count][1]	= newOrder.get(1);
+		rowData[count][2]	= getNumItems(newOrder);
+		rowData[count][3]	= newOrder.get(2);
 		
-	    this.fireTableRowsInserted(orders.getNumberOfOrders() - 1, orders.getNumberOfOrders() - 1);
+	    this.fireTableRowsInserted(count, count);
+	}
+	
+	/*
+	 * Updates the order at the index i passed in as
+	 * a parameter. Specifically, the number of items
+	 * in that order is updated.
+	 */
+	public void updateOrder(int i) {
+		ArrayList<ArrayList<String>> orderUpdate = Manager.indexOrders(orders, customers, items);
+		ArrayList<String> orderForUpdate = new ArrayList<String> ();
+		
+		for(ArrayList<String> o : orderUpdate) {
+			if(o.get(0).equals(String.valueOf(i))) {
+				orderForUpdate = o;
+				break;
+			}
+		}
+		int index = getIndex(orderForUpdate.get(0));
+		rowData[index][2] = getNumItems(orderForUpdate);
+		allOrders.set(index, orderForUpdate);
+		this.fireTableRowsUpdated(index, index);
+	}
+	
+	/*
+	 * Returns the index of the order with an
+	 * id that matches the String i passed in
+	 * as a parameter. Index is returned as an
+	 * int.
+	 */
+	public int getIndex(String i) {
+		int index = 0;
+		for(int j = 0; j < allOrders.size(); j++) {
+			if(allOrders.get(j).get(0).equals(i)) {
+				index = j;
+			}
+		}
+		
+		return index;
+	}
+	
+	/*
+	 * Removes the top row of the table when it is
+	 * called by one of the server threads.
+	 */
+	public void removeRow() {
+		allOrders.remove(0);
+		rowData = new Object[allOrders.size()+25][4];
+		getRowData();
+		this.fireTableDataChanged();
 	}
 
 

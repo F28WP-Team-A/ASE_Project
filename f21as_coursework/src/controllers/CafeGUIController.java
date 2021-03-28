@@ -2,9 +2,18 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
 import f21as_coursework.*;
 import model.CafeModel;
+import model.CafeTableModel;
+import model.SharedObject;
 import views.*;
+
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /*
@@ -25,15 +34,20 @@ public class CafeGUIController {
 	private CafeGUIView gui;
 	private CafeModel 	cafe;
 	private Timer		timer;
+	private boolean newOrder;
+	private SharedObject so;
 	
 	
-	public CafeGUIController(CafeGUIView gui, CafeModel cafe) {
+	public CafeGUIController(CafeGUIView gui, CafeModel cafe, SharedObject so) {
 		this.gui 	= gui;
 		this.cafe 	= cafe;
-		updateServer();
+		this.so = so;
+		newOrder = false;
+//		updateServer();
 		queueCountdown();
-		gui.addUpdateSpeedListener(new UpdateSpeed());
-		gui.addNewServerListener(new AddServer());
+//		gui.addUpdateSpeedListener(new UpdateSpeed());
+//		gui.addNewServerListener(new AddServer());
+		gui.addNewCustListener(new AddCustomer());
 		
 	}
 	
@@ -45,7 +59,7 @@ public class CafeGUIController {
 	private void updateServer() {
 		int counter = 6;
 		
-		timer = new Timer(cafe.getProcessingSpeed()*1000, new OrderProcessor());
+//		timer = new Timer(cafe.getProcessingSpeed()*1000, new OrderProcessor());
 		timer.start();
 	}
 	
@@ -77,12 +91,12 @@ public class CafeGUIController {
 	 * It calls the CafeModel method getNextOrder to
 	 * provide the String for the updateServerOne method.
 	 */
-	public class OrderProcessor implements ActionListener{
-		
-		public void actionPerformed(ActionEvent e) {
-			gui.updateSeverOne(cafe.getNextOrder());
-		}
-	}
+//	public class OrderProcessor implements ActionListener{
+//		
+//		public void actionPerformed(ActionEvent e) {
+//			gui.updateSever(cafe.getNextOrder());
+//		}
+//	}
 	
 	/*
 	 * The QueueTimer class crates an action listener
@@ -122,7 +136,23 @@ public class CafeGUIController {
 		}
 	}
 	
-	public class AddServer implements ActionListener{
+	/*
+	 * When the submit button is clicked on the gui,
+	 * the actionPerformed method of the AddCumstomer
+	 * class calls the putNew method of the shared object
+	 * and passes the new order info in as a parameter.
+	 * 
+	 * The new order is then added to the shared object
+	 * and is retrieved by the NewOrderMgr thread to be
+	 * processed.
+	 */
+	public class AddCustomer implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			so.putNew(gui.getNewOrderInfo());
+		}
+	}
+	
+	public class AddServer implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			// TODO Make add server number dynamic

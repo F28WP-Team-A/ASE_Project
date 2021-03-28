@@ -3,12 +3,15 @@ package model;
 import f21as_coursework.*;
 import views.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import controllers.*;
-import controllers.CafeGUIController.OrderProcessor;
 
 /*
  * The CafeModel class is designed to be the model
@@ -117,5 +120,4 @@ public class CafeModel {
 			return Integer.toString(processingTime-=1);
 		}
 	}
-
 }

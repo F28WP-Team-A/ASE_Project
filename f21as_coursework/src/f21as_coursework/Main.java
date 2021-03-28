@@ -11,8 +11,7 @@ import javax.swing.JTable;
 
 import views.*;
 import controllers.*;
-import model.CafeModel;
-import model.SharedOrderObject;
+import model.*;
 
 public class Main {
 	
@@ -33,18 +32,36 @@ public class Main {
 		
 		CafeModel cafe = new CafeModel(orders, items, customers);
 		
-		SharedOrderObject SOO = new SharedOrderObject(orders, items, customers);
+		ArrayList<ArrayList<String>> allOrders = Manager.indexOrders(orders, customers, items);
 		
-		ServerThread1 serverThread1 = new ServerThread1();
-		ServerThread2 serverThread2 = new ServerThread2();
-		Thread thread1 = new Thread(serverThread1);
-		Thread thread2 = new Thread(serverThread2);
-	
-		thread1.start();
-		thread2.start();
-		//CafeGUIView gui = new CafeGUIView(orders, customers, items);
+		System.out.println("Foo123 price: " + items.getPrice("DRINK206"));
 		
-		//CafeGUIController controller = new CafeGUIController(gui, cafe);
+		CafeGUIView gui = new CafeGUIView(orders, customers, items);
+		
+		SharedObject so = new SharedObject();
+		
+		CafeGUIController controller = new CafeGUIController(gui, cafe, so);
+		
+		QueueManager q = new QueueManager(so, orders, cafe, customers, items);
+		
+		Thread producerThread = new Thread(q);
+		producerThread.start();
+		
+		Server serverOne = new Server(so, gui, 1);
+		Thread consumerThreadOne = new Thread(serverOne);
+		consumerThreadOne.start();
+		
+		Server serverTwo = new Server(so, gui, 2);
+		Thread consumerThreadTwo = new Thread(serverTwo);
+		consumerThreadTwo.start();
+		
+		NewOrderMgr newOrderManager = new NewOrderMgr(so, orders, customers, gui, items);
+		
+		Thread newOrderThread = new Thread(newOrderManager);
+		newOrderThread.start();		
+
+		
+
 	}	
 }		
 
