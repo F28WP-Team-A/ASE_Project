@@ -33,7 +33,6 @@ public class CafeGUIController {
 	
 	private CafeGUIView gui;
 	private CafeModel 	cafe;
-	private CafeTableModel cafeTable;
 	private Timer		timer;
 	private boolean newOrder;
 	private NewOrderSharedObj so;
@@ -42,7 +41,6 @@ public class CafeGUIController {
 	public CafeGUIController(CafeGUIView gui, CafeModel cafe, NewOrderSharedObj so) {
 		this.gui 	= gui;
 		this.cafe 	= cafe;
-		this.cafeTable = gui.getTableModel();
 		this.so = so;
 		newOrder = false;
 //		updateServer();

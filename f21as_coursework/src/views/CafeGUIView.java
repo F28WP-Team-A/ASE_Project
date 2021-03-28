@@ -246,8 +246,14 @@ public class CafeGUIView extends JFrame {
 		return itemList;
 	}
 	
-	public CafeTableModel getTableModel() {
-		return tableModel;
+	public void addTableRow() {
+		System.out.println("In add row to table");
+		tableModel.addRow();
+	}
+	
+	public void updateTable(int i) {
+		System.out.println("In update table");
+		tableModel.updateOrder(i);
 	}
 	
 	/*

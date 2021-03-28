@@ -139,6 +139,14 @@ public class CafeTableModel extends AbstractTableModel {
 		
 	    this.fireTableRowsInserted(allOrders.size()-1, allOrders.size()-1);
 	}
+	
+	public void updateOrder(int i) {
+		i--;
+		rowData[i][2] = getNumItems(Manager.indexOrders(orders, customers, items).get(i));
+		System.out.println("Rowdata: " + rowData[i][2]);
+		
+		this.fireTableRowsUpdated(i, i);
+	}
 
 
 }

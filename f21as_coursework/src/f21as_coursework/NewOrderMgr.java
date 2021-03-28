@@ -70,6 +70,7 @@ public class NewOrderMgr implements Runnable {
 			String newName = newOrder.get(2);
 			String itemChoice = newOrder.get(1);
 			BigDecimal price = items.getPrice(newOrder.get(1));
+			boolean existingCustomer = customers.existingCustomer(inputString);
 			
 			try {
 				String custName = "";
@@ -92,7 +93,15 @@ public class NewOrderMgr implements Runnable {
 				
 				orders.addDetails(order);
 				
-				gui.getTableModel().addRow();		
+				System.out.println(Manager.indexOrders(orders, customers, items));
+				System.out.println(customers.existingCustomer(inputString));
+				
+				if(existingCustomer) {
+					gui.updateTable(Integer.parseInt(inputString));
+				}
+				else {
+					gui.addTableRow();
+				}
 			}
 			
 			catch(NullPointerException n) {

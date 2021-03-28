@@ -104,5 +104,15 @@ public class CustomerList {
 	public int getCustListSize() {
 		return this.customers.size();
 	}
+	
+	public boolean existingCustomer(String id) {
+		for(Customer c : this.customers) {
+			if(c.getCustID().equals(id)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 }
