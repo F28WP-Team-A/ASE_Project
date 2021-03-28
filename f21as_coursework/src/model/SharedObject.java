@@ -1,21 +1,26 @@
 package model;
 
+import java.util.ArrayList;
+
 import f21as_coursework.*;
 
 public class SharedObject {
 	
-	private String order;
-	private boolean empty;
+	private String nextOrder;
+	private ArrayList<String> newOrder;
+	private boolean nextOrderEempty;
+	private boolean newOrderEmpty;
 	private boolean done;
 	
 	public SharedObject() {
-		empty = true;
+		nextOrderEempty = true;
+		newOrderEmpty = true;
 		done = false;
 	}
 	
-	public synchronized String get(int i) {
+	public synchronized String getNext(int i) {
 		System.out.println("Consumer "+i+" getting...");
-		while(empty) {
+		while(nextOrderEempty) {
 			try {
 				System.out.println("Consumer "+i+" waiting...");
 				wait();
@@ -25,16 +30,16 @@ public class SharedObject {
 			}
 		}
 		
-		System.out.println("Consumer "+i+ "Got order " + order);
-		empty = true;
+		System.out.println("Consumer "+i+ "Got order " + nextOrder);
+		nextOrderEempty = true;
 		notifyAll();
-		return order;
+		return nextOrder;
 	}
 	
 	
-	public synchronized void put(String o) {
+	public synchronized void putNext(String o) {
 		System.out.println("Producer putting...");
-		while(!empty) {
+		while(!nextOrderEempty) {
 			try {
 				System.out.println("Producer waiting...");
 				wait();
@@ -44,9 +49,35 @@ public class SharedObject {
 			}
 		}
 		System.out.println("Put order: " + o);
-		empty = false;
+		nextOrderEempty = false;
 		notifyAll();
-		this.order = o;
+		this.nextOrder = o;
+	}
+	
+	public synchronized ArrayList<String> getNew() {
+		System.out.println("New Order Manager getting...");
+		while(newOrderEmpty) {
+			try {
+				System.out.println("New Order Manager waiting...");
+				wait();
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println("New Order Manager got: " + newOrder);
+		newOrderEmpty = true;
+		notifyAll();
+		return newOrder;
+	}
+	
+	public synchronized void putNew(ArrayList<String> o) {
+		System.out.println("Controller putting...");
+		System.out.println("Controller put order: " + o);
+		newOrderEmpty = false;
+		notifyAll();
+		this.newOrder = o;
 	}
 	
 	public void finishedOrders() {

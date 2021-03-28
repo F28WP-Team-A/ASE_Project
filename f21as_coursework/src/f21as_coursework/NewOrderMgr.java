@@ -11,34 +11,23 @@ import controllers.CafeGUIController;
 import views.*;
 
 import model.CafeModel;
-import model.NewOrderSharedObj;
 import model.SharedObject;
 
 public class NewOrderMgr implements Runnable {
 	
 	private SharedObject so;
-	private NewOrderSharedObj orderSO;
 	private OrderList orders;
 	private CustomerList customers;
-	private CafeModel model;
 	private CafeGUIView gui;
-	private CafeGUIController controler;
 	private ItemList items;
-	private int count;
-	private boolean newOrderCheck;
 	
-	public NewOrderMgr(SharedObject so, OrderList orders, CustomerList customers, CafeModel model,
-						CafeGUIView gui, CafeGUIController cont, ItemList items, NewOrderSharedObj orderSO) {
+	public NewOrderMgr(SharedObject so, OrderList orders, CustomerList customers,
+						CafeGUIView gui, ItemList items) {
 		this.so = so;
-		this.orderSO = orderSO;
 		this.orders = orders;
-		this.model = model;
 		this.gui = gui;
 		this.items = items;
-		this.controler = cont;
 		this.customers = customers;
-		count = 0;
-		newOrderCheck = false;
 	}
 
 	@Override
@@ -64,7 +53,7 @@ public class NewOrderMgr implements Runnable {
 			
 			System.out.println("New Order Manager Finished Waiting...");
 			
-			ArrayList<String> newOrder = orderSO.get();
+			ArrayList<String> newOrder = so.getNew();
 			
 			String inputString = newOrder.get(0);
 			String newName = newOrder.get(2);

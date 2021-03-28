@@ -44,7 +44,7 @@ public class Server extends Thread{
 
 				@Override
 				protected String doInBackground() throws Exception {
-					String order = so.get(threadNum);
+					String order = so.getNext(threadNum);
 					return order;
 				}
 				

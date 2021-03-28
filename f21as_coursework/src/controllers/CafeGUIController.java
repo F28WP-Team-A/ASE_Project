@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import f21as_coursework.*;
 import model.CafeModel;
 import model.CafeTableModel;
-import model.NewOrderSharedObj;
+import model.SharedObject;
 import views.*;
 
 import javax.swing.JOptionPane;
@@ -35,10 +35,10 @@ public class CafeGUIController {
 	private CafeModel 	cafe;
 	private Timer		timer;
 	private boolean newOrder;
-	private NewOrderSharedObj so;
+	private SharedObject so;
 	
 	
-	public CafeGUIController(CafeGUIView gui, CafeModel cafe, NewOrderSharedObj so) {
+	public CafeGUIController(CafeGUIView gui, CafeModel cafe, SharedObject so) {
 		this.gui 	= gui;
 		this.cafe 	= cafe;
 		this.so = so;
@@ -154,7 +154,7 @@ public class CafeGUIController {
 	
 	public class AddCustomer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			so.put(gui.getNewOrderInfo());
+			so.putNew(gui.getNewOrderInfo());
 		}
 	}
 	

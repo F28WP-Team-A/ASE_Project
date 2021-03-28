@@ -38,11 +38,9 @@ public class Main {
 		
 		CafeGUIView gui = new CafeGUIView(orders, customers, items);
 		
-		NewOrderSharedObj orderSO = new NewOrderSharedObj();
-		
-		CafeGUIController controller = new CafeGUIController(gui, cafe, orderSO);
-		
 		SharedObject so = new SharedObject();
+		
+		CafeGUIController controller = new CafeGUIController(gui, cafe, so);
 		
 		QueueManager q = new QueueManager(so, orders, cafe, customers, items);
 		
@@ -57,8 +55,8 @@ public class Main {
 		Thread consumerThreadTwo = new Thread(serverTwo);
 		consumerThreadTwo.start();
 		
-		NewOrderMgr newOrderManager = new NewOrderMgr(so, orders, customers, cafe,
-						gui, controller, items, orderSO);
+		NewOrderMgr newOrderManager = new NewOrderMgr(so, orders, customers,
+						gui, items);
 		
 		Thread newOrderThread = new Thread(newOrderManager);
 		newOrderThread.start();		

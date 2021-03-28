@@ -36,7 +36,7 @@ public class QueueManager implements Runnable {
 			catch (InterruptedException e) {
 				
 			}
-			so.put(model.getNextOrder());
+			so.putNext(model.getNextOrder());
 			count = Manager.indexOrders(orders, customers, items).size();
 		}
 		so.finishedOrders();
