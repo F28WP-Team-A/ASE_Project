@@ -64,6 +64,10 @@ public class CafeTableModel extends AbstractTableModel {
 		
 	}
 	
+	/*
+	 * Returns the number of items in the order passed
+	 * in as a parameter as an int.
+	 */
 	private int getNumItems(ArrayList<String> order) {
 		int count = 0;
 		for(int i = 3; i < order.size(); i++) {
@@ -128,6 +132,10 @@ public class CafeTableModel extends AbstractTableModel {
 		return rowData[rowIndex][columnIndex];
 	}
 	
+	/*
+	 * Adds a new row to the tables containing data of the
+	 * new order entered by the user.
+	 */
 	public void addRow() { 
 		ArrayList<ArrayList<String>> allOrdersUpdate = Manager.indexOrders(orders, customers, items);
 		ArrayList<String> newOrder = allOrdersUpdate.get(allOrdersUpdate.size()-1);
@@ -141,6 +149,11 @@ public class CafeTableModel extends AbstractTableModel {
 	    this.fireTableRowsInserted(count, count);
 	}
 	
+	/*
+	 * Updates the order at the index i passed in as
+	 * a parameter. Specifically, the number of items
+	 * in that order is updated.
+	 */
 	public void updateOrder(int i) {
 		ArrayList<ArrayList<String>> orderUpdate = Manager.indexOrders(orders, customers, items);
 		ArrayList<String> orderForUpdate = new ArrayList<String> ();
@@ -157,6 +170,12 @@ public class CafeTableModel extends AbstractTableModel {
 		this.fireTableRowsUpdated(index, index);
 	}
 	
+	/*
+	 * Returns the index of the order with an
+	 * id that matches the String i passed in
+	 * as a parameter. Index is returned as an
+	 * int.
+	 */
 	public int getIndex(String i) {
 		int index = 0;
 		for(int j = 0; j < allOrders.size(); j++) {
@@ -168,6 +187,10 @@ public class CafeTableModel extends AbstractTableModel {
 		return index;
 	}
 	
+	/*
+	 * Removes the top row of the table when it is
+	 * called by one of the server threads.
+	 */
 	public void removeRow() {
 		allOrders.remove(0);
 		rowData = new Object[allOrders.size()+25][4];
