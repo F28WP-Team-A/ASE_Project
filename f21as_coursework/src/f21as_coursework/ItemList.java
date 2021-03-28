@@ -129,7 +129,8 @@ public class ItemList {
 		
 		
 		/*
-		 * Returns price of item entered in parameter
+		 * Returns price of item entered in parameter as
+		 * a BigDecimal.
 		 */
 		public BigDecimal getPrice(String itemChoice) {
 			

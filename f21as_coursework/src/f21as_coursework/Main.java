@@ -55,8 +55,7 @@ public class Main {
 		Thread consumerThreadTwo = new Thread(serverTwo);
 		consumerThreadTwo.start();
 		
-		NewOrderMgr newOrderManager = new NewOrderMgr(so, orders, customers,
-						gui, items);
+		NewOrderMgr newOrderManager = new NewOrderMgr(so, orders, customers, gui, items);
 		
 		Thread newOrderThread = new Thread(newOrderManager);
 		newOrderThread.start();		

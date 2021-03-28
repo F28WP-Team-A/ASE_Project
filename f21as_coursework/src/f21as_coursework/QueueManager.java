@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import model.*;
 
+/*
+ * QueueManager acts as a producer for the
+ * shared object.
+ */
+
 public class QueueManager implements Runnable {
 
 	private SharedObject so;
@@ -23,6 +28,11 @@ public class QueueManager implements Runnable {
 		count = Manager.indexOrders(orders, customers, items).size();
 	}
 
+	/*
+	 * Periodically the QueueManager calls the putNext
+	 * method of the shared object, passing in the next
+	 * order to be processed as an argument.
+	 */
 	@Override
 	public void run() {
 		

@@ -83,22 +83,6 @@ public class CafeGUIController {
 	}
 	
 	
-	public synchronized boolean newOrderCheck() {
-		
-		System.out.println("New Order Manager getting...");
-		while(!newOrder) {
-			try {
-				wait();
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		notifyAll();
-		return newOrder;
-	}
-	
 	/*
 	 * The OrderProcessor class crates an action listener
 	 * that when triggered, gives the server a new order
@@ -152,6 +136,16 @@ public class CafeGUIController {
 		}
 	}
 	
+	/*
+	 * When the submit button is clicked on the gui,
+	 * the actionPerformed method of the AddCumstomer
+	 * class calls the putNew method of the shared object
+	 * and passes the new order info in as a parameter.
+	 * 
+	 * The new order is then added to the shared object
+	 * and is retrieved by the NewOrderMgr thread to be
+	 * processed.
+	 */
 	public class AddCustomer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			so.putNew(gui.getNewOrderInfo());

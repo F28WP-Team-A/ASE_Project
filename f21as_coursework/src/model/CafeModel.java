@@ -120,9 +120,4 @@ public class CafeModel {
 			return Integer.toString(processingTime-=1);
 		}
 	}
-	
-	public void addOrder() {
-		
-	}	
-
 }
