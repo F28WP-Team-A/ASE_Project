@@ -146,10 +146,33 @@ public class CafeTableModel extends AbstractTableModel {
 	}
 	
 	public void updateOrder(int i) {
-		i--;
-		rowData[i][2] = getNumItems(Manager.indexOrders(orders, customers, items).get(i));
+		ArrayList<ArrayList<String>> orderUpdate = Manager.indexOrders(orders, customers, items);
+		ArrayList<String> orderForUpdate = new ArrayList<String> ();
 		
-		this.fireTableRowsUpdated(i, i);
+		for(ArrayList<String> o : orderUpdate) {
+			if(o.get(0).equals(String.valueOf(i))) {
+				orderForUpdate = o;
+				break;
+			}
+		}
+		int index = getIndex(orderForUpdate.get(0));
+		System.out.println("Index 2: " + index);
+		System.out.println("Indexed order: " + allOrders.get(index));
+		rowData[index][2] = getNumItems(orderForUpdate);
+		System.out.println("Num items: " + getNumItems(orderForUpdate));
+		allOrders.set(index, orderForUpdate);
+		this.fireTableRowsUpdated(index, index);
+	}
+	
+	public int getIndex(String i) {
+		int index = 0;
+		for(int j = 0; j < allOrders.size(); j++) {
+			if(allOrders.get(j).get(0).equals(i)) {
+				index = j;
+			}
+		}
+		
+		return index;
 	}
 	
 	public void removeRow() {
