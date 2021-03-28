@@ -37,10 +37,7 @@ public class CafeTableModel extends AbstractTableModel {
 		this.items = items;
 		allOrders = Manager.indexOrders(orders, customers, items);
 		rowData = new Object[allOrders.size()+25][4];
-		System.out.println(orders.getNumberOfOrders());
-		System.out.println(rowData.length);
 		getRowData();
-		System.out.println(rowData.length);
 		columnHeaders = headers;
 		count = allOrders.size();
 	}
@@ -58,7 +55,6 @@ public class CafeTableModel extends AbstractTableModel {
 	private void getRowData() {
 		int i = 0;
 		for(ArrayList<String> order : allOrders) {
-			System.out.println("Adding order row: " + order);
 			rowData[i][0]	= order.get(0);
 			rowData[i][1]	= order.get(1);
 			rowData[i][2]	= getNumItems(order);
@@ -156,10 +152,7 @@ public class CafeTableModel extends AbstractTableModel {
 			}
 		}
 		int index = getIndex(orderForUpdate.get(0));
-		System.out.println("Index 2: " + index);
-		System.out.println("Indexed order: " + allOrders.get(index));
 		rowData[index][2] = getNumItems(orderForUpdate);
-		System.out.println("Num items: " + getNumItems(orderForUpdate));
 		allOrders.set(index, orderForUpdate);
 		this.fireTableRowsUpdated(index, index);
 	}
