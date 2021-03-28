@@ -131,14 +131,16 @@ public class CafeTableModel extends AbstractTableModel {
 	}
 	
 	public void addRow() {
-		allOrders = Manager.indexOrders(orders, customers, items);
+//		allOrders = Manager.indexOrders(orders, customers, items);
+		System.out.println("All orders size: " + allOrders.size());
+		System.out.println("All orders:  " + allOrders);
 		ArrayList<String> newOrder = allOrders.get(allOrders.size()-1);
 		rowData[allOrders.size()-1][0]	= newOrder.get(0);
 		rowData[allOrders.size()-1][1]	= newOrder.get(1);
 		rowData[allOrders.size()-1][2]	= getNumItems(newOrder);
 		rowData[allOrders.size()-1][3]	= newOrder.get(2);
 		
-	    this.fireTableRowsInserted(getRowCount()-1, getRowCount()-1);
+	    this.fireTableRowsInserted(allOrders.size()-1, allOrders.size()-1);
 	}
 	
 	public void updateOrder(int i) {
