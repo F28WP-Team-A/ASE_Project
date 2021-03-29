@@ -36,6 +36,7 @@ public class CafeGUIController {
 	private Timer		timer;
 	private boolean newOrder;
 	private SharedObject so;
+	private int serverCount;
 	
 	
 	public CafeGUIController(CafeGUIView gui, CafeModel cafe, SharedObject so) {
@@ -43,11 +44,13 @@ public class CafeGUIController {
 		this.cafe 	= cafe;
 		this.so = so;
 		newOrder = false;
+		serverCount = 2;
 //		updateServer();
 		queueCountdown();
 //		gui.addUpdateSpeedListener(new UpdateSpeed());
-//		gui.addNewServerListener(new AddServer());
+		gui.addNewServerListener(new AddServer());
 		gui.addNewCustListener(new AddCustomer());
+		gui.addRemoveServerListener(new RemoveServer());
 		
 	}
 	
@@ -153,12 +156,19 @@ public class CafeGUIController {
 	}
 	
 	public class AddServer implements ActionListener {
-		
 		public void actionPerformed(ActionEvent e) {
-			// TODO Make add server number dynamic
-			// Create new Server object
-			gui.addServer(3);
-			// Start new server object thread
+			serverCount++;
+			gui.addServer();
+			Server newServer = new Server(so, gui, serverCount);
+			Thread newServerThread = new Thread(newServer);
+			newServerThread.start();
+		}
+	}
+	
+	public class RemoveServer implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			gui.removeServer();
+
 		}
 	}
 	

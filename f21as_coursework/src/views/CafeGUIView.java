@@ -36,9 +36,10 @@ public class CafeGUIView extends JFrame {
 	JTextArea						menu;
 	JTextPane						serverOne, serverTwo;
 	JButton 						eastNumSearch, submitItemSelection, submitNewSpeed,
-									addServer;
+									addServer, removeServer;
 	TableRowSorter<CafeTableModel> 	sorter;
 	JComboBox<String> 				itemsList, sizeSelection;
+	ArrayList<JTextPane>			servers;
 	
 	
 	/*
@@ -52,6 +53,7 @@ public class CafeGUIView extends JFrame {
 		this.customers = customers;
 		this.items = items;
 		this.currentCustomerNum = orders.getNumberOfOrders();
+		servers = new ArrayList<JTextPane>();
 		setDefaultCloseOperation(CafeGUIView.DO_NOTHING_ON_CLOSE);
 		this.setLayout(new BorderLayout(1,1));
 		createEastPanel();
@@ -138,6 +140,12 @@ public class CafeGUIView extends JFrame {
 		addServer							= new JButton("Add Server");
 		eastPanel.add(addServer);
 		
+		JLabel removeServerLabel				= new JLabel("Click button to remove a server:");
+		eastPanel.add(addServerLabel);
+		
+		removeServer							= new JButton("Remove Server");
+		eastPanel.add(removeServer);
+		
 		group.setHorizontalGroup(
 				group.createSequentialGroup()
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)					// Padding added to create some space between each object.
@@ -146,7 +154,8 @@ public class CafeGUIView extends JFrame {
 						.addComponent(chooseItem)
 						.addComponent(timeRemaining)
 						.addComponent(enterNewSpeed)
-						.addComponent(addServerLabel))
+						.addComponent(addServerLabel)
+						.addComponent(removeServerLabel))
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
 						.addComponent(customerID)
 						.addComponent(customerName)
@@ -157,6 +166,7 @@ public class CafeGUIView extends JFrame {
 						.addComponent(submitItemSelection)
 						.addComponent(submitNewSpeed)
 						.addComponent(addServer)
+						.addComponent(removeServer)
 						)
 					
 		);
@@ -182,6 +192,9 @@ public class CafeGUIView extends JFrame {
 					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
 							.addComponent(addServerLabel)
 							.addComponent(addServer))
+					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
+							.addComponent(removeServerLabel)
+							.addComponent(removeServer))
 		);
 				
 		this.add(eastPanel, BorderLayout.EAST);
@@ -283,6 +296,7 @@ public class CafeGUIView extends JFrame {
 		SimpleAttributeSet center = new SimpleAttributeSet();
 		StyleConstants.setAlignment(center,  StyleConstants.ALIGN_CENTER);
 		sOneText.setParagraphAttributes(0, sOneText.getLength(), center, false);
+		servers.add(serverOne);
 		southPanel.add(serverOne);
 		
 		TitledBorder 	sTwoBorder 			= new TitledBorder("Server 2");
@@ -293,6 +307,7 @@ public class CafeGUIView extends JFrame {
 		StyledDocument sTwoText = serverTwo.getStyledDocument();
 		StyleConstants.setAlignment(center,  StyleConstants.ALIGN_CENTER);
 		sTwoText.setParagraphAttributes(0, sTwoText.getLength(), center, false);
+		servers.add(serverTwo);
 		southPanel.add(serverTwo);
 		
 		this.add(southPanel, BorderLayout.SOUTH);	
@@ -328,15 +343,21 @@ public class CafeGUIView extends JFrame {
 	 */
 	public void updateSever(int i, String order) {
 		
-		switch(i) {
+//		switch(i) {
+//		
+//		case 1:
+//			serverOne.setText(order);
+//			break;
+//			
+//		case 2:
+//			serverTwo.setText(order);
+//			break;
+//		}
 		
-		case 1:
-			serverOne.setText(order);
-			break;
-			
-		case 2:
-			serverTwo.setText(order);
-			break;
+		for(int j = 0; j < servers.size(); j++) {
+			if(j == i-1) {
+				servers.get(j).setText(order);
+			}
 		}
 		
 		
@@ -362,8 +383,9 @@ public class CafeGUIView extends JFrame {
 		JOptionPane.showMessageDialog(null, message);
 	}
 	
-	public void addServer(int num) {
-		TitledBorder 	newServerBorder 			= new TitledBorder("Server " + num);
+	public void addServer() {
+		System.out.println("Adding server");
+		TitledBorder 	newServerBorder 			= new TitledBorder("Server " + (servers.size()+1));
 		newServerBorder.setTitleJustification(TitledBorder.CENTER);
 		JTextPane newServer = new JTextPane();
 		newServer.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
@@ -372,7 +394,12 @@ public class CafeGUIView extends JFrame {
 		SimpleAttributeSet center = new SimpleAttributeSet();
 		StyleConstants.setAlignment(center,  StyleConstants.ALIGN_CENTER);
 		sOneText.setParagraphAttributes(0, sOneText.getLength(), center, false);
+		servers.add(newServer);
 		southPanel.add(newServer);
+	}
+	
+	public void removeServer() {
+		southPanel.remove(servers.get(servers.size()-1));
 	}
 	
 	/*
@@ -386,6 +413,11 @@ public class CafeGUIView extends JFrame {
 	public void addNewServerListener(ActionListener al) {
 		addServer.addActionListener(al);
 		System.out.println("Add server action Listener added");
+	}
+	
+	public void addRemoveServerListener(ActionListener al) {
+		removeServer.addActionListener(al);
+		System.out.println("Remove server action Listener added");
 	}
 	
 	public void addUpdateSpeedListener(ActionListener al) {

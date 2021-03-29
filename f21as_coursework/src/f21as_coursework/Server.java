@@ -44,15 +44,15 @@ public class Server extends Thread{
 		
 		while(!done) {
 			try {
-//				System.out.println("Consumer "+ threadNum +" sleeping");
-				Thread.sleep(10000);
+				System.out.println("Consumer "+ threadNum +" sleeping");
+				Thread.sleep(5000);
 			}
 			catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
 			if(so.getDone()) {
-//				System.out.println("Consumer "+ threadNum +" done");
+				System.out.println("Consumer "+ threadNum +" done");
 				done = true;
 				break;
 			}

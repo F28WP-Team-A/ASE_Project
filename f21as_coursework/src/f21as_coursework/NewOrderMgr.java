@@ -37,7 +37,7 @@ public class NewOrderMgr implements Runnable {
 		
 		while(!done) {
 			try {
-				System.out.println("New Order Manager Waiting...");
+//				System.out.println("New Order Manager Waiting...");
 				Thread.sleep(500);
 
 			}
@@ -46,12 +46,12 @@ public class NewOrderMgr implements Runnable {
 			}
 			
 			if(so.getDone()) {
-				System.out.println("New Order Manager done...");
+//				System.out.println("New Order Manager done...");
 				done = true;
 				break;
 			}
 			
-			System.out.println("New Order Manager Finished Waiting...");
+//			System.out.println("New Order Manager Finished Waiting...");
 			
 			ArrayList<String> newOrder = so.getNew();
 			

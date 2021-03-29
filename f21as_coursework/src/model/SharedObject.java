@@ -44,7 +44,7 @@ public class SharedObject {
 			}
 		}
 		
-		System.out.println("Consumer "+i+ "Got order " + nextOrder);
+		System.out.println("Consumer "+i+ " Got order ");
 		nextOrderEmpty = true;
 		notifyAll();
 		return nextOrder;
@@ -70,7 +70,7 @@ public class SharedObject {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Put order: " + o);
+		System.out.println("Put order: ");
 		nextOrderEmpty = false;
 		notifyAll();
 		this.nextOrder = o;

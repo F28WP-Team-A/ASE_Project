@@ -37,8 +37,8 @@ public class QueueManager implements Runnable {
 	public void run() {
 		
 		while(count > 0) {
-			System.out.println("i: " + count);
-			System.out.println("Number of orders: " + Manager.indexOrders(orders, customers, items).size());
+//			System.out.println("i: " + count);
+//			System.out.println("Number of orders: " + Manager.indexOrders(orders, customers, items).size());
 			try {
 				System.out.println("Producer sleeping");
 				Thread.sleep(1000);
