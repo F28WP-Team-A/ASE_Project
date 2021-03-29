@@ -44,8 +44,8 @@ public class Server extends Thread{
 		
 		while(!done) {
 			try {
-				System.out.println("Consumer "+ threadNum +" sleeping");
-				Thread.sleep(5000);
+				System.out.println("Execution speed: " + gui.getExecutionSpeed());
+				Thread.sleep(gui.getExecutionSpeed()*1000);
 			}
 			catch (InterruptedException e) {
 				e.printStackTrace();

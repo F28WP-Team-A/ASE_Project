@@ -27,10 +27,10 @@ public class CafeGUIView extends JFrame {
 	private OrderList 				orders;
 	private CustomerList			customers;
 	private ItemList				items;
-	private int 					currentCustomerNum;
+	private int 					executionSpeed;
 	private CafeTableModel 			tableModel;
 	JPanel							eastPanel, centrePanel, southPanel;
-	JLabel							countdown;
+	JLabel							countdown, speed;
 	JTable							table;
 	JTextField 						customerID, eastNumInput, customerName, newSpeed;
 	JTextArea						menu;
@@ -52,7 +52,7 @@ public class CafeGUIView extends JFrame {
 		this.orders = orders;
 		this.customers = customers;
 		this.items = items;
-		this.currentCustomerNum = orders.getNumberOfOrders();
+		executionSpeed = 5;
 		servers = new ArrayList<JTextPane>();
 		setDefaultCloseOperation(CafeGUIView.DO_NOTHING_ON_CLOSE);
 		this.setLayout(new BorderLayout(1,1));
@@ -125,6 +125,12 @@ public class CafeGUIView extends JFrame {
 		countdown							= new JLabel("00:00");
 		eastPanel.add(countdown);
 		
+		JLabel speedLabel				= new JLabel("Current time to process one order (seconds):");
+		eastPanel.add(speedLabel);
+		
+		speed 								= new JLabel(String.valueOf(this.getExecutionSpeed()));
+		eastPanel.add(speed);
+		
 		JLabel enterNewSpeed				= new JLabel("Enter new processing speed (seconds):");
 		eastPanel.add(enterNewSpeed);
 		
@@ -153,6 +159,7 @@ public class CafeGUIView extends JFrame {
 						.addComponent(cName)
 						.addComponent(chooseItem)
 						.addComponent(timeRemaining)
+						.addComponent(speedLabel)
 						.addComponent(enterNewSpeed)
 						.addComponent(addServerLabel)
 						.addComponent(removeServerLabel))
@@ -161,6 +168,7 @@ public class CafeGUIView extends JFrame {
 						.addComponent(customerName)
 						.addComponent(itemsList)
 						.addComponent(countdown)
+						.addComponent(speed)
 						.addComponent(newSpeed))
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
 						.addComponent(submitItemSelection)
@@ -185,6 +193,9 @@ public class CafeGUIView extends JFrame {
 					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
 							.addComponent(timeRemaining)
 							.addComponent(countdown))
+					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
+							.addComponent(speedLabel)
+							.addComponent(speed))
 					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
 							.addComponent(enterNewSpeed)
 							.addComponent(newSpeed)
@@ -346,18 +357,7 @@ public class CafeGUIView extends JFrame {
 	 * with the String input as a parameter.
 	 */
 	public void updateSever(int i, String order) {
-		
-//		switch(i) {
-//		
-//		case 1:
-//			serverOne.setText(order);
-//			break;
-//			
-//		case 2:
-//			serverTwo.setText(order);
-//			break;
-//		}
-		
+				
 		for(int j = 0; j < servers.size(); j++) {
 			if(j == i-1) {
 				servers.get(j).setText(order);
@@ -367,20 +367,17 @@ public class CafeGUIView extends JFrame {
 		
 	}
 	
-	/*
-	 * Updates the text of the JLabel showing the
-	 * time remaining.
-	 */
-	public void updateGUITimer(String time) {
-		countdown.setText("00:" + time);
+	public void updateExecutionSpeed() {
+		executionSpeed = Integer.parseInt(newSpeed.getText().trim());
+		speed.setText(String.valueOf(executionSpeed));
 	}
 	
 	/*
 	 * Returns the String input by the user as the
 	 * new order processing speed as an int.
 	 */
-	public int getSpeedInput() {
-		return Integer.parseInt(newSpeed.getText());
+	public int getExecutionSpeed() {
+		return executionSpeed;
 	}
 	
 	public void errorMessage(String message) {

@@ -47,35 +47,13 @@ public class CafeGUIController {
 		newOrder = false;
 		serverCount = 2;
 		this.tableModel = gui.getTableModel();
-//		updateServer();
-		queueCountdown();
-//		gui.addUpdateSpeedListener(new UpdateSpeed());
+		gui.addUpdateSpeedListener(new UpdateSpeed());
 		gui.addNewServerListener(new AddServer());
 		gui.addNewCustListener(new AddCustomer());
 		gui.addRemoveServerListener(new RemoveServer());
 		
 	}
-	
-	
-	/*
-	 * Stops the timer instance currently controlling
-	 * the processing of orders.
-	 */
-	private void resetProcessingSpeed() {
-		timer.stop();
-	}
-	
-	/*
-	 * Creates a new timer to control the updating of
-	 * the JLabel that displays the time remaining to
-	 * process the orders.
-	 */
-	private void queueCountdown() {
-
-		Timer countdown = new Timer(1000, new QueueTimer());
-		countdown.start();
-	}
-	
+		
 	public CafeTableModel getModel() {
 		return tableModel;
 	}
@@ -92,10 +70,7 @@ public class CafeGUIController {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
-				resetProcessingSpeed();
-				cafe.setProcessingSpeed(gui.getSpeedInput());
-				updateServer();
-				System.out.println("Updated speed to: " + cafe.getProcessingSpeed());
+				gui.updateExecutionSpeed();
 			}
 			catch(NumberFormatException n) {
 				gui.errorMessage("Invalid number of seconds");
