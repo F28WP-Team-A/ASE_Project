@@ -218,6 +218,14 @@ public class CafeGUIView extends JFrame {
 	}
 	
 	/*
+	 * Updates the text of the JLabel showing the
+	 * time remaining.
+	 */
+	public void updateGUITimer(String time) {
+		countdown.setText("00:" + time);
+	}
+	
+	/*
 	 * Creates a JPanel and adds it to the centre section
 	 * of the GUI instance.
 	 * 

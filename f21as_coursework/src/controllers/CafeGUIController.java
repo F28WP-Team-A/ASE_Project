@@ -38,6 +38,8 @@ public class CafeGUIController {
 	private boolean newOrder;
 	private SharedObject so;
 	private int serverCount;
+	private int				processingTime;
+	private int				initTime;
 	
 	
 	public CafeGUIController(CafeGUIView gui, CafeModel cafe, SharedObject so) {
@@ -47,6 +49,10 @@ public class CafeGUIController {
 		newOrder = false;
 		serverCount = 2;
 		this.tableModel = gui.getTableModel();
+		processingTime = (tableModel.getNumRemaining() * gui.getExecutionSpeed()) / serverCount + gui.getExecutionSpeed();
+		initTime = processingTime;
+		System.out.println("Processing time: " + processingTime);
+		queueCountdown();
 		gui.addUpdateSpeedListener(new UpdateSpeed());
 		gui.addNewServerListener(new AddServer());
 		gui.addNewCustListener(new AddCustomer());
@@ -57,6 +63,52 @@ public class CafeGUIController {
 	public CafeTableModel getModel() {
 		return tableModel;
 	}
+	
+	
+	/*
+	 * Creates a new timer to control the updating of
+	 * the JLabel that displays the time remaining to
+	 * process the orders.
+	 */
+	private void queueCountdown() {
+
+		Timer countdown = new Timer(1000, new QueueTimer());
+		countdown.start();
+	}
+	
+
+	public void updateTimer() {
+		System.out.println("Num remaning: " + tableModel.getNumRemaining());
+		System.out.println("Execution speed: " + gui.getExecutionSpeed());
+		System.out.println("Server count: " + serverCount);
+		System.out.println("New count: " + ((tableModel.getNumRemaining() * gui.getExecutionSpeed()) / serverCount));
+		processingTime += gui.getExecutionSpeed();
+		System.out.println("Time updated to: " + processingTime);
+	}
+	
+	public void reinitiateTimer() {
+		int diff = initTime - processingTime;
+//		int newTime = (tableModel.getNumRemaining() * gui.getExecutionSpeed()) / serverCount;
+		processingTime = (tableModel.getNumRemaining() * gui.getExecutionSpeed()) / serverCount + diff - 1;
+	}
+	
+	/*
+	 * Returns the time remaining to process the queue in seconds as a
+	 * String.
+	 * 
+	 * Is called by QueueTimer to display on the GUI instance every
+	 * second. 	
+	 */
+	public String queueTimer() {
+		
+		if(processingTime <= 10) {
+			return "0" + Integer.toString(processingTime-=1);
+		}
+		else {
+			return Integer.toString(processingTime-=1);
+		}
+	}
+	
 		
 	/*
 	 * UpdateSpeed class creates an action listener
@@ -71,10 +123,25 @@ public class CafeGUIController {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				gui.updateExecutionSpeed();
+				reinitiateTimer();
 			}
 			catch(NumberFormatException n) {
 				gui.errorMessage("Invalid number of seconds");
 			}
+		}
+	}
+	
+	 /* The QueueTimer class crates an action listener
+	 * that when triggered updates the time remaining
+	 * JLabel on the GUI instance.
+	 * 
+	 * Is called based on a swing timer and is called
+	 * once every second.
+	 */
+	public class QueueTimer implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			gui.updateGUITimer(queueTimer());
 		}
 	}
 	
