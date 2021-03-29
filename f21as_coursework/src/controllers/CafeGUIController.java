@@ -34,6 +34,7 @@ public class CafeGUIController {
 	private CafeGUIView gui;
 	private CafeModel 	cafe;
 	private Timer		timer;
+	private CafeTableModel tableModel;
 	private boolean newOrder;
 	private SharedObject so;
 	private int serverCount;
@@ -45,6 +46,7 @@ public class CafeGUIController {
 		this.so = so;
 		newOrder = false;
 		serverCount = 2;
+		this.tableModel = gui.getTableModel();
 //		updateServer();
 		queueCountdown();
 //		gui.addUpdateSpeedListener(new UpdateSpeed());
@@ -54,17 +56,6 @@ public class CafeGUIController {
 		
 	}
 	
-	/*
-	 * The updateServer method creates a new Swing
-	 * Timer and triggers the OrderProcessor action
-	 * listener at the given interval.
-	 */
-	private void updateServer() {
-		int counter = 6;
-		
-//		timer = new Timer(cafe.getProcessingSpeed()*1000, new OrderProcessor());
-		timer.start();
-	}
 	
 	/*
 	 * Stops the timer instance currently controlling
@@ -85,37 +76,10 @@ public class CafeGUIController {
 		countdown.start();
 	}
 	
-	
-	/*
-	 * The OrderProcessor class crates an action listener
-	 * that when triggered, gives the server a new order
-	 * to process on the CafeGUIView.
-	 * 
-	 * It calls the CafeModel method getNextOrder to
-	 * provide the String for the updateServerOne method.
-	 */
-//	public class OrderProcessor implements ActionListener{
-//		
-//		public void actionPerformed(ActionEvent e) {
-//			gui.updateSever(cafe.getNextOrder());
-//		}
-//	}
-	
-	/*
-	 * The QueueTimer class crates an action listener
-	 * that when triggered updates the time remaining
-	 * JLabel on the GUI instance.
-	 * 
-	 * Is called based on a swing timer and is called
-	 * once every second.
-	 */
-	public class QueueTimer implements ActionListener{
-		
-		public void actionPerformed(ActionEvent e) {
-			gui.updateGUITimer(cafe.queueTimer());
-		}
+	public CafeTableModel getModel() {
+		return tableModel;
 	}
-	
+		
 	/*
 	 * UpdateSpeed class creates an action listener
 	 * that when triggered stops the current timer
@@ -170,7 +134,6 @@ public class CafeGUIController {
 			gui.removeServer();
 
 		}
-	}
-	
+	}	
 
 }

@@ -70,7 +70,9 @@ public class Server extends Thread{
 					try {
 						String nextOrder = get();
 						gui.updateSever(threadNum, nextOrder);
-						gui.removeOrder();
+						if(gui.getTableModel().getNumRemaining() > 0) {
+							gui.removeOrder();
+						}
 					}
 					catch(ExecutionException x) {
 						x.printStackTrace();
@@ -86,6 +88,32 @@ public class Server extends Thread{
 			worker.execute();
 		}
 		
+		SwingWorker<String, Void> endWorker = new SwingWorker<String, Void>() {
+
+			@Override
+			protected String doInBackground() throws Exception {
+				String order = "No more orders";
+				return order;
+			}
+			
+			@Override
+			protected void done() {
+				try {
+					String nextOrder = get();
+					gui.updateSever(threadNum, nextOrder);
+				}
+				catch(ExecutionException x) {
+					x.printStackTrace();
+				}
+				catch(InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+		};
+		
+		endWorker.execute();
 	}
 	
 

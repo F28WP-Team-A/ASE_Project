@@ -247,6 +247,10 @@ public class CafeGUIView extends JFrame {
 		
 	}
 	
+	public CafeTableModel getTableModel() {
+		return tableModel;
+	}
+	
 	private String [] getItems(ItemList items) {
 		
 		String [] itemList = new String [items.getMapSize()];
