@@ -20,16 +20,14 @@ public class NewOrderMgr implements Runnable {
 	private CustomerList customers;
 	private CafeGUIView gui;
 	private ItemList items;
-	private CafeGUIController controller;
 	
 	public NewOrderMgr(SharedObject so, OrderList orders, CustomerList customers,
-						CafeGUIView gui, ItemList items, CafeGUIController controller) {
+						CafeGUIView gui, ItemList items) {
 		this.so = so;
 		this.orders = orders;
 		this.gui = gui;
 		this.items = items;
 		this.customers = customers;
-		this.controller = controller;
 	}
 
 	@Override
@@ -93,9 +91,8 @@ public class NewOrderMgr implements Runnable {
 				else {
 					gui.addTableRow();
 				}
-				
-				controller.updateTimer();
 			}
+			
 			catch(NullPointerException n) {
 				JOptionPane.showMessageDialog(null, "Invalid customer number");
 				n.printStackTrace();

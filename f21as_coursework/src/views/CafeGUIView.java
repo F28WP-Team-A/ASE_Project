@@ -30,7 +30,7 @@ public class CafeGUIView extends JFrame {
 	private int 					executionSpeed;
 	private CafeTableModel 			tableModel;
 	JPanel							eastPanel, centrePanel, southPanel;
-	JLabel							countdown, speed;
+	JLabel							speed;
 	JTable							table;
 	JTextField 						customerID, eastNumInput, customerName, newSpeed;
 	JTextArea						menu;
@@ -63,6 +63,7 @@ public class CafeGUIView extends JFrame {
 		setLocation(450,150);
 		setTitle("Cafe GUI");
 		setVisible(true);
+		this.setResizable(false);
 
 		
 	}
@@ -88,6 +89,7 @@ public class CafeGUIView extends JFrame {
 	 */
 	private void createEastPanel() {
 		eastPanel 		= new JPanel();		
+		eastPanel.setMinimumSize(getMinimumSize());
 		
 		TitledBorder 	border 			= new TitledBorder("PLACEHOLDER FOR USER CONTROLS");					// Creates a border with a title that informs the user of the functionality of the panel.
 		border.setTitleJustification(TitledBorder.CENTER);
@@ -118,12 +120,6 @@ public class CafeGUIView extends JFrame {
 		
 		submitItemSelection 				= new JButton("Submit");
 		eastPanel.add(submitItemSelection);
-		
-		JLabel timeRemaining				= new JLabel("Time Remaining:");
-		eastPanel.add(timeRemaining);
-		
-		countdown							= new JLabel("00:00");
-		eastPanel.add(countdown);
 		
 		JLabel speedLabel				= new JLabel("Current time to process one order (seconds):");
 		eastPanel.add(speedLabel);
@@ -158,7 +154,6 @@ public class CafeGUIView extends JFrame {
 						.addComponent(eastNumPrompt)
 						.addComponent(cName)
 						.addComponent(chooseItem)
-						.addComponent(timeRemaining)
 						.addComponent(speedLabel)
 						.addComponent(enterNewSpeed)
 						.addComponent(addServerLabel)
@@ -167,7 +162,6 @@ public class CafeGUIView extends JFrame {
 						.addComponent(customerID)
 						.addComponent(customerName)
 						.addComponent(itemsList)
-						.addComponent(countdown)
 						.addComponent(speed)
 						.addComponent(newSpeed))
 				.addGroup(group.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(10)
@@ -191,9 +185,6 @@ public class CafeGUIView extends JFrame {
 							.addComponent(itemsList)
 							.addComponent(submitItemSelection))
 					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
-							.addComponent(timeRemaining)
-							.addComponent(countdown))
-					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
 							.addComponent(speedLabel)
 							.addComponent(speed))
 					.addGroup(group.createParallelGroup(GroupLayout.Alignment.BASELINE).addGap(50)
@@ -215,14 +206,6 @@ public class CafeGUIView extends JFrame {
 //			}
 //		});
 		
-	}
-	
-	/*
-	 * Updates the text of the JLabel showing the
-	 * time remaining.
-	 */
-	public void updateGUITimer(String time) {
-		countdown.setText("00:" + time);
 	}
 	
 	/*
@@ -371,7 +354,7 @@ public class CafeGUIView extends JFrame {
 				servers.get(j).setText(order);
 			}
 		}
-		
+		this.revalidate();
 		
 	}
 	
@@ -405,6 +388,7 @@ public class CafeGUIView extends JFrame {
 		sOneText.setParagraphAttributes(0, sOneText.getLength(), center, false);
 		servers.add(newServer);
 		southPanel.add(newServer);
+		this.revalidate();
 	}
 	
 	public void removeServer() {

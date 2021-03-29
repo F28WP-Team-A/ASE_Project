@@ -45,17 +45,7 @@ public class CafeModel {
 		processingSpeed = 3;
 		
 	}
-	
-	public int getProcessingSpeed() {
-		return processingSpeed;
-	}
-
-
-	public void setProcessingSpeed(int processingSpeed) {
-		this.processingSpeed = processingSpeed;
-	}
-	
-	
+		
 	/*
 	 * getNextOrder method retrieves the order in the OrderList
 	 * that is at the index of the current value of orderIndex.
