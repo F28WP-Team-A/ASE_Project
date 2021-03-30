@@ -91,6 +91,19 @@ public class Server extends Thread{
 			worker.execute();
 		}
 		
+		/*
+		 * If done becomes true and the while loop is exited,
+		 * the server checks if it was because it was terminated
+		 * (i.e. the user clicked 'Remove Server' on the gui).
+		 * 
+		 * If terminated is false, it means done was made true
+		 * because all orders have been processed, so the server
+		 * creates a new SwingWordker class to show in its
+		 * corresponding JTextPane on the gui that there are no
+		 * more orders.
+		 * 
+		 * If the thread was forcefully terminated, nothing happens.
+		 */
 		if(!terminated) {
 			SwingWorker<String, Void> endWorker = new SwingWorker<String, Void>() {
 
@@ -118,12 +131,14 @@ public class Server extends Thread{
 			};
 			endWorker.execute();
 		}
-		else {
-			System.out.println("Thread " + threadNum + " terminated");
-		}
 		
 	}
 	
+	/*
+	 * terminate method allows the server thread
+	 * to be terminated externally in response to
+	 * a user removing a server from the gui.
+	 */
 	public void terminate() {
 		done = true;
 		terminated = true;
