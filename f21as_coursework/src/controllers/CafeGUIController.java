@@ -34,8 +34,11 @@ public class CafeGUIController {
 	private CafeGUIView gui;
 	private CafeModel 	cafe;
 	private Timer		timer;
+	private CafeTableModel tableModel;
 	private boolean newOrder;
 	private SharedObject so;
+	private int serverCount;
+	private ArrayList<Server> servers;
 	
 	
 	public CafeGUIController(CafeGUIView gui, CafeModel cafe, SharedObject so) {
@@ -43,76 +46,20 @@ public class CafeGUIController {
 		this.cafe 	= cafe;
 		this.so = so;
 		newOrder = false;
-//		updateServer();
-		queueCountdown();
-//		gui.addUpdateSpeedListener(new UpdateSpeed());
-//		gui.addNewServerListener(new AddServer());
+		serverCount = 2;
+		servers = new ArrayList<Server>();
+		this.tableModel = gui.getTableModel();
+		gui.addUpdateSpeedListener(new UpdateSpeed());
+		gui.addNewServerListener(new AddServer());
 		gui.addNewCustListener(new AddCustomer());
+		gui.addRemoveServerListener(new RemoveServer());
 		
 	}
-	
-	/*
-	 * The updateServer method creates a new Swing
-	 * Timer and triggers the OrderProcessor action
-	 * listener at the given interval.
-	 */
-	private void updateServer() {
-		int counter = 6;
 		
-//		timer = new Timer(cafe.getProcessingSpeed()*1000, new OrderProcessor());
-		timer.start();
+	public CafeTableModel getModel() {
+		return tableModel;
 	}
-	
-	/*
-	 * Stops the timer instance currently controlling
-	 * the processing of orders.
-	 */
-	private void resetProcessingSpeed() {
-		timer.stop();
-	}
-	
-	/*
-	 * Creates a new timer to control the updating of
-	 * the JLabel that displays the time remaining to
-	 * process the orders.
-	 */
-	private void queueCountdown() {
-
-		Timer countdown = new Timer(1000, new QueueTimer());
-		countdown.start();
-	}
-	
-	
-	/*
-	 * The OrderProcessor class crates an action listener
-	 * that when triggered, gives the server a new order
-	 * to process on the CafeGUIView.
-	 * 
-	 * It calls the CafeModel method getNextOrder to
-	 * provide the String for the updateServerOne method.
-	 */
-//	public class OrderProcessor implements ActionListener{
-//		
-//		public void actionPerformed(ActionEvent e) {
-//			gui.updateSever(cafe.getNextOrder());
-//		}
-//	}
-	
-	/*
-	 * The QueueTimer class crates an action listener
-	 * that when triggered updates the time remaining
-	 * JLabel on the GUI instance.
-	 * 
-	 * Is called based on a swing timer and is called
-	 * once every second.
-	 */
-	public class QueueTimer implements ActionListener{
 		
-		public void actionPerformed(ActionEvent e) {
-			gui.updateGUITimer(cafe.queueTimer());
-		}
-	}
-	
 	/*
 	 * UpdateSpeed class creates an action listener
 	 * that when triggered stops the current timer
@@ -125,10 +72,7 @@ public class CafeGUIController {
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
-				resetProcessingSpeed();
-				cafe.setProcessingSpeed(gui.getSpeedInput());
-				updateServer();
-				System.out.println("Updated speed to: " + cafe.getProcessingSpeed());
+				gui.updateExecutionSpeed();
 			}
 			catch(NumberFormatException n) {
 				gui.errorMessage("Invalid number of seconds");
@@ -152,15 +96,43 @@ public class CafeGUIController {
 		}
 	}
 	
+	/*
+	 * When the 'Add Server' button is clicked on the
+	 * gui, the actionPerformed method of the AddServer
+	 * class:
+	 * 1. Increments the number of servers by 1.
+	 * 2. Calls the gui to add a server window.
+	 * 3. Instantiates a new server object.
+	 * 4. Instantiates a new server Thread.
+	 * 5. Adds the new server to the ArrayList<Server>.
+	 * 6. Starts the new server Thread.
+	 */
 	public class AddServer implements ActionListener {
-		
 		public void actionPerformed(ActionEvent e) {
-			// TODO Make add server number dynamic
-			// Create new Server object
-			gui.addServer(3);
-			// Start new server object thread
+			serverCount++;
+			gui.addServer();
+			Server newServer = new Server(so, gui, serverCount);
+			Thread newServerThread = new Thread(newServer);
+			servers.add(newServer);
+			newServerThread.start();
 		}
 	}
 	
+	/*
+	 * When the 'Remove Server' button is clicked on the
+	 * gui, the actionPerformed method of the RemoveServer
+	 * class:
+	 * 1. Calls the gui to remove the server JTextPane at the
+	 * 	  last index of the ArrayList<JOptionPane>.
+	 * 2. Terminates the server Thread at the last index of
+	 *    the ArrayList<Server>.
+	 */
+	public class RemoveServer implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			gui.removeServer();
+			servers.get(servers.size()-1).terminate();
+
+		}
+	}	
 
 }

@@ -34,7 +34,6 @@ public class CafeModel {
 	private ItemList 		items;
 	private CustomerList 	customers;
 	private int 			orderIndex;
-	private int				processingTime;
 	private int				processingSpeed;
 	
 	public CafeModel(OrderList orders, ItemList items, CustomerList customers) {
@@ -44,20 +43,9 @@ public class CafeModel {
 		this.customers 	= customers;
 		orderIndex 		= 0;
 		processingSpeed = 3;
-		queueTimerInit(Manager.indexOrders(orders, customers, items));
 		
 	}
-	
-	public int getProcessingSpeed() {
-		return processingSpeed;
-	}
-
-
-	public void setProcessingSpeed(int processingSpeed) {
-		this.processingSpeed = processingSpeed;
-	}
-	
-	
+		
 	/*
 	 * getNextOrder method retrieves the order in the OrderList
 	 * that is at the index of the current value of orderIndex.
@@ -75,7 +63,9 @@ public class CafeModel {
 				
 			String nextOrder = "Order Number: " 	+ allOrders.get(orderIndex).get(0) + "\n"
 								+ "Name: " 			+ allOrders.get(orderIndex).get(1) + "\n"
-								+ "Total Price: " 	+ allOrders.get(orderIndex).get(2) + "\n";
+								+ "Total Price: " 	+ allOrders.get(orderIndex).get(2) + "\n"
+								+ "Discount applied: " + Manager.getDiscount(orders, allOrders.get(orderIndex).get(0))
+								+ "% \n";
 			
 			for(int i = 3; i < allOrders.get(orderIndex).size(); i++) {
 				nextOrder += "Item " + (i-2) + ": " + allOrders.get(orderIndex).get(i) + "\n";
@@ -90,34 +80,5 @@ public class CafeModel {
 			return "No more orders";
 		}
 		
-	}
-	
-	/*
-	 * This method initialises the time remaining to process all
-	 * orders. Updates instance int variable processingTime.
-	 * 
-	 * Is updated if user alters number of orders or processing
-	 * speed.	
-	 */
-	public void queueTimerInit(ArrayList<ArrayList<String>> orders) {
-		
-		processingTime = orders.size() * processingSpeed + processingSpeed;		
-	}
-	
-	/*
-	 * Returns the time remaining to process the queue in seconds as a
-	 * String.
-	 * 
-	 * Is called by QueueTimer to display on the GUI instance every
-	 * second. 	
-	 */
-	public String queueTimer() {
-		
-		if(processingTime <= 10) {
-			return "0" + Integer.toString(processingTime-=1);
-		}
-		else {
-			return Integer.toString(processingTime-=1);
-		}
 	}
 }

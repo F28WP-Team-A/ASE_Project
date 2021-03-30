@@ -2,6 +2,7 @@ package f21as_coursework;
 
 import java.util.ArrayList;
 
+import controllers.CafeGUIController;
 import model.*;
 
 /*
@@ -16,16 +17,18 @@ public class QueueManager implements Runnable {
 	private CustomerList customers;
 	private ItemList items;
 	private CafeModel model;
+	private CafeGUIController controller;
 	private int count;
 	
 	public QueueManager(SharedObject so, OrderList orders, CafeModel model,
-						CustomerList customers, ItemList items) {
+						CustomerList customers, ItemList items, CafeGUIController controller) {
 		this.so = so;
 		this.orders = orders;
 		this.model = model;
 		this.customers = customers;
 		this.items = items;
-		count = Manager.indexOrders(orders, customers, items).size();
+		this.controller = controller;
+		count = controller.getModel().getNumRemaining();
 	}
 
 	/*
@@ -37,8 +40,8 @@ public class QueueManager implements Runnable {
 	public void run() {
 		
 		while(count > 0) {
-			System.out.println("i: " + count);
-			System.out.println("Number of orders: " + Manager.indexOrders(orders, customers, items).size());
+//			System.out.println("i: " + count);
+//			System.out.println("Number of orders: " + Manager.indexOrders(orders, customers, items).size());
 			try {
 				System.out.println("Producer sleeping");
 				Thread.sleep(1000);
@@ -47,8 +50,9 @@ public class QueueManager implements Runnable {
 				
 			}
 			so.putNext(model.getNextOrder());
-			count = Manager.indexOrders(orders, customers, items).size();
+			count = controller.getModel().getNumRemaining();
 		}
+		so.putNext(model.getNextOrder());
 		so.finishedOrders();
 		
 	}

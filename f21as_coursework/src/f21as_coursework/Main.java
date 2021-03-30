@@ -42,7 +42,7 @@ public class Main {
 		
 		CafeGUIController controller = new CafeGUIController(gui, cafe, so);
 		
-		QueueManager q = new QueueManager(so, orders, cafe, customers, items);
+		QueueManager q = new QueueManager(so, orders, cafe, customers, items, controller);
 		
 		Thread producerThread = new Thread(q);
 		producerThread.start();

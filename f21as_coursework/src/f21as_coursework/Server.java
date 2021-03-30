@@ -16,11 +16,14 @@ public class Server extends Thread{
 	private SharedObject so;
 	private CafeGUIView gui;
 	private int threadNum;
+	boolean done;
+	boolean terminated;
 	
 	public Server(SharedObject so, CafeGUIView gui, int i) {
 		this.so = so;
 		this.gui = gui;
 		threadNum =i;
+		terminated = false;
 	}
 	
 	/*
@@ -40,19 +43,19 @@ public class Server extends Thread{
 	@Override
 	public void run() {
 		
-		boolean done = false;
+		done = false;
 		
 		while(!done) {
 			try {
-//				System.out.println("Consumer "+ threadNum +" sleeping");
-				Thread.sleep(10000);
+				System.out.println("Execution speed: " + gui.getExecutionSpeed());
+				Thread.sleep(gui.getExecutionSpeed()*1000);
 			}
 			catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			
 			if(so.getDone()) {
-//				System.out.println("Consumer "+ threadNum +" done");
+				System.out.println("Consumer "+ threadNum +" done");
 				done = true;
 				break;
 			}
@@ -70,7 +73,9 @@ public class Server extends Thread{
 					try {
 						String nextOrder = get();
 						gui.updateSever(threadNum, nextOrder);
-						gui.removeOrder();
+						if(gui.getTableModel().getNumRemaining() > 0) {
+							gui.removeOrder();
+						}
 					}
 					catch(ExecutionException x) {
 						x.printStackTrace();
@@ -86,6 +91,57 @@ public class Server extends Thread{
 			worker.execute();
 		}
 		
+		/*
+		 * If done becomes true and the while loop is exited,
+		 * the server checks if it was because it was terminated
+		 * (i.e. the user clicked 'Remove Server' on the gui).
+		 * 
+		 * If terminated is false, it means done was made true
+		 * because all orders have been processed, so the server
+		 * creates a new SwingWordker class to show in its
+		 * corresponding JTextPane on the gui that there are no
+		 * more orders.
+		 * 
+		 * If the thread was forcefully terminated, nothing happens.
+		 */
+		if(!terminated) {
+			SwingWorker<String, Void> endWorker = new SwingWorker<String, Void>() {
+
+				@Override
+				protected String doInBackground() throws Exception {
+					String order = "No more orders";
+					return order;
+				}
+				
+				@Override
+				protected void done() {
+					try {
+						String nextOrder = get();
+						gui.updateSever(threadNum, nextOrder);
+					}
+					catch(ExecutionException x) {
+						x.printStackTrace();
+					}
+					catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+				}
+				
+			};
+			endWorker.execute();
+		}
+		
+	}
+	
+	/*
+	 * terminate method allows the server thread
+	 * to be terminated externally in response to
+	 * a user removing a server from the gui.
+	 */
+	public void terminate() {
+		done = true;
+		terminated = true;
 	}
 	
 

@@ -17,6 +17,13 @@ public class Name {
 		
 	}
 	
+	public Name(String firstName) {
+		
+		this.firstName = firstName;
+		this.lastName = "";
+		
+	}
+	
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}

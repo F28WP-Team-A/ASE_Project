@@ -197,6 +197,10 @@ public class CafeTableModel extends AbstractTableModel {
 		getRowData();
 		this.fireTableDataChanged();
 	}
+	
+	public int getNumRemaining() {
+		return allOrders.size();
+	}
 
 
 }
