@@ -324,7 +324,7 @@ public class CafeGUIView extends JFrame {
 		TitledBorder 	sOneBorder 			= new TitledBorder("Server 1");
 		sOneBorder.setTitleJustification(TitledBorder.CENTER);
 		serverOne = new JTextPane();
-		serverOne.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		serverOne.setText("Waiting for order...");
 		serverOne.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), sOneBorder));
 		StyledDocument sOneText = serverOne.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();
@@ -336,7 +336,7 @@ public class CafeGUIView extends JFrame {
 		TitledBorder 	sTwoBorder 			= new TitledBorder("Server 2");
 		sTwoBorder.setTitleJustification(TitledBorder.CENTER);
 		serverTwo = new JTextPane();
-		serverTwo.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		serverTwo.setText("Waiting for order...");
 		serverTwo.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), sTwoBorder));
 		StyledDocument sTwoText = serverTwo.getStyledDocument();
 		StyleConstants.setAlignment(center,  StyleConstants.ALIGN_CENTER);
@@ -379,7 +379,7 @@ public class CafeGUIView extends JFrame {
 		TitledBorder 	newServerBorder 			= new TitledBorder("Server " + (servers.size()+1));
 		newServerBorder.setTitleJustification(TitledBorder.CENTER);
 		JTextPane newServer = new JTextPane();
-		newServer.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		newServer.setText("Waiting for order...");
 		newServer.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), newServerBorder));
 		StyledDocument sOneText = newServer.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();
