@@ -16,11 +16,14 @@ public class Server extends Thread{
 	private SharedObject so;
 	private CafeGUIView gui;
 	private int threadNum;
+	boolean done;
+	boolean terminated;
 	
 	public Server(SharedObject so, CafeGUIView gui, int i) {
 		this.so = so;
 		this.gui = gui;
 		threadNum =i;
+		terminated = false;
 	}
 	
 	/*
@@ -40,7 +43,7 @@ public class Server extends Thread{
 	@Override
 	public void run() {
 		
-		boolean done = false;
+		done = false;
 		
 		while(!done) {
 			try {
@@ -88,32 +91,42 @@ public class Server extends Thread{
 			worker.execute();
 		}
 		
-		SwingWorker<String, Void> endWorker = new SwingWorker<String, Void>() {
+		if(!terminated) {
+			SwingWorker<String, Void> endWorker = new SwingWorker<String, Void>() {
 
-			@Override
-			protected String doInBackground() throws Exception {
-				String order = "No more orders";
-				return order;
-			}
-			
-			@Override
-			protected void done() {
-				try {
-					String nextOrder = get();
-					gui.updateSever(threadNum, nextOrder);
-				}
-				catch(ExecutionException x) {
-					x.printStackTrace();
-				}
-				catch(InterruptedException e) {
-					e.printStackTrace();
+				@Override
+				protected String doInBackground() throws Exception {
+					String order = "No more orders";
+					return order;
 				}
 				
-			}
-			
-		};
+				@Override
+				protected void done() {
+					try {
+						String nextOrder = get();
+						gui.updateSever(threadNum, nextOrder);
+					}
+					catch(ExecutionException x) {
+						x.printStackTrace();
+					}
+					catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+				}
+				
+			};
+			endWorker.execute();
+		}
+		else {
+			System.out.println("Thread " + threadNum + " terminated");
+		}
 		
-		endWorker.execute();
+	}
+	
+	public void terminate() {
+		done = true;
+		terminated = true;
 	}
 	
 

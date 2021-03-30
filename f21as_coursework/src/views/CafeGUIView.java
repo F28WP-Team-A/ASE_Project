@@ -49,10 +49,10 @@ public class CafeGUIView extends JFrame {
 	 */
 	public CafeGUIView(OrderList orders, CustomerList customers, ItemList items) {
 		
-		this.orders = orders;
-		this.customers = customers;
-		this.items = items;
-		executionSpeed = 5;
+		this.orders 		= orders;
+		this.customers 		= customers;
+		this.items 			= items;
+		executionSpeed 		= 5;
 		servers = new ArrayList<JTextPane>();
 		setDefaultCloseOperation(CafeGUIView.DO_NOTHING_ON_CLOSE);
 		this.setLayout(new BorderLayout(1,1));
@@ -88,7 +88,7 @@ public class CafeGUIView extends JFrame {
 	 * can only be called from within the class.
 	 */
 	private void createEastPanel() {
-		eastPanel 		= new JPanel();		
+		eastPanel 						= new JPanel();		
 		eastPanel.setMinimumSize(getMinimumSize());
 		
 		TitledBorder 	border 			= new TitledBorder("PLACEHOLDER FOR USER CONTROLS");					// Creates a border with a title that informs the user of the functionality of the panel.
@@ -103,49 +103,49 @@ public class CafeGUIView extends JFrame {
 		JLabel 			eastNumPrompt	= new JLabel("Enter customer number:");
 		eastPanel.add(eastNumPrompt);
 		
-		customerID 					= new JTextField(5); 
+		customerID 						= new JTextField(5); 
 		eastPanel.add(customerID);
 		
-		JLabel cName 						= new JLabel("Name:");
+		JLabel cName 					= new JLabel("Name:");
 		eastPanel.add(cName);
 		
-		customerName 		= new JTextField(5);
+		customerName 					= new JTextField(5);
 		eastPanel.add(customerName);
 		
-		JLabel 			chooseItem	= new JLabel("Choose item:");
+		JLabel chooseItem				= new JLabel("Choose item:");
 		eastPanel.add(chooseItem);
 		
 		itemsList 						= new JComboBox<String>(getItems(items));
 		eastPanel.add(itemsList);
 		
-		submitItemSelection 				= new JButton("Submit");
+		submitItemSelection 			= new JButton("Submit");
 		eastPanel.add(submitItemSelection);
 		
 		JLabel speedLabel				= new JLabel("Current time to process one order (seconds):");
 		eastPanel.add(speedLabel);
 		
-		speed 								= new JLabel(String.valueOf(this.getExecutionSpeed()));
+		speed 							= new JLabel(String.valueOf(this.getExecutionSpeed()));
 		eastPanel.add(speed);
 		
-		JLabel enterNewSpeed				= new JLabel("Enter new processing speed (seconds):");
+		JLabel enterNewSpeed			= new JLabel("Enter new processing speed (seconds):");
 		eastPanel.add(enterNewSpeed);
 		
-		newSpeed							= new JTextField(5);
+		newSpeed						= new JTextField(5);
 		eastPanel.add(newSpeed);
 		
-		submitNewSpeed						= new JButton("Submit");
+		submitNewSpeed					= new JButton("Submit");
 		eastPanel.add(submitNewSpeed);
 		
-		JLabel addServerLabel				= new JLabel("Click button to add a server:");
+		JLabel addServerLabel			= new JLabel("Click button to add a server:");
 		eastPanel.add(addServerLabel);
 		
-		addServer							= new JButton("Add Server");
+		addServer						= new JButton("Add Server");
 		eastPanel.add(addServer);
 		
-		JLabel removeServerLabel				= new JLabel("Click button to remove a server:");
+		JLabel removeServerLabel		= new JLabel("Click button to remove a server:");
 		eastPanel.add(addServerLabel);
 		
-		removeServer							= new JButton("Remove Server");
+		removeServer						= new JButton("Remove Server");
 		eastPanel.add(removeServer);
 		
 		group.setHorizontalGroup(
@@ -209,6 +209,25 @@ public class CafeGUIView extends JFrame {
 	}
 	
 	/*
+	 * Returns a String array of all items on the
+	 * menu at the cafe.
+	 * 
+	 * Used by the east panel to populate the drop
+	 * down for item choices.
+	 */
+	private String [] getItems(ItemList items) {
+		
+		String [] itemList = new String [items.getMapSize()];
+		int count = 0;
+		for(Entry<String, Items> i : items.entrySet()) {
+			itemList[count] = i.getValue().getID();
+			count += 1;
+		}
+		
+		return itemList;
+	}
+	
+	/*
 	 * Creates a JPanel and adds it to the centre section
 	 * of the GUI instance.
 	 * 
@@ -223,7 +242,7 @@ public class CafeGUIView extends JFrame {
 	 * 
 	 */
 	private void createCentrePanel() {
-		centrePanel 	= new JPanel();
+		centrePanel 					= new JPanel();
 		centrePanel.setLayout(new BoxLayout(centrePanel,BoxLayout.Y_AXIS));
 		
 		TitledBorder 	border 			= new TitledBorder("Table of orders"); 					// Creates a border with a title that informs the user of the functionality of the panel.
@@ -238,7 +257,7 @@ public class CafeGUIView extends JFrame {
 		sorter 							= new TableRowSorter<CafeTableModel>(tableModel);						// Instantiates a new TableRowSorter for the custom CompTableModel.
 
 		
-		table 			= new JTable(tableModel);
+		table 							= new JTable(tableModel);
 		table.setRowSorter(sorter);
 		
 		JScrollPane 	scrollPane 		= new JScrollPane(table);
@@ -249,32 +268,41 @@ public class CafeGUIView extends JFrame {
 		
 	}
 	
+	/*
+	 * Returns CafeTableModel instance currently
+	 * being used by the GUI.
+	 * 
+	 * Used by other classes to determine how
+	 * many orders are left to process.
+	 */
 	public CafeTableModel getTableModel() {
 		return tableModel;
 	}
 	
-	private String [] getItems(ItemList items) {
-		
-		String [] itemList = new String [items.getMapSize()];
-		int count = 0;
-		for(Entry<String, Items> i : items.entrySet()) {
-			itemList[count] = i.getValue().getID();
-			count += 1;
-		}
-		
-		return itemList;
-	}
-	
+	/*
+	 * Calls the CafeTableModel method addRow to
+	 * inform the table model there is new data
+	 * that needs to be inserted into the table.
+	 */
 	public void addTableRow() {
-		System.out.println("In add row to table");
 		tableModel.addRow();
 	}
 	
+	/*
+	 * Calls the CafeTableModel method updateTable
+	 * to inform the table model the data has been
+	 * updated and the table needs to be refreshed.
+	 */
 	public void updateTable(int i) {
-		System.out.println("In update table");
 		tableModel.updateOrder(i);
 	}
 	
+	/*
+	 * Calls the CafeTableModel method removeOrder
+	 * to inform the table model the next order has
+	 * gone to a server and can be removed from the
+	 * table.
+	 */
 	public void removeOrder() {
 		tableModel.removeRow();
 	}
@@ -320,32 +348,15 @@ public class CafeGUIView extends JFrame {
 		
 	}
 	
-	public String getCustIDInput() {
-		return customerID.getText().trim();
-	}
-	
-	public String getItemChoice() {
-		return itemsList.getSelectedItem().toString();
-	}
-	
-	public String getCustName() {
-		return customerName.getText().trim();
-	}
-	
-	public ArrayList<String> getNewOrderInfo(){
-		ArrayList<String> newOrder = new ArrayList<String>();
-		
-		newOrder.add(customerID.getText().trim());
-		System.out.println("New ID: " + customerID.getText().trim());
-		newOrder.add(itemsList.getSelectedItem().toString());
-		newOrder.add(customerName.getText().trim());
-		
-		return newOrder;
-	}
-	
 	/*
-	 * Updates the text in the JTextPane of server1
-	 * with the String input as a parameter.
+	 * Updates the JTextPane of the server specified
+	 * by the int passed in as a parameter, to show
+	 * the String also passed in as a parameter.
+	 * 
+	 * Searches through the ArrayList<JTextPane> of
+	 * servers until it reaches the server at index i,
+	 * where it then sets the text of that JTextPane to
+	 * be the order String.
 	 */
 	public void updateSever(int i, String order) {
 				
@@ -358,25 +369,13 @@ public class CafeGUIView extends JFrame {
 		
 	}
 	
-	public void updateExecutionSpeed() {
-		executionSpeed = Integer.parseInt(newSpeed.getText().trim());
-		speed.setText(String.valueOf(executionSpeed));
-	}
-	
 	/*
-	 * Returns the String input by the user as the
-	 * new order processing speed as an int.
+	 * Creates a new JTextPane for a new server with
+	 * the same styling as the other servers, adds
+	 * it to the ArrayList<JTextPane> of servers and
+	 * adds it to the southPanel.
 	 */
-	public int getExecutionSpeed() {
-		return executionSpeed;
-	}
-	
-	public void errorMessage(String message) {
-		JOptionPane.showMessageDialog(null, message);
-	}
-	
 	public void addServer() {
-		System.out.println("Adding server");
 		TitledBorder 	newServerBorder 			= new TitledBorder("Server " + (servers.size()+1));
 		newServerBorder.setTitleJustification(TitledBorder.CENTER);
 		JTextPane newServer = new JTextPane();
@@ -391,30 +390,89 @@ public class CafeGUIView extends JFrame {
 		this.revalidate();
 	}
 	
+	/*
+	 * Removes the server at the last index of the
+	 * ArrayList<JTextPane> of servers from the
+	 * southPanel.
+	 */
 	public void removeServer() {
 		southPanel.remove(servers.get(servers.size()-1));
 	}
 	
 	/*
-	 * Add ActionListeners
+	 * Returns an ArrayList<String> containing the
+	 * new order information input by the user.
+	 */
+	public ArrayList<String> getNewOrderInfo(){
+		ArrayList<String> newOrder = new ArrayList<String>();
+		
+		newOrder.add(customerID.getText().trim());
+		System.out.println("New ID: " + customerID.getText().trim());
+		newOrder.add(itemsList.getSelectedItem().toString());
+		newOrder.add(customerName.getText().trim());
+		
+		return newOrder;
+	}
+	
+
+	/*
+	 * Returns the String input by the user as the
+	 * new order processing speed as an int.
+	 */
+	public int getExecutionSpeed() {
+		return executionSpeed;
+	}
+	
+	/*
+	 * Sets the variable executionSpeed to be the
+	 * new speed input by the user and also updates
+	 * the JLabel speed to reflect this.
+	 */
+	public void updateExecutionSpeed() {
+		executionSpeed = Integer.parseInt(newSpeed.getText().trim());
+		speed.setText(String.valueOf(executionSpeed));
+	}
+	
+	/*
+	 * Shows the user a JOptionPane containing
+	 * an error message specified by the String
+	 * passed in as a parameter.
+	 */
+	public void errorMessage(String message) {
+		JOptionPane.showMessageDialog(null, message);
+	}
+	
+
+	
+	/*
+	 * Adds an ActionListener to the submitItemSelection
+	 * JButton.
 	 */
 	public void addNewCustListener(ActionListener al) {
 		submitItemSelection.addActionListener(al);
-		System.out.println("Action Listener added");
 	}
 	
+	/*
+	 * Adds an ActionListener to the addServer
+	 * JButton.
+	 */
 	public void addNewServerListener(ActionListener al) {
 		addServer.addActionListener(al);
-		System.out.println("Add server action Listener added");
 	}
 	
+	/*
+	 * Adds an ActionListener to the removeServer
+	 * JButton.
+	 */
 	public void addRemoveServerListener(ActionListener al) {
 		removeServer.addActionListener(al);
-		System.out.println("Remove server action Listener added");
 	}
 	
+	/*
+	 * Adds an ActionListener to the submitNewSpeed
+	 * JButton.
+	 */
 	public void addUpdateSpeedListener(ActionListener al) {
 		submitNewSpeed.addActionListener(al);
-		System.out.println("Action Listener added");
 	}
 }

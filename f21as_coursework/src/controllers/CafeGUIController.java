@@ -38,6 +38,7 @@ public class CafeGUIController {
 	private boolean newOrder;
 	private SharedObject so;
 	private int serverCount;
+	private ArrayList<Server> servers;
 	
 	
 	public CafeGUIController(CafeGUIView gui, CafeModel cafe, SharedObject so) {
@@ -46,6 +47,7 @@ public class CafeGUIController {
 		this.so = so;
 		newOrder = false;
 		serverCount = 2;
+		servers = new ArrayList<Server>();
 		this.tableModel = gui.getTableModel();
 		gui.addUpdateSpeedListener(new UpdateSpeed());
 		gui.addNewServerListener(new AddServer());
@@ -94,19 +96,41 @@ public class CafeGUIController {
 		}
 	}
 	
+	/*
+	 * When the 'Add Server' button is clicked on the
+	 * gui, the actionPerformed method of the AddServer
+	 * class:
+	 * 1. Increments the number of servers by 1.
+	 * 2. Calls the gui to add a server window.
+	 * 3. Instantiates a new server object.
+	 * 4. Instantiates a new server Thread.
+	 * 5. Adds the new server to the ArrayList<Server>.
+	 * 6. Starts the new server Thread.
+	 */
 	public class AddServer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			serverCount++;
 			gui.addServer();
 			Server newServer = new Server(so, gui, serverCount);
 			Thread newServerThread = new Thread(newServer);
+			servers.add(newServer);
 			newServerThread.start();
 		}
 	}
 	
+	/*
+	 * When the 'Remove Server' button is clicked on the
+	 * gui, the actionPerformed method of the RemoveServer
+	 * class:
+	 * 1. Calls the gui to remove the server JTextPane at the
+	 * 	  last index of the ArrayList<JOptionPane>.
+	 * 2. Terminates the server Thread at the last index of
+	 *    the ArrayList<Server>.
+	 */
 	public class RemoveServer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			gui.removeServer();
+			servers.get(servers.size()-1).terminate();
 
 		}
 	}	
