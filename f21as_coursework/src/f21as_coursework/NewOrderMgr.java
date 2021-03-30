@@ -98,8 +98,8 @@ public class NewOrderMgr implements Runnable {
 						else {
 							custName    = newName;
 							String []  name = custName.split(" ");
-							if(name.length > 1) {
-								customers.addCustomer(new Customer( new Name(name[0], name[1]), inputString));					// Create a new Customer object if they do not already exist.
+							if(name.length > 1) {																			// Check which Name constructor to use.	
+								customers.addCustomer(new Customer( new Name(name[0], name[1]), inputString));				// Create a new Customer object if they do not already exist.
 							}
 							else {
 								customers.addCustomer(new Customer( new Name(name[0]), inputString));
@@ -129,10 +129,6 @@ public class NewOrderMgr implements Runnable {
 				}
 			}
 			
-			catch(NullPointerException n) {
-				JOptionPane.showMessageDialog(null, "Invalid customer number");
-				n.printStackTrace();
-			}
 			catch(NumberFormatException f) {
 				gui.errorMessage("Customer number must be an integer");
 			}
