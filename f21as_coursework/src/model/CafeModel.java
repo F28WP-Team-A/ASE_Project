@@ -63,7 +63,9 @@ public class CafeModel {
 				
 			String nextOrder = "Order Number: " 	+ allOrders.get(orderIndex).get(0) + "\n"
 								+ "Name: " 			+ allOrders.get(orderIndex).get(1) + "\n"
-								+ "Total Price: " 	+ allOrders.get(orderIndex).get(2) + "\n";
+								+ "Total Price: " 	+ allOrders.get(orderIndex).get(2) + "\n"
+								+ "Discount applied: " + Manager.getDiscount(orders, allOrders.get(orderIndex).get(0))
+								+ "% \n";
 			
 			for(int i = 3; i < allOrders.get(orderIndex).size(); i++) {
 				nextOrder += "Item " + (i-2) + ": " + allOrders.get(orderIndex).get(i) + "\n";

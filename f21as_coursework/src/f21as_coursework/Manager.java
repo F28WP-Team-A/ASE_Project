@@ -368,6 +368,47 @@ public class Manager {
 		return price;
 	}
 	
+	public static int getDiscount(OrderList orders, String customerID) {
+		
+		int food 		= 0;
+		int drink 		= 0;
+		int merch 		= 0;
+		int discount 	= 0;
+			
+		for(int i = 1; i < orders.getNumberOfOrders()+1; i++) {
+//			System.out.println("Manager 333 i: " + i);
+			if(orders.getOrderItem(i).getId().equals(customerID) 
+				&& orders.getOrderItem(i).getItemDetails().substring(1,5).equalsIgnoreCase("food")) {
+				food += 1;
+			}
+			
+			else if(orders.getOrderItem(i).getId().equals(customerID)
+				&& orders.getOrderItem(i).getItemDetails().substring(1,6).equalsIgnoreCase("drink")) {
+				drink += 1;
+			}
+			
+			else if(orders.getOrderItem(i).getId().equals(customerID)
+				&& orders.getOrderItem(i).getItemDetails().substring(1,6).equalsIgnoreCase("merch")) {
+				merch += 1;
+			}
+		}
+		
+		// Check for discounts
+		if(food >= 3)  {
+			discount = 30;
+		}
+		
+		if(food >= 2 && drink >= 2) {
+			discount = 20;
+		}
+		
+		if(merch >= 1) {
+			discount = 10;
+		}
+		
+		return discount;
+	}
+	
 	
 	/*
 	 * getReport method generates a report including the orders from the
