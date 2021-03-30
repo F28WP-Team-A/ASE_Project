@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import f21as_coursework.*;
 
@@ -16,6 +18,8 @@ public class SharedObject {
 	private boolean nextOrderEmpty;
 	private boolean newOrderEmpty;
 	private boolean done;
+	
+	private final static Logger logger = Logger.getLogger(SharedObject.class.getName());
 	
 	public SharedObject() {
 		nextOrderEmpty = true;
@@ -37,6 +41,7 @@ public class SharedObject {
 		while(nextOrderEmpty) {
 			try {
 				System.out.println("Consumer "+i+" waiting...");
+				logger.log(Level.INFO, "Order ready to be served.");
 				wait();
 			}
 			catch (InterruptedException e) {
@@ -90,6 +95,7 @@ public class SharedObject {
 		while(newOrderEmpty) {
 			try {
 				System.out.println("New Order Manager waiting...");
+				logger.log(Level.INFO, "New order to be processed.");
 				wait();
 			}
 			catch (InterruptedException e) {
