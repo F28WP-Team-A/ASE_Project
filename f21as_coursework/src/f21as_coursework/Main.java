@@ -60,6 +60,8 @@ public class Main {
 		Thread newOrderThread = new Thread(newOrderManager);
 		newOrderThread.start();		
 
+		//Log.getInstance();
+		//Log.Log();
 		
 
 	}	

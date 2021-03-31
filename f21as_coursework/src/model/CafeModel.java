@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -35,6 +37,9 @@ public class CafeModel {
 	private CustomerList 	customers;
 	private int 			orderIndex;
 	private int				processingSpeed;
+	
+	private final static Logger logger = Logger.getLogger(CafeModel.class.getName());
+	private Log log = Log.getInstance();
 	
 	public CafeModel(OrderList orders, ItemList items, CustomerList customers) {
 		
@@ -73,10 +78,12 @@ public class CafeModel {
 				
 			orderIndex ++;
 			
+			logger.log(Level.INFO, "Next order.");
 			return nextOrder;
 			
 		}
 		else {
+			logger.log(Level.INFO, "No more orders");
 			return "No more orders";
 		}
 		
