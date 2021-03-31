@@ -97,7 +97,6 @@ public class SharedObject {
 			try {
 				System.out.println("New Order Manager waiting...");
 				logger.log(Level.INFO, "New order to be processed.");
-				//log.log(Level.INFO, "processed");
 				wait();
 			}
 			catch (InterruptedException e) {
