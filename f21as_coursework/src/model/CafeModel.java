@@ -39,6 +39,7 @@ public class CafeModel {
 	private int				processingSpeed;
 	
 	private final static Logger logger = Logger.getLogger(CafeModel.class.getName());
+	private Log log = Log.getInstance();
 	
 	public CafeModel(OrderList orders, ItemList items, CustomerList customers) {
 		
@@ -82,7 +83,7 @@ public class CafeModel {
 			
 		}
 		else {
-			//logger.log(Level.INFO, "No more orders");
+			logger.log(Level.INFO, "No more orders");
 			return "No more orders";
 		}
 		

@@ -20,6 +20,7 @@ public class SharedObject {
 	private boolean done;
 	
 	private final static Logger logger = Logger.getLogger(SharedObject.class.getName());
+	private Log log = Log.getInstance();
 	
 	public SharedObject() {
 		nextOrderEmpty = true;
@@ -96,6 +97,7 @@ public class SharedObject {
 			try {
 				System.out.println("New Order Manager waiting...");
 				logger.log(Level.INFO, "New order to be processed.");
+				//log.log(Level.INFO, "processed");
 				wait();
 			}
 			catch (InterruptedException e) {
