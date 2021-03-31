@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 public class Log {
 	
+	
 	private static Log instance;
 	private static Log logger;
 	//private final static Logger logger = Logger.getLogger(Log.class.getName());
@@ -31,7 +32,7 @@ public class Log {
 	}
 	
 	
-	//lazy initialisation 
+	//singleton pattern - lazy initialisation 
 	//accessible everywhere
 	public static Log getInstance() {
 		if (instance == null) 				//only if no instance
