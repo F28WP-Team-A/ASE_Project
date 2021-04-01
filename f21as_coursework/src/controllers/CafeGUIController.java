@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import f21as_coursework.*;
 import model.CafeModel;
@@ -96,6 +98,8 @@ public class CafeGUIController {
 		}
 	}
 	
+	private final static Logger logger = Logger.getLogger(CafeGUIController.class.getName());
+	
 	/*
 	 * When the 'Add Server' button is clicked on the
 	 * gui, the actionPerformed method of the AddServer
@@ -111,6 +115,7 @@ public class CafeGUIController {
 		public void actionPerformed(ActionEvent e) {
 			serverCount++;
 			gui.addServer();
+			logger.log(Level.INFO, "New server added.");
 			Server newServer = new Server(so, gui, serverCount);
 			Thread newServerThread = new Thread(newServer);
 			servers.add(newServer);
@@ -130,6 +135,7 @@ public class CafeGUIController {
 	public class RemoveServer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			gui.removeServer();
+			logger.log(Level.INFO, "Server removed.");
 			servers.get(servers.size()-1).terminate();
 
 		}
