@@ -32,8 +32,8 @@ import controllers.*;
 
 public class CafeModel {
 	
-	private OrderList 		orders;
-	private ItemList 		items;
+	private OrderSet 		orders;
+	private ItemMap 		items;
 	private CustomerList 	customers;
 	private int 			orderIndex;
 	private int				processingSpeed;
@@ -41,7 +41,7 @@ public class CafeModel {
 	private final static Logger logger = Logger.getLogger(CafeModel.class.getName());
 	private Log log = Log.getInstance();
 	
-	public CafeModel(OrderList orders, ItemList items, CustomerList customers) {
+	public CafeModel(OrderSet orders, ItemMap items, CustomerList customers) {
 		
 		this.orders 	= orders;
 		this.items 		= items;

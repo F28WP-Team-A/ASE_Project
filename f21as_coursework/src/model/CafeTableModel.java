@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 import f21as_coursework.CustomerList;
-import f21as_coursework.ItemList;
+import f21as_coursework.ItemMap;
 import f21as_coursework.Manager;
-import f21as_coursework.OrderList;
+import f21as_coursework.OrderSet;
 
 public class CafeTableModel extends AbstractTableModel {
 	
-	private OrderList orders;
+	private OrderSet orders;
 	private CustomerList customers;
 	private String [] columnHeaders;
 	private Object [] [] rowData;
-	private ItemList items;
+	private ItemMap items;
 	private ArrayList<ArrayList<String>> allOrders;
 	private int count;
 	
@@ -30,7 +30,7 @@ public class CafeTableModel extends AbstractTableModel {
 	 * Array which becomes the formatted data used
 	 * in the table.
 	 */
-	public CafeTableModel(OrderList orders , CustomerList customers,ItemList items,
+	public CafeTableModel(OrderSet orders , CustomerList customers,ItemMap items,
 							String [] headers) {
 		this.orders = orders;
 		this.customers = customers;

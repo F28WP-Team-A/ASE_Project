@@ -9,11 +9,11 @@ class ManagerTest {
 
 	@Test
 	public void testDiscount() throws IncorrectItemException, IncorrectOrderException {
-		ItemList items = new ItemList();
-		OrderList orders = new OrderList();
+		ItemMap items = new ItemMap();
+		OrderSet orders = new OrderSet();
 		CustomerList customers = new CustomerList();
-		Manager.populateItemList(items, "items.csv");
-		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
+		Manager.populateItemMap(items, "items.csv");
+		Manager.populateOrderSet(orders, customers, "existingCustomerOrders.csv");
 		
 		//test for the discount method (4 paths)
 		//test for the discount with 1 merch (or more)

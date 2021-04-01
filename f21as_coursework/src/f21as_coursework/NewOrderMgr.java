@@ -29,13 +29,13 @@ import model.SharedObject;
 public class NewOrderMgr implements Runnable {
 	
 	private SharedObject so;
-	private OrderList orders;
+	private OrderSet orders;
 	private CustomerList customers;
 	private CafeGUIView gui;
-	private ItemList items;
+	private ItemMap items;
 	
-	public NewOrderMgr(SharedObject so, OrderList orders, CustomerList customers,
-						CafeGUIView gui, ItemList items) {
+	public NewOrderMgr(SharedObject so, OrderSet orders, CustomerList customers,
+						CafeGUIView gui, ItemMap items) {
 		this.so = so;
 		this.orders = orders;
 		this.gui = gui;
