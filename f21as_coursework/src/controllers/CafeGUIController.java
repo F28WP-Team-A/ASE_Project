@@ -41,6 +41,9 @@ public class CafeGUIController {
 	private ArrayList<Server> servers;
 	private boolean done;
 	
+	private final static Logger logger = Logger.getLogger(CafeGUIController.class.getName());
+	private Log log = Log.getInstance();
+	
 	
 	public CafeGUIController(CafeGUIView gui, SharedObject so) {
 		this.gui 	= gui;
@@ -105,7 +108,6 @@ public class CafeGUIController {
 		}
 	}
 	
-	private final static Logger logger = Logger.getLogger(CafeGUIController.class.getName());
 	
 	/*
 	 * When the 'Add Server' button is clicked on the
