@@ -54,7 +54,7 @@ public class CafeGUIView extends JFrame {
 		this.items 			= items;
 		executionSpeed 		= 5;
 		servers = new ArrayList<JTextPane>();
-		setDefaultCloseOperation(CafeGUIView.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(CafeGUIView.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout(1,1));
 		createEastPanel();
 		createCentrePanel();
@@ -200,11 +200,12 @@ public class CafeGUIView extends JFrame {
 		);
 				
 		this.add(eastPanel, BorderLayout.EAST);
-//		this.addWindowListener(new WindowAdapter() {
-//			public void windowClosing(WindowEvent e) {
-//				Manager.outputReport(orders, customers, items, "Cafe_Report.txt");
-//			}
-//		});
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.out.println("test test");
+				Manager.outputReport(orders, customers, items, "./Cafe_Report1.txt");
+			}
+		});
 		
 	}
 	

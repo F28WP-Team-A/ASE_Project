@@ -9,7 +9,7 @@ import f21as_coursework.*;
 /*
  * Shared object for next orders and new orders.
  * 
- */
+ */	
 
 public class SharedObject {
 	

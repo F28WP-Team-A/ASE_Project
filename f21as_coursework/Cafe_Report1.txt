@@ -1,0 +1,101 @@
+Orders: 
+[1, John  Smith, 10.98, ham sandwich, americano, mug, water]
+[2, Aleshia Tomkiewicz, 7.15, ham&cheese sandwich, chocolate brownie, flavoured tea]
+[3, Evan Zigomalas, 9.880, cheese baked potato, mixed fruit bag, cappuccino, coke, reusable straw]
+[4, France Andrade, 4.4, tomato soup, ready salted crisps]
+[5, Ulysses Mcwalters, 11.44, tuna mayo sandwich, flavoured latte, tuna baked potato, tuna baked potato]
+[6, Tyisha Veness, 8.100, coke, water bottle]
+Total Sales: �61.45
+
+Menu: 
+Item Number         Description                   Type/Size      Drink Type     Flavour        Price              
+DRINK228            tea                           small          hot            null           2                  
+DRINK229            tea                           regular        hot            null           2.25               
+DRINK237            coke                          small          juice          null           2                  
+DRINK238            coke                          regular        juice          null           2.75               
+DRINK235            flavoured tea                 regular        hot            red berries    2.5                
+DRINK236            flavoured tea                 large          hot            red berries    2.75               
+DRINK233            flavoured tea                 large          hot            peppermint     2.75               
+MERCH310            mug                           regular                                      5                  
+DRINK234            flavoured tea                 small          hot            red berries    2.25               
+DRINK231            flavoured tea                 small          hot            peppermint     2.25               
+DRINK232            flavoured tea                 regular        hot            peppermint     2.5                
+DRINK230            tea                           large          hot            null           2.5                
+FOOD129             mixed fruit bag               snack                                        1                  
+FOOD128             ready salted crisps           snack                                        0.9                
+FOOD127             chocolate chip cookie         snack                                        1.95               
+FOOD122             beans baked potato            main                                         5.25               
+FOOD121             cheese baked potato           main                                         5.25               
+FOOD120             tomato soup                   main                                         3.5                
+FOOD126             blueberry muffin              snack                                        2                  
+FOOD125             chocolate brownie             snack                                        1.95               
+FOOD124             tuna baked potato             main                                         5.25               
+DRINK239            coke                          large          juice          null           3.25               
+FOOD123             beans&cheese baked potato     main                                         5.25               
+DRINK204            latte                         small          hot            null           2.4                
+DRINK248            water                         large          juice          null           2                  
+DRINK205            latte                         regular        hot            null           2.9                
+DRINK249            apple juice                   small          juice          null           1.6                
+DRINK202            americano                     regular        hot            null           2.75               
+DRINK246            water                         small          juice          null           1.5                
+DRINK203            americano                     large          hot            null           3.5                
+DRINK247            water                         regular        juice          null           1.75               
+DRINK244            fanta                         regular        juice          null           2.75               
+DRINK201            americano                     small          hot            null           2.25               
+DRINK245            fanta                         large          juice          null           3.25               
+DRINK242            lemonade                      large          juice          null           3.25               
+DRINK243            fanta                         small          juice          null           2                  
+DRINK240            lemonade                      small          juice          null           2                  
+DRINK241            lemonade                      regular        juice          null           2.75               
+FOOD119             lentil soup                   main                                         3.5                
+FOOD118             cheese&tomato toastie         main                                         2.95               
+FOOD117             cheese&tomato toastie         main                                         2.95               
+FOOD116             tuna&cheese toastie           main                                         2.95               
+FOOD111             cheese toastie                main                                         2.95               
+FOOD110             egg mayo sandwich             main                                         2.95               
+FOOD115             tuna&cheese toastie           main                                         2.95               
+DRINK208            flavoured latte               regular        hot            vanilla        3.4                
+FOOD114             ham&cheese toastie            main                                         2.95               
+DRINK209            flavoured latte               large          hot            vanilla        3.75               
+FOOD113             ham&cheese toastie            main                                         2.95               
+DRINK206            latte                         large          hot            null           3.25               
+FOOD112             cheese toastie                main                                         2.95               
+DRINK207            flavoured latte               small          hot            vanilla        2.9                
+DRINK215            latte                         large          iced           null           3.25               
+DRINK216            flavoured latte               small          iced           vanilla        2.9                
+DRINK213            latte                         small          iced           null           2.4                
+DRINK214            latte                         regular        iced           null           2.9                
+DRINK211            flavoured latte               regular        hot            caramel        3.4                
+DRINK212            flavoured latte               large          hot            caramel        3.75               
+DRINK210            flavoured latte               small          hot            caramel        2.9                
+DRINK251            apple juice                   large          juice          null           2.5                
+DRINK250            apple juice                   regular        juice          null           2.2                
+FOOD108             tuna mayo sandwich            main                                         2.95               
+FOOD107             tuna mayo sandwich            main                                         2.95               
+FOOD106             ham&cheese sandwich           main                                         2.95               
+FOOD105             ham&cheese sandwich           main                                         2.95               
+FOOD109             egg mayo sandwich             main                                         2.95               
+FOOD104             cheese sandwich               main                                         2.95               
+DRINK219            flavoured latte               small          iced           caramel        2.9                
+FOOD103             cheese sandwich               main                                         2.95               
+FOOD102             ham sandwich                  main                                         2.95               
+DRINK217            flavoured latte               regular        iced           vanilla        3.4                
+FOOD101             ham sandwich                  main                                         2.95               
+DRINK218            flavoured latte               large          iced           vanilla        3.75               
+DRINK226            hot chocolate                 regular        hot            null           2.9                
+MERCH303            reusable cup                  large                                        9                  
+DRINK227            hot chocolate                 large          hot            null           3.25               
+MERCH302            reusable cup                  regular                                      7.5                
+DRINK224            cappuccino                    large          hot            null           3.25               
+MERCH301            reusable cup                  small                                        5                  
+DRINK225            hot chocolate                 small          hot            null           2.5                
+DRINK222            cappuccino                    small          hot            null           2.4                
+DRINK223            cappuccino                    regular        hot            null           2.9                
+DRINK220            flavoured latte               regular        iced           caramel        3.4                
+DRINK221            flavoured latte               large          iced           caramel        3.75               
+MERCH309            tote bag                      regular                                      6                  
+MERCH308            tote bag                      small                                        4                  
+MERCH307            water bottle                  large                                        7                  
+MERCH306            water bottle                  regular                                      4.99               
+MERCH305            water bottle                  small                                        3.5                
+MERCH304            reusable straw                regular                                      1.2                
