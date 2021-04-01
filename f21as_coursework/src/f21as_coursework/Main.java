@@ -25,6 +25,8 @@ public class Main {
 		OrderList orders = new OrderList();
 		
 		CustomerList customers = new CustomerList();
+		
+		SharedObject so = new SharedObject();
 	
 		Manager.populateItemList(items, "items.csv");
 
@@ -36,11 +38,9 @@ public class Main {
 		
 		System.out.println("Foo123 price: " + items.getPrice("DRINK206"));
 		
-		CafeGUIView gui = new CafeGUIView(orders, customers, items);
+		CafeGUIView gui = new CafeGUIView(orders, customers, items, so);
 		
-		SharedObject so = new SharedObject();
-		
-		CafeGUIController controller = new CafeGUIController(gui, cafe, so);
+		CafeGUIController controller = new CafeGUIController(gui, so);
 		
 		QueueManager q = new QueueManager(so, orders, cafe, customers, items, controller);
 		

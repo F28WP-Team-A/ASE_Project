@@ -2,6 +2,7 @@ package views;
 
 import f21as_coursework.*;
 import model.CafeTableModel;
+import model.SharedObject;
 import controllers.*;
 
 import java.awt.*;
@@ -29,6 +30,7 @@ public class CafeGUIView extends JFrame {
 	private ItemList				items;
 	private int 					executionSpeed;
 	private CafeTableModel 			tableModel;
+	private boolean					done;
 	JPanel							eastPanel, centrePanel, southPanel;
 	JLabel							speed;
 	JTable							table;
@@ -47,11 +49,12 @@ public class CafeGUIView extends JFrame {
 	 * an OrderList, CustomerList and ItemList that will provide
 	 * the data used by the GUI.
 	 */
-	public CafeGUIView(OrderList orders, CustomerList customers, ItemList items) {
+	public CafeGUIView(OrderList orders, CustomerList customers, ItemList items, SharedObject so) {
 		
 		this.orders 		= orders;
 		this.customers 		= customers;
 		this.items 			= items;
+		this.done     		= so.getDone();
 		executionSpeed 		= 5;
 		servers = new ArrayList<JTextPane>();
 		setDefaultCloseOperation(CafeGUIView.EXIT_ON_CLOSE);
@@ -102,6 +105,7 @@ public class CafeGUIView extends JFrame {
 		
 		JLabel 			eastNumPrompt	= new JLabel("Enter customer number:");
 		eastPanel.add(eastNumPrompt);
+	
 		
 		customerID 						= new JTextField(5); 
 		eastPanel.add(customerID);
@@ -147,6 +151,8 @@ public class CafeGUIView extends JFrame {
 		
 		removeServer						= new JButton("Remove Server");
 		eastPanel.add(removeServer);
+		
+		
 		
 		group.setHorizontalGroup(
 				group.createSequentialGroup()
@@ -201,9 +207,15 @@ public class CafeGUIView extends JFrame {
 				
 		this.add(eastPanel, BorderLayout.EAST);
 		this.addWindowListener(new WindowAdapter() {
+			public void actionPerformed(ActionEvent e) {
+				if(done = true) {
+					System.out.println("close close ");
+					}
+				}
+			});
+		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				System.out.println("test test");
-				Manager.outputReport(orders, customers, items, "./Cafe_Report1.txt");
+				Manager.outputReport(orders, customers, items, "./Cafe_Report.txt");
 			}
 		});
 		
@@ -325,7 +337,7 @@ public class CafeGUIView extends JFrame {
 		TitledBorder 	sOneBorder 			= new TitledBorder("Server 1");
 		sOneBorder.setTitleJustification(TitledBorder.CENTER);
 		serverOne = new JTextPane();
-		serverOne.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		serverOne.setText("Waiting for order");
 		serverOne.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), sOneBorder));
 		StyledDocument sOneText = serverOne.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();
@@ -337,7 +349,7 @@ public class CafeGUIView extends JFrame {
 		TitledBorder 	sTwoBorder 			= new TitledBorder("Server 2");
 		sTwoBorder.setTitleJustification(TitledBorder.CENTER);
 		serverTwo = new JTextPane();
-		serverTwo.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		serverTwo.setText("Waiting for order");
 		serverTwo.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), sTwoBorder));
 		StyledDocument sTwoText = serverTwo.getStyledDocument();
 		StyleConstants.setAlignment(center,  StyleConstants.ALIGN_CENTER);
@@ -380,7 +392,7 @@ public class CafeGUIView extends JFrame {
 		TitledBorder 	newServerBorder 			= new TitledBorder("Server " + (servers.size()+1));
 		newServerBorder.setTitleJustification(TitledBorder.CENTER);
 		JTextPane newServer = new JTextPane();
-		newServer.setText("lorem ipsum \nlorem ipsum \nlorem ipsum \n");
+		newServer.setText("Waiting for order");
 		newServer.setBorder(BorderFactory.createCompoundBorder(new BevelBorder(BevelBorder.RAISED), newServerBorder));
 		StyledDocument sOneText = newServer.getStyledDocument();
 		SimpleAttributeSet center = new SimpleAttributeSet();

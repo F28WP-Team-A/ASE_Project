@@ -30,6 +30,10 @@ public class QueueManager implements Runnable {
 		this.controller = controller;
 		count = controller.getModel().getNumRemaining();
 	}
+	
+	public int getCount(){
+		return count;
+	}
 
 	/*
 	 * Periodically the QueueManager calls the putNext

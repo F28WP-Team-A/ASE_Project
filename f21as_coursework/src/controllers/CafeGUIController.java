@@ -2,6 +2,7 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,20 +33,16 @@ import javax.swing.Timer;
 public class CafeGUIController {
 	
 	private CafeGUIView gui;
-	private CafeModel 	cafe;
-	private Timer		timer;
 	private CafeTableModel tableModel;
-	private boolean newOrder;
 	private SharedObject so;
 	private int serverCount;
 	private ArrayList<Server> servers;
+	private boolean done;
 	
 	
-	public CafeGUIController(CafeGUIView gui, CafeModel cafe, SharedObject so) {
+	public CafeGUIController(CafeGUIView gui, SharedObject so) {
 		this.gui 	= gui;
-		this.cafe 	= cafe;
 		this.so = so;
-		newOrder = false;
 		serverCount = 2;
 		servers = new ArrayList<Server>();
 		this.tableModel = gui.getTableModel();
@@ -53,12 +50,22 @@ public class CafeGUIController {
 		gui.addNewServerListener(new AddServer());
 		gui.addNewCustListener(new AddCustomer());
 		gui.addRemoveServerListener(new RemoveServer());
+		this.done = so.getDone();
 		
 	}
 		
 	public CafeTableModel getModel() {
 		return tableModel;
 	}
+	
+	public class exitUponCompletion implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			if(done = true) {
+				gui.dispatchEvent(new WindowEvent(gui, WindowEvent.WINDOW_CLOSING));
+			};
+		};
+	};
 		
 	/*
 	 * UpdateSpeed class creates an action listener

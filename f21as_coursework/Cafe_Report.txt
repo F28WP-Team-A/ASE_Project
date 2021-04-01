@@ -5,7 +5,9 @@ Orders:
 [4, France Andrade, 4.4, tomato soup, ready salted crisps]
 [5, Ulysses Mcwalters, 11.44, tuna mayo sandwich, flavoured latte, tuna baked potato, tuna baked potato]
 [6, Tyisha Veness, 8.100, coke, water bottle]
-Total Sales: �61.45
+[7, Liam Horrobin, 4, tea, tea]
+[8, john Horrobin, 7.25, tea, tea, coke]
+Total Sales: �72.70
 
 Menu: 
 Item Number         Description                   Type/Size      Drink Type     Flavour        Price              
