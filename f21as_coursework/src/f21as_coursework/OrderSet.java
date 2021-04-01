@@ -5,11 +5,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 //Order objects stored as a TreeSet
-public class OrderList {
+public class OrderSet {
 	// storage for details
 	static Set<Order> orders = new TreeSet<Order>();
 
-    public OrderList() {
+    public OrderSet() {
     }
 
     // look up orderItemNum and return order details

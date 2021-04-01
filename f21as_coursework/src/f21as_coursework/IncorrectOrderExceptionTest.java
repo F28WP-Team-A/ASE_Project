@@ -11,9 +11,9 @@ class IncorrectOrderExceptionTest {
 	 */
 	@Test
 	void testIncorrectOrderException() {
-		OrderList orders = new OrderList();
+		OrderSet orders = new OrderSet();
 		CustomerList customers = new CustomerList();
-		assertThrows(IncorrectItemException.class, () -> {Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");});
+		assertThrows(IncorrectItemException.class, () -> {Manager.populateOrderSet(orders, customers, "existingCustomerOrders.csv");});
 	}
 
 }

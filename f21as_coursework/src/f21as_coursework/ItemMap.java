@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 
 //import f21as_coursework.Items;
 
-public class ItemList {
+public class ItemMap {
 
 		//create HashMap object called items 
 		//where key = identifier (String) and value = menu item (String)

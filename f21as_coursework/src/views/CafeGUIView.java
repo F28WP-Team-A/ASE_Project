@@ -25,9 +25,9 @@ import java.time.LocalDateTime;
 
 public class CafeGUIView extends JFrame {
 	
-	private OrderList 				orders;
+	private OrderSet 				orders;
 	private CustomerList			customers;
-	private ItemList				items;
+	private ItemMap				items;
 	private int 					executionSpeed;
 	private CafeTableModel 			tableModel;
 	private boolean					done;
@@ -49,7 +49,7 @@ public class CafeGUIView extends JFrame {
 	 * an OrderList, CustomerList and ItemList that will provide
 	 * the data used by the GUI.
 	 */
-	public CafeGUIView(OrderList orders, CustomerList customers, ItemList items, SharedObject so) {
+	public CafeGUIView(OrderSet orders, CustomerList customers, ItemMap items, SharedObject so) {
 		
 		this.orders 		= orders;
 		this.customers 		= customers;
@@ -228,7 +228,7 @@ public class CafeGUIView extends JFrame {
 	 * Used by the east panel to populate the drop
 	 * down for item choices.
 	 */
-	private String [] getItems(ItemList items) {
+	private String [] getItems(ItemMap items) {
 		
 		String [] itemList = new String [items.getMapSize()];
 		int count = 0;

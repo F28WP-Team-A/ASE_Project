@@ -44,7 +44,7 @@ public class Manager {
 	 * passed in as a parameter and constructs a Customer and Order object for each line
 	 * in the file.
 	 */
-	public static void populateOrderList(OrderList orderList, CustomerList customers,
+	public static void populateOrderSet(OrderSet orderList, CustomerList customers,
 										String fileName) throws IncorrectOrderException {
 		
 		try {
@@ -93,7 +93,7 @@ public class Manager {
 	 * in the file.
 	 * 
 	 */
-	public static void populateItemList(ItemList itemList, String fileName) throws IncorrectItemException {
+	public static void populateItemMap(ItemMap itemList, String fileName) throws IncorrectItemException {
 		
 		try {
 			File 	items 		= new File(fileName);									
@@ -280,9 +280,9 @@ public class Manager {
 	// also this cannot be called in its current format within the GuiCreate 
 	// need to work out some form of getter. 
 	
-	public static ArrayList<ArrayList<String>> indexOrders(OrderList orders, 
+	public static ArrayList<ArrayList<String>> indexOrders(OrderSet orders, 
 												  CustomerList customers,
-												  ItemList items)	{
+												  ItemMap items)	{
 		
 		ArrayList<ArrayList<String>> allOrders = new ArrayList<ArrayList<String>>();
 		
@@ -320,7 +320,7 @@ public class Manager {
 	 * 
 	 * Returns the price of the customers order as a BigDecimal.
 	 */
-	public static BigDecimal getTotalPrice(OrderList orders, String customerID) {
+	public static BigDecimal getTotalPrice(OrderSet orders, String customerID) {
 			
 		int food 	= 0;
 		int drink 	= 0;
@@ -368,7 +368,7 @@ public class Manager {
 		return price;
 	}
 	
-	public static int getDiscount(OrderList orders, String customerID) {
+	public static int getDiscount(OrderSet orders, String customerID) {
 		
 		int food 		= 0;
 		int drink 		= 0;
@@ -416,7 +416,7 @@ public class Manager {
 	 * 
 	 * This is called by outputReport when exiting the GUI.
 	 */
-	public static String getReport(OrderList orders, CustomerList customers,ItemList items) {
+	public static String getReport(OrderSet orders, CustomerList customers,ItemMap items) {
 		
 		String report 	= "Orders: \n";
 		
@@ -439,8 +439,8 @@ public class Manager {
 	 * The method is enclosed in a try/catch block in order to catch any
 	 * IOExceptions that may arise when calling this method.
 	 */
-	public static void outputReport(OrderList orders, CustomerList customers,
-									ItemList items, String fileName) {
+	public static void outputReport(OrderSet orders, CustomerList customers,
+									ItemMap items, String fileName) {
 		
 		try {
 			FileWriter reportOutput = new FileWriter(fileName);							

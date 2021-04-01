@@ -11,8 +11,8 @@ class IncorrectItemExceptionTest {
  */
 	@Test
 	void testIncorrectItemException() {
-		ItemList items = new ItemList();
-		assertThrows(IncorrectItemException.class, () -> {Manager.populateItemList(items, "items.csv");});
+		ItemMap items = new ItemMap();
+		assertThrows(IncorrectItemException.class, () -> {Manager.populateItemMap(items, "items.csv");});
 	}
 
 }

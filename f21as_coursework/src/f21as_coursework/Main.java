@@ -20,17 +20,17 @@ public class Main {
 		
 		
 		
-		ItemList items = new ItemList();
+		ItemMap items = new ItemMap();
 
-		OrderList orders = new OrderList();
+		OrderSet orders = new OrderSet();
 		
 		CustomerList customers = new CustomerList();
 		
 		SharedObject so = new SharedObject();
 	
-		Manager.populateItemList(items, "items.csv");
+		Manager.populateItemMap(items, "items.csv");
 
-		Manager.populateOrderList(orders, customers, "existingCustomerOrders.csv");
+		Manager.populateOrderSet(orders, customers, "existingCustomerOrders.csv");
 		
 		CafeModel cafe = new CafeModel(orders, items, customers);
 		

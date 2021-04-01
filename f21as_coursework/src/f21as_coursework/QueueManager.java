@@ -13,15 +13,15 @@ import model.*;
 public class QueueManager implements Runnable {
 
 	private SharedObject so;
-	private OrderList orders;
+	private OrderSet orders;
 	private CustomerList customers;
-	private ItemList items;
+	private ItemMap items;
 	private CafeModel model;
 	private CafeGUIController controller;
 	private int count;
 	
-	public QueueManager(SharedObject so, OrderList orders, CafeModel model,
-						CustomerList customers, ItemList items, CafeGUIController controller) {
+	public QueueManager(SharedObject so, OrderSet orders, CafeModel model,
+						CustomerList customers, ItemMap items, CafeGUIController controller) {
 		this.so = so;
 		this.orders = orders;
 		this.model = model;
