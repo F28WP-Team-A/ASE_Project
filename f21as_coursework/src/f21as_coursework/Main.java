@@ -32,9 +32,15 @@ public class Main {
 
 		Manager.populateOrderSet(orders, customers, "existingCustomerOrders.csv");
 		
+		for(int i = 0; i<orders.getNumberOfOrders();i++) {
+			System.out.println(orders.getOrderItem(i));
+		}
+		
 		CafeModel cafe = new CafeModel(orders, items, customers);
 		
 		ArrayList<ArrayList<String>> allOrders = Manager.indexOrders(orders, customers, items);
+		
+		System.out.println("All orders: " + allOrders);
 		
 		System.out.println("Foo123 price: " + items.getPrice("DRINK206"));
 		

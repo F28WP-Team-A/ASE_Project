@@ -1,0 +1,62 @@
+Apr 01, 2021 5:20:54 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:20:54 PM model.CafeModel getNextOrder
+INFO: Next order.
+Apr 01, 2021 5:20:54 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:20:55 PM model.CafeModel getNextOrder
+INFO: Next order.
+Apr 01, 2021 5:20:58 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:20:58 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:20:59 PM model.CafeModel getNextOrder
+INFO: Next order.
+Apr 01, 2021 5:20:59 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:00 PM model.CafeModel getNextOrder
+INFO: Next order.
+Apr 01, 2021 5:21:03 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:04 PM model.CafeModel getNextOrder
+INFO: Next order.
+Apr 01, 2021 5:21:05 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:05 PM model.CafeModel getNextOrder
+INFO: Next order.
+Apr 01, 2021 5:21:07 PM controllers.CafeGUIController$AddServer actionPerformed
+INFO: New server added.
+Apr 01, 2021 5:21:08 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:08 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:09 PM model.CafeModel getNextOrder
+INFO: Next order.
+Apr 01, 2021 5:21:09 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:10 PM model.CafeModel getNextOrder
+INFO: No more orders
+Apr 01, 2021 5:21:12 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:12 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:13 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:13 PM model.SharedObject getNext
+INFO: Order ready to be served.
+Apr 01, 2021 5:21:13 PM model.CafeModel getNextOrder
+INFO: No more orders
+Apr 01, 2021 5:21:13 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:13 PM model.CafeModel getNextOrder
+INFO: No more orders
+Apr 01, 2021 5:21:13 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:21:13 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:23:33 PM model.SharedObject getNew
+INFO: New order to be processed.
+Apr 01, 2021 5:23:34 PM model.CafeModel getNextOrder
+INFO: Next order.
+Apr 01, 2021 5:23:34 PM model.SharedObject getNew
+INFO: New order to be processed.

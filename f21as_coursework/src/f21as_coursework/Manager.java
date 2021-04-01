@@ -48,19 +48,30 @@ public class Manager {
 										String fileName) throws IncorrectOrderException {
 		
 		try {
+			InputStream data = Manager.class.getClassLoader().getResourceAsStream(fileName);
+			System.out.println("Data " + data);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(data));
 			File 	orders 		= new File(fileName);									
-			Scanner fileInput 	= new Scanner(orders);								
+			Scanner fileInput 	= new Scanner(reader);								
 			int 	count 		= 0;
 			
-			if(fileInput.hasNextLine()==false) {
-				System.out.println("Input file is empty. Stopping execution.");
-				System.exit(0);
-			}
+			String newLine;
+//			
+//			if((newLine=reader.readLine()) == null) {
+//				System.out.println("Input file is empty. Stopping execution.");
+//				System.exit(0);
+//			}
 			
-			while(fileInput.hasNextLine()) {
+			while((newLine=reader.readLine()) != null) {
 				count 					+= 1;
-				String line 			= fileInput.nextLine();
+				String line 			= newLine;
+				if(line.isEmpty()) {
+					System.out.println("Input file is empty. Stopping execution.");
+					System.exit(0);
+				}
+				System.out.println("Line: " + line);
 				String newOrderInfo [] 	= line.split(",");
+				System.out.println("New order info: " + newOrderInfo[2]);
 
 				if(newOrderInfo.length == 13) {
 					try {
@@ -84,6 +95,9 @@ public class Manager {
 		}
 		catch (FileNotFoundException fnf) {
 			System.out.println("File not found, check file name");		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -327,6 +341,7 @@ public class Manager {
 		int merch 	= 0;
 		
 		BigDecimal price = new BigDecimal(0);
+		System.out.println("Customer ID: " + customerID);
 			
 		for(int i = 1; i < orders.getNumberOfOrders()+1; i++) {
 //			System.out.println("Manager 333 i: " + i);
